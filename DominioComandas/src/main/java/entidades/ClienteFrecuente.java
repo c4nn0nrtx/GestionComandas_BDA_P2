@@ -6,12 +6,9 @@ package entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -20,66 +17,51 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "clientesFrecuentes")
 public class ClienteFrecuente extends Cliente implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Transient
+    private Double totalGastado;
     
-    @Column(name = "totalGastado", nullable = false)
-    private double totalGastado;
+    @Transient
+    private Integer visitas;
     
-    @Column(name = "visitas", nullable = false)
-    private int visitas;
-    
-    @Column(name = "puntosFidelidad", nullable = false)
-    private int puntosFidelidad;
+    @Transient
+    private Integer puntosFidelidad;
 
     public ClienteFrecuente() {
     }
 
-    public ClienteFrecuente(Long id, double totalGastado, int visitas, int puntosFidelidad, String nombres, String apellidoPaterno, String apellidoMaterno, String correo, String telefono, LocalDate fechaRegistro) {
+    public ClienteFrecuente(Double totalGastado, Integer visitas, Integer puntosFidelidad, String nombres, String apellidoPaterno, String apellidoMaterno, String correo, String telefono, LocalDate fechaRegistro) {
         super(nombres, apellidoPaterno, apellidoMaterno, correo, telefono, fechaRegistro);
-        this.id = id;
         this.totalGastado = totalGastado;
         this.visitas = visitas;
         this.puntosFidelidad = puntosFidelidad;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getTotalGastado() {
+    
+    public Double getTotalGastado() {
         return totalGastado;
     }
 
-    public void setTotalGastado(double totalGastado) {
+    public void setTotalGastado(Double totalGastado) {
         this.totalGastado = totalGastado;
     }
 
-    public int getVisitas() {
+    public Integer getVisitas() {
         return visitas;
     }
 
-    public void setVisitas(int visitas) {
+    public void setVisitas(Integer visitas) {
         this.visitas = visitas;
     }
 
-    public int getPuntosFidelidad() {
+    public Integer getPuntosFidelidad() {
         return puntosFidelidad;
     }
 
-    public void setPuntosFidelidad(int puntosFidelidad) {
+    public void setPuntosFidelidad(Integer puntosFidelidad) {
         this.puntosFidelidad = puntosFidelidad;
     }
 
     @Override
     public String toString() {
-        return "ClienteFrecuente{" + "id=" + id + ", totalGastado=" + totalGastado + ", visitas=" + visitas + ", puntosFidelidad=" + puntosFidelidad + '}';
+        return "ClienteFrecuente{" + "totalGastado=" + totalGastado + ", visitas=" + visitas + ", puntosFidelidad=" + puntosFidelidad + '}';
     }
 }

@@ -47,16 +47,16 @@ public class Cliente implements Serializable {
     @Column(name = "apellidoMaterno", nullable = false)
     private String apellidoMaterno;
 
-    @Column(name = "correo", nullable = false)
+    @Column(name = "correo", nullable = true)
     private String correo;
 
-    @Column(name = "telefono", nullable = false)
+    @Column(name = "telefono", nullable = false, unique = true)
     private String telefono;
     
     @Column(name = "fechaRegistro", nullable = false)
     private LocalDate fechaRegistro;
     
-    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private List<Comanda> comandas = new ArrayList<>(); 
     //pocas cascadas, no nos interesa que se eliminen las comandas si se elimina un cliente
 

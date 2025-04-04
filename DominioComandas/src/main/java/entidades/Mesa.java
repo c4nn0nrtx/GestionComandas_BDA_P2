@@ -31,21 +31,12 @@ public class Mesa implements Serializable {
     private Long id;
     
     @Column(name = "numeroMesa", nullable = false)
-    private int numeroMesa;
-    
-    //En caso de que SI se quieran mantener las comandas de la mesa
-//    @OneToMany(mappedBy = "mesa", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-//    private List<Comanda> comandas = new ArrayList<>();
-    
-    @OneToMany(mappedBy = "mesa", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, 
-               orphanRemoval = true, //Para que se borren las comandas de esta mesa
-               fetch = FetchType.LAZY) //Aunque segun yo Lazy es por defecto lazy en OneToMany
-    private List<Comanda> comandas = new ArrayList<>();
+    private Integer numeroMesa;
     
     public Mesa() {
     }
     
-    public Mesa(int numeroMesa) {
+    public Mesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
@@ -57,24 +48,16 @@ public class Mesa implements Serializable {
         this.id = id;
     }
 
-    public int getNumeroMesa() {
+    public Integer getNumeroMesa() {
         return numeroMesa;
     }
 
-    public void setNumeroMesa(int numeroMesa) {
+    public void setNumeroMesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
-    }
-
-    public List<Comanda> getComandas() {
-        return comandas;
-    }
-
-    public void setComandas(List<Comanda> comandas) {
-        this.comandas = comandas;
     }
 
     @Override
     public String toString() {
-        return "Mesa{" + "id=" + id + ", numeroMesa=" + numeroMesa + ", comandas=" + comandas + '}';
+        return "Mesa{" + "id=" + id + ", numeroMesa=" + numeroMesa + ", comandas=" + '}';
     }
 }

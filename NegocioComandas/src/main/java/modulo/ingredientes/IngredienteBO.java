@@ -5,6 +5,7 @@
 package modulo.ingredientes;
 
 import DTOs.nuevos.IngredienteNuevoDTO;
+import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
 import entidades.Ingrediente;
 import excepciones.NegocioException;
@@ -19,6 +20,7 @@ import mappers.IngredienteMapper;
  * @author Beto_
  */
 public class IngredienteBO implements IIngredienteBO{
+    IngredienteMapper ingredienteMapper = new IngredienteMapper();
     private static final Logger LOGGER = Logger.getLogger(IngredienteBO.class.getName());
     /**
      * Instancia del DAO que maneja la persistencia de ingredientes.
@@ -92,9 +94,9 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public List<Ingrediente> obtenerTodosIngredientes() throws NegocioException {
+    public List<IngredienteViejoDTO> obtenerTodos() throws NegocioException {
         try {
-            return ingredienteDAO.obtenerTodos();
+            return IngredienteMapper.toViejoDTOList(ingredienteDAO.obtenerTodos());
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al obtener todos los ingredientes", ex);
             throw new NegocioException("Error al obtener todos los ingredientes", ex);
@@ -102,9 +104,9 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public List<Ingrediente> obtenerIngredientesPorNombre(String nombre) throws NegocioException {
+    public List<IngredienteViejoDTO> obtenerPorNombre(String nombre) throws NegocioException {
         try {
-            return ingredienteDAO.obtenerPorNombre(nombre);
+            return IngredienteMapper.toViejoDTOList(ingredienteDAO.obtenerPorNombre(nombre));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al obtener ingredientes por nombre", ex);
             throw new NegocioException("Error al obtener ingredientes por nombre", ex);
@@ -112,9 +114,9 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public List<Ingrediente> obtenerIngredientesPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException {
+    public List<IngredienteViejoDTO> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException {
         try {
-            return ingredienteDAO.obtenerPorUnidadMedida(unidadMedida);
+            return IngredienteMapper.toViejoDTOList(ingredienteDAO.obtenerPorUnidadMedida(unidadMedida));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al obtener ingredientes por unidad de medida", ex);
             throw new NegocioException("Error al obtener ingredientes por unidad de medida", ex);

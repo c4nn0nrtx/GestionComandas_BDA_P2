@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +26,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ingredientes")
-@NamedQuery(name = "Ingrediente.buscarPorNombre", query = "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre")
+@NamedQuery(name = "Ingrediente.buscarPorNombre", query = "SELECT i FROM Ingrediente i WHERE i.nombre LIKE :nombre")
 @NamedQuery(name = "Ingrediente.buscarPorUnidadMedida", query = "SELECT i FROM Ingrediente i WHERE i.unidadMedida = :unidadMedida")
 public class Ingrediente implements Serializable {
 
@@ -37,18 +39,16 @@ public class Ingrediente implements Serializable {
     private String nombre;
     
     @Column(name = "unidadMedida", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UnidadMedida unidadMedida;
     
     @Column(name = "stock", nullable = false)
-    private double stock;
-    
-    @OneToMany(mappedBy = "ingrediente", fetch = FetchType.LAZY) //lista de detalles
-    private List<ProductoIngrediente> productosIngredientes = new ArrayList<>();
-
+    private Double stock;
+   
     public Ingrediente() {
     }
 
-    public Ingrediente(String nombre, UnidadMedida unidadMedida, double stock) {
+    public Ingrediente(String nombre, UnidadMedida unidadMedida, Double stock) {
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
         this.stock = stock;
@@ -78,24 +78,16 @@ public class Ingrediente implements Serializable {
         this.unidadMedida = unidadMedida;
     }
 
-    public double getStock() {
+    public Double getStock() {
         return stock;
     }
 
-    public void setStock(double stock) {
+    public void setStock(Double stock) {
         this.stock = stock;
-    }
-
-    public List<ProductoIngrediente> getProductosIngredientes() {
-        return productosIngredientes;
-    }
-
-    public void setProductosIngredientes(List<ProductoIngrediente> productosIngredientes) {
-        this.productosIngredientes = productosIngredientes;
     }
 
     @Override
     public String toString() {
-        return "Ingrediente{" + "id=" + id + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", stock=" + stock + ", productosIngredientes=" + productosIngredientes + '}';
+        return "Ingrediente{" + "id=" + id + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", stock=" + stock + '}';
     }
 }

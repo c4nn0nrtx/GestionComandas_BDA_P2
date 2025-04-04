@@ -36,7 +36,7 @@ public class Comanda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "folio", nullable = false)
+    @Column(name = "folio", nullable = false, unique = true)
     private String folio;
     
     @Column(name = "estado", nullable = false)
@@ -47,7 +47,7 @@ public class Comanda implements Serializable {
     private LocalDateTime fechaHora;
     
     @Column(name = "totalVenta", nullable = false)
-    private double totalVenta;
+    private Double totalVenta;
     
     @ManyToOne
     @JoinColumn(name = "id_mesa", nullable = false) //false pq no hay comandas sin mesa
@@ -67,7 +67,7 @@ public class Comanda implements Serializable {
     public Comanda() {
     }
 
-    public Comanda(String folio, EstadoComanda estado, LocalDateTime fechaHora, double totalVenta, Mesa mesa, Cliente cliente) {
+    public Comanda(String folio, EstadoComanda estado, LocalDateTime fechaHora, Double totalVenta, Mesa mesa, Cliente cliente) {
         this.folio = folio;
         this.estado = estado;
         this.fechaHora = fechaHora;
@@ -108,11 +108,11 @@ public class Comanda implements Serializable {
         this.fechaHora = fechaHora;
     }
 
-    public double getTotalVenta() {
+    public Double getTotalVenta() {
         return totalVenta;
     }
 
-    public void setTotalVenta(double totalVenta) {
+    public void setTotalVenta(Double totalVenta) {
         this.totalVenta = totalVenta;
     }
 

@@ -5,6 +5,7 @@
 package modulo.ingredientes;
 
 import DTOs.nuevos.IngredienteNuevoDTO;
+import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
 import entidades.Ingrediente;
 import excepciones.NegocioException;
@@ -23,9 +24,9 @@ public interface IIngredienteBO {
 
     Ingrediente obtenerIngredientePorId(Long id) throws NegocioException;
 
-    List<Ingrediente> obtenerTodosIngredientes() throws NegocioException;
+    List<IngredienteViejoDTO> obtenerTodos() throws NegocioException;
 
-    List<Ingrediente> obtenerIngredientesPorNombre(String nombre) throws NegocioException;
+    List<IngredienteViejoDTO> obtenerPorNombre(String nombre) throws NegocioException;
 
-    List<Ingrediente> obtenerIngredientesPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException;
+    List<IngredienteViejoDTO> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException;
 }

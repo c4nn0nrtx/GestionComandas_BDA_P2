@@ -155,7 +155,7 @@ public class IngredienteDAO implements IIngredienteDAO{
             TypedQuery consulta = em.createNamedQuery("Ingrediente.buscarPorNombre", Ingrediente.class);
             
             // 2. Añadimos parametros
-            consulta.setParameter("nombre", nombre);
+            consulta.setParameter("nombre", "%" + nombre + "%");
 
             // 3. validamos resultado de la consulta y devolvemos
             return consulta.getResultList();

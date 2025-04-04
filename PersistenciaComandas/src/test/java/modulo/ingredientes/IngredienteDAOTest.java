@@ -169,10 +169,10 @@ public class IngredienteDAOTest {
         try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
             mockedConexion.when(Conexion::crearConexion).thenReturn(em);
             when(em.createNamedQuery("Ingrediente.buscarPorNombre", Ingrediente.class)).thenReturn(query);
-            when(query.setParameter("nombre", "Tomate")).thenReturn(query);
+            when(query.setParameter("nombre", "%omat%")).thenReturn(query);
             when(query.getResultList()).thenReturn(Arrays.asList(ingrediente1));
 
-            List<Ingrediente> result = ingredienteDAO.obtenerPorNombre("Tomate");
+            List<Ingrediente> result = ingredienteDAO.obtenerPorNombre("omat");
 
             assertEquals(1, result.size());
             assertEquals("Tomate", result.get(0).getNombre());
