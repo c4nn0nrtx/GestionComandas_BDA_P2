@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +24,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ingredientes")
+@NamedQuery(name = "Ingrediente.buscarPorNombre", query = "SELECT i FROM Ingrediente i WHERE i.nombre = :nombre")
+@NamedQuery(name = "Ingrediente.buscarPorUnidadMedida", query = "SELECT i FROM Ingrediente i WHERE i.unidadMedida = :unidadMedida")
 public class Ingrediente implements Serializable {
 
     private static final long serialVersionUID = 1L;

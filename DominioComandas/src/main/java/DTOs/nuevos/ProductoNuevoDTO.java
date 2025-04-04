@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTOs.viejos;
+package DTOs.nuevos;
 
 import ENUMs.TipoProducto;
 
@@ -10,30 +10,20 @@ import ENUMs.TipoProducto;
  *
  * @author Beto_
  */
-public class ProductoViejoDTO {
-    private Long id;
+public class ProductoNuevoDTO {
     private String nombre;
     private TipoProducto tipo;
     private double precio;
     private boolean estado;
 
-    public ProductoViejoDTO() {
+    public ProductoNuevoDTO() {
     }
 
-    public ProductoViejoDTO(Long id, String nombre, TipoProducto tipo, double precio, boolean estado) {
-        this.id = id;
+    public ProductoNuevoDTO(String nombre, TipoProducto tipo, double precio, boolean estado) {
         this.nombre = nombre;
         this.tipo = tipo;
         this.precio = precio;
         this.estado = estado;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -70,6 +60,6 @@ public class ProductoViejoDTO {
 
     @Override
     public String toString() {
-        return "ProductoViejoDTO{" + "id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", precio=" + precio + ", estado=" + estado + '}';
+        return "ProductoNuevoDTO{" + "nombre=" + nombre + ", tipo=" + tipo + ", precio=" + precio + ", estado=" + estado + '}';
     }
 }
