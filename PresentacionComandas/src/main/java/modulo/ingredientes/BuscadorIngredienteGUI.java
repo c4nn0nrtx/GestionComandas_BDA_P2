@@ -6,9 +6,11 @@ package modulo.ingredientes;
 
 import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
+import controlGUI.IngredienteSeleccionadoListener;
 import excepciones.NegocioException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,33 +18,28 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 import manejadoresBO.ManejadorBO;
 
 /**
  *
  * @author Beto_
  */
-public class BuscadorIngredientesGUI extends javax.swing.JFrame {
-    IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
-//    private IngredienteSeleccionadoListener listener;
+public class BuscadorIngredienteGUI extends javax.swing.JFrame {
+    private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
+    private List<IngredienteViejoDTO> listaIngredientes = new ArrayList<>();
+    private IngredienteSeleccionadoListener listener;
     DefaultTableModel modelo;
 
     /**
      * Creates new form BuscadorIngredientesGUI
      */
-    //public BuscadorIngredientesGUI(IngredienteSeleccionadoListener listener)
-    public BuscadorIngredientesGUI() {
+    //public BuscadorIngredienteGUI(IngredienteSeleccionadoListener listener)
+    public BuscadorIngredienteGUI() {
         initComponents();
         modelo = (DefaultTableModel) tblIngredientes.getModel();
         cargarIngredientes();
         agregarListeners();
-        
-        // Columna invisible para el id
-        TableColumnModel columnModel = tblIngredientes.getColumnModel();
-        if (columnModel.getColumnCount() > 0) {
-            columnModel.removeColumn(columnModel.getColumn(0));
-        }
+        System.out.println("Instancia del buscador creada: " + this);
     }
 
     /**
@@ -194,6 +191,10 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void setIngredienteSeleccionadoListener(IngredienteSeleccionadoListener listener) {
+        this.listener = listener;
+    }
+    
     private void agregarListeners(){
         txtNombre.getDocument().addDocumentListener(
                 new DocumentListener() {
@@ -233,11 +234,11 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(chbNombre.isSelected()){
             txtNombre.setEnabled(true);
-        }
-        
-        if(!chbNombre.isSelected()){
-            txtNombre.setText(null);
+            chbUnidadMedida.setSelected(false);
+            cbxUnidadMedida.setEnabled(false);
+        }else{
             txtNombre.setEnabled(false);
+            txtNombre.setText(null);
             cargarIngredientes();
             if (!chbUnidadMedida.isSelected()) {
                 cargarIngredientes();
@@ -250,9 +251,12 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(chbUnidadMedida.isSelected()){
             cbxUnidadMedida.setEnabled(true);
-        }
-        
-        if(!chbUnidadMedida.isSelected()){
+            
+            //Deshabilitar la otra checkBox
+            chbNombre.setSelected(false);
+            txtNombre.setEnabled(false);
+            txtNombre.setText(null);
+        }else{
             cbxUnidadMedida.setSelectedIndex(-1);
             cbxUnidadMedida.setEnabled(false);
             if (!chbNombre.isSelected()) {
@@ -264,48 +268,33 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
 
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
-        String nombre;
-        UnidadMedida unidadMedida = null;
+                
+        //Tomamos la fila seleccionada para enviarla
+        int filaSeleccionada = tblIngredientes.getSelectedRow();
         
-
-        // Validación 1: Nombre
-        if(chbNombre.isSelected()){
-            nombre = txtNombre.getText();
-            if (nombre == null || nombre.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre", "Error", JOptionPane.ERROR_MESSAGE);
-                txtNombre.requestFocus();
-                return;
+        //Si la fila es válida
+        if (filaSeleccionada >= 0) {
+            //obtiene el ingrediente de la fila seleccionada
+            IngredienteViejoDTO ingredienteSeleccionado = obtenerIngredienteDeFila(filaSeleccionada);
+            
+            // Válida el ingrediente y el listener para enviar el ingrediente
+            if (ingredienteSeleccionado != null) {
+                if (listener != null) {
+                    int opcion = JOptionPane.showConfirmDialog(this,"¿Desea seleccionar el ingrediente: " + ingredienteSeleccionado.getNombre() +
+                                                            " con unidad de medida: " + ingredienteSeleccionado.getUnidadMedida().toString() + " ?",
+                                                            "Confirmar elección",
+                                                            JOptionPane.YES_NO_OPTION);
+                    if(opcion == JOptionPane.YES_OPTION){
+                        JOptionPane.showMessageDialog(this, "Ingrediente fue seleccionado", "Información", JOptionPane.INFORMATION_MESSAGE);
+                        listener.ingredienteSeleccionado(ingredienteSeleccionado);
+                    }
+                    this.setVisible(false);
+                }
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-
-
-        // Validación 2. UnidadMedida seleccionada
-        if(chbUnidadMedida.isSelected()){
-            String unidadMedidaS = (String) cbxUnidadMedida.getSelectedItem();
-            if (unidadMedidaS == null || unidadMedidaS.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, seleccione una unidad de medida.", "Error", JOptionPane.ERROR_MESSAGE);
-                cbxUnidadMedida.requestFocus();
-                return;
-            }
-            
-            switch (unidadMedidaS) {
-                case "Piezas" ->unidadMedida = UnidadMedida.PIEZAS;
-                case "Gramos" -> unidadMedida = UnidadMedida.GRAMOS;
-                case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
-                default -> JOptionPane.showMessageDialog(this, "Prror con unidad de medida", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }   
-
-            int filaSeleccionada = tblIngredientes.getSelectedRow();
-            if (filaSeleccionada >= 0) {
-                IngredienteViejoDTO ingredienteSeleccionado = obtenerIngredienteDeFila(filaSeleccionada); // Implementa este método
-                JOptionPane.showMessageDialog(this, "¿Desea seleccionar el ingrediente: " + ingredienteSeleccionado.getNombre() + " con unidad de medida: " 
-                          + ingredienteSeleccionado.getUnidadMedida().toString().toLowerCase() + " ?", 
-                          "Confirmar eleccción", JOptionPane.YES_NO_OPTION);
-//                listener.ingredienteSeleccionado(ingredienteSeleccionado);
-                  JOptionPane.showMessageDialog(this, "Ingrediente fue seleccionado", "Información", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-            }
     }//GEN-LAST:event_btnElegirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -313,40 +302,6 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscadorIngredientesGUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -364,10 +319,13 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
     private void cargarIngredientes(){
         //Empezar de 0 la tabla
         modelo.setRowCount(0);
+        listaIngredientes.clear();
         
         try{
+            //Los ingredientes que se van a obtener
             List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerTodos();
             
+            //Verificar la lista de ingredientes
             if (ingredientes == null || ingredientes.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Información", JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -375,15 +333,15 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
             
             for (IngredienteViejoDTO ingrediente : ingredientes) {
                 modelo.addRow(new Object[] {
-                    ingrediente.getId(),
                     ingrediente.getNombre(),
                     ingrediente.getUnidadMedida().toString(),
                     ingrediente.getStock()
                 });
+                listaIngredientes.add(ingrediente);
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
     
@@ -397,6 +355,7 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         
         //Empezar de 0 la tabla
         modelo.setRowCount(0);
+        listaIngredientes.clear();
         
         try{
             List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorNombre(txtNombre.getText());
@@ -408,15 +367,15 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
             
             for (IngredienteViejoDTO ingrediente : ingredientes) {
                 modelo.addRow(new Object[] {
-                    ingrediente.getId(),
                     ingrediente.getNombre(),
                     ingrediente.getUnidadMedida().toString(),
                     ingrediente.getStock()
                 });
+                listaIngredientes.add(ingrediente);
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por nombre: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
     
@@ -429,6 +388,7 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         
         //Empezar de 0 la tabla
         modelo.setRowCount(0);
+        listaIngredientes.clear();
         
         //Transformar unidad de medida
         UnidadMedida unidadMedida = null;
@@ -449,29 +409,23 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
             
             for (IngredienteViejoDTO ingrediente : ingredientes) {
                 modelo.addRow(new Object[] {
-                    ingrediente.getId(),
                     ingrediente.getNombre(),
                     ingrediente.getUnidadMedida().toString(),
                     ingrediente.getStock()
                 });
+                listaIngredientes.add(ingrediente);
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por unidad de medida: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
         
     private IngredienteViejoDTO obtenerIngredienteDeFila(int fila) {
-        Long id = (Long) tblIngredientes.getValueAt(fila, 0);
-        String nombre = (String) tblIngredientes.getValueAt(fila, 1);
-        UnidadMedida unidadMedida = (UnidadMedida) tblIngredientes.getValueAt(fila, 2);
-        double stock = (double) tblIngredientes.getValueAt(fila, 3);
-        IngredienteViejoDTO ingrediente = new IngredienteViejoDTO();
-        ingrediente.setId(id);
-        ingrediente.setNombre(nombre);
-        ingrediente.setUnidadMedida(unidadMedida);
-        ingrediente.setStock(stock);
-        return ingrediente;
+    if (fila >= 0 && fila < listaIngredientes.size()) {
+        return listaIngredientes.get(fila);
+    }
+    return null;
     }
 
 }

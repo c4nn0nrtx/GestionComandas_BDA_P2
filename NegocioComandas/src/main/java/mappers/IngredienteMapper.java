@@ -22,7 +22,7 @@ public class IngredienteMapper {
         Ingrediente ingrediente = new Ingrediente();
         ingrediente.setNombre(dto.getNombre());
         ingrediente.setUnidadMedida(dto.getUnidadMedida());
-        ingrediente.setStock(dto.getStock());
+        ingrediente.setStock(dto.getStock()); // Asumiendo Double
         return ingrediente;
     }
 
@@ -31,10 +31,10 @@ public class IngredienteMapper {
             return null;
         }
         return new IngredienteViejoDTO(
-            ingrediente.getId(),
-            ingrediente.getNombre(),
-            ingrediente.getUnidadMedida(),
-            ingrediente.getStock()
+                ingrediente.getId(), // Asumiendo Long o Integer
+                ingrediente.getNombre(),
+                ingrediente.getUnidadMedida(),
+                ingrediente.getStock() // Asumiendo Double
         );
     }
 
@@ -43,10 +43,10 @@ public class IngredienteMapper {
             return null;
         }
         return new IngredienteViejoDTO(
-            null,
-            ingredienteNuevoDTO.getNombre(),
-            ingredienteNuevoDTO.getUnidadMedida(),
-            ingredienteNuevoDTO.getStock()
+                null, // ID puede ser nulo al crear desde NuevoDTO
+                ingredienteNuevoDTO.getNombre(),
+                ingredienteNuevoDTO.getUnidadMedida(),
+                ingredienteNuevoDTO.getStock() // Asumiendo Double
         );
     }
 
@@ -56,10 +56,10 @@ public class IngredienteMapper {
             return null;
         }
         Ingrediente ingrediente = new Ingrediente();
-        ingrediente.setId(dto.getId());
+        ingrediente.setId(dto.getId()); // Asumiendo Long o Integer
         ingrediente.setNombre(dto.getNombre());
         ingrediente.setUnidadMedida(dto.getUnidadMedida());
-        ingrediente.setStock(dto.getStock());
+        ingrediente.setStock(dto.getStock()); // Asumiendo Double
         return ingrediente;
     }
 

@@ -44,7 +44,7 @@ public class Producto implements Serializable {
     private Double precio;
     
     @Column(name = "estado", nullable = false)
-    private boolean estado;
+    private Boolean estado;
     
     //lista de ingredientes con cantidad
     @OneToMany(mappedBy = "producto", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, 

@@ -14,13 +14,13 @@ public class ProductoViejoDTO {
     private Long id;
     private String nombre;
     private TipoProducto tipo;
-    private double precio;
-    private boolean estado;
+    private Double precio;
+    private Boolean estado;
 
     public ProductoViejoDTO() {
     }
 
-    public ProductoViejoDTO(Long id, String nombre, TipoProducto tipo, double precio, boolean estado) {
+    public ProductoViejoDTO(Long id, String nombre, TipoProducto tipo, Double precio, Boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.tipo = tipo;
@@ -52,19 +52,19 @@ public class ProductoViejoDTO {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
-    public boolean isEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

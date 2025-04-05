@@ -14,12 +14,12 @@ public class IngredienteViejoDTO {
     private Long id;
     private String nombre;
     private UnidadMedida unidadMedida;
-    private double stock;
+    private Double stock;
 
     public IngredienteViejoDTO() {
     }
 
-    public IngredienteViejoDTO(Long id, String nombre, UnidadMedida unidadMedida, double stock) {
+    public IngredienteViejoDTO(Long id, String nombre, UnidadMedida unidadMedida, Double stock) {
         this.id = id;
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
@@ -50,11 +50,11 @@ public class IngredienteViejoDTO {
         this.unidadMedida = unidadMedida;
     }
 
-    public double getStock() {
+    public Double getStock() {
         return stock;
     }
 
-    public void setStock(double stock) {
+    public void setStock(Double stock) {
         this.stock = stock;
     }
 
