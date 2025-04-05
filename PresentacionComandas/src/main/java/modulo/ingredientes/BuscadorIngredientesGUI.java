@@ -10,9 +10,13 @@ import excepciones.NegocioException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import manejadoresBO.ManejadorBO;
 
 /**
@@ -21,13 +25,24 @@ import manejadoresBO.ManejadorBO;
  */
 public class BuscadorIngredientesGUI extends javax.swing.JFrame {
     IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
+//    private IngredienteSeleccionadoListener listener;
+    DefaultTableModel modelo;
 
     /**
      * Creates new form BuscadorIngredientesGUI
      */
+    //public BuscadorIngredientesGUI(IngredienteSeleccionadoListener listener)
     public BuscadorIngredientesGUI() {
         initComponents();
+        modelo = (DefaultTableModel) tblIngredientes.getModel();
         cargarIngredientes();
+        agregarListeners();
+        
+        // Columna invisible para el id
+        TableColumnModel columnModel = tblIngredientes.getColumnModel();
+        if (columnModel.getColumnCount() > 0) {
+            columnModel.removeColumn(columnModel.getColumn(0));
+        }
     }
 
     /**
@@ -44,7 +59,6 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         chbUnidadMedida = new javax.swing.JCheckBox();
         txtNombre = new javax.swing.JTextField();
         cbxUnidadMedida = new javax.swing.JComboBox<>();
-        cbxIngredientes = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         btnElegir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -57,7 +71,7 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         jLabel1.setText("Buscador de ingredintes");
 
         chbNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbNombre.setText("Buscar por unidad de medida");
+        chbNombre.setText("Buscar por nombre");
         chbNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbNombreActionPerformed(evt);
@@ -65,7 +79,7 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         });
 
         chbUnidadMedida.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbUnidadMedida.setText("Buscar por nombre");
+        chbUnidadMedida.setText("Buscar por unidad de medida");
         chbUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbUnidadMedidaActionPerformed(evt);
@@ -77,8 +91,6 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         cbxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piezas", "Gramos", "Mililitros" }));
         cbxUnidadMedida.setSelectedIndex(-1);
         cbxUnidadMedida.setEnabled(false);
-
-        cbxIngredientes.setSelectedIndex(-1);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -128,8 +140,8 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chbNombre)
-                    .addComponent(chbUnidadMedida))
+                    .addComponent(chbUnidadMedida)
+                    .addComponent(chbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
@@ -143,21 +155,16 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
                         .addGap(98, 98, 98))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(cbxIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(123, 123, 123))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(131, 131, 131))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnElegir)))
-                .addGap(26, 26, 26))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,14 +182,12 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(cbxIngredientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnElegir))
-                .addGap(32, 32, 32))
+                    .addComponent(btnElegir)
+                    .addComponent(btnCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -208,7 +213,8 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
 
                     @Override
                     public void changedUpdate(DocumentEvent e) {
-                        // No se usa para JTextField simple
+                        //Vacío porque se usa para JTextField simple
+                        // Ignorar
                     }
                 }
         );
@@ -233,6 +239,9 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
             txtNombre.setText(null);
             txtNombre.setEnabled(false);
             cargarIngredientes();
+            if (!chbUnidadMedida.isSelected()) {
+                cargarIngredientes();
+            } 
         }
         
     }//GEN-LAST:event_chbNombreActionPerformed
@@ -246,6 +255,9 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
         if(!chbUnidadMedida.isSelected()){
             cbxUnidadMedida.setSelectedIndex(-1);
             cbxUnidadMedida.setEnabled(false);
+            if (!chbNombre.isSelected()) {
+                cargarIngredientes();
+            }
         }
        
     }//GEN-LAST:event_chbUnidadMedidaActionPerformed
@@ -282,14 +294,18 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
                 case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
                 default -> JOptionPane.showMessageDialog(this, "Prror con unidad de medida", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
+        }   
 
-//        try{
-//            ingredienteBO
-//            JOptionPane.showMessageDialog(this, "Ingrediente elegido con éxito", "Error", JOptionPane.INFORMATION_MESSAGE);
-//        }catch(NegocioException ne){
-//            JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+            int filaSeleccionada = tblIngredientes.getSelectedRow();
+            if (filaSeleccionada >= 0) {
+                IngredienteViejoDTO ingredienteSeleccionado = obtenerIngredienteDeFila(filaSeleccionada); // Implementa este método
+                JOptionPane.showMessageDialog(this, "¿Desea seleccionar el ingrediente: " + ingredienteSeleccionado.getNombre() + " con unidad de medida: " 
+                          + ingredienteSeleccionado.getUnidadMedida().toString().toLowerCase() + " ?", 
+                          "Confirmar eleccción", JOptionPane.YES_NO_OPTION);
+//                listener.ingredienteSeleccionado(ingredienteSeleccionado);
+                  JOptionPane.showMessageDialog(this, "Ingrediente fue seleccionado", "Información", JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            }
     }//GEN-LAST:event_btnElegirActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -335,7 +351,6 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnElegir;
-    private javax.swing.JComboBox<String> cbxIngredientes;
     private javax.swing.JComboBox<String> cbxUnidadMedida;
     private javax.swing.JCheckBox chbNombre;
     private javax.swing.JCheckBox chbUnidadMedida;
@@ -347,6 +362,9 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     
     private void cargarIngredientes(){
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        
         try{
             List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerTodos();
             
@@ -354,17 +372,106 @@ public class BuscadorIngredientesGUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Información", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-        }catch(NegocioException ne){
             
+            for (IngredienteViejoDTO ingrediente : ingredientes) {
+                modelo.addRow(new Object[] {
+                    ingrediente.getId(),
+                    ingrediente.getNombre(),
+                    ingrediente.getUnidadMedida().toString(),
+                    ingrediente.getStock()
+                });
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar ingredientes: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
     
     private void cargarIngredientesNombre(){
         
+        //1. Validación de campo vacío
+//        if(txtNombre.getText() == null || txtNombre.getText().isEmpty()){
+//            JOptionPane.showMessageDialog(this, "Seleccione un campo válido para el nombre", "Información", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+        
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        
+        try{
+            List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorNombre(txtNombre.getText());
+            
+//            if (ingredientes == null || ingredientes.isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Información", JOptionPane.INFORMATION_MESSAGE);
+//                return;
+//            }
+            
+            for (IngredienteViejoDTO ingrediente : ingredientes) {
+                modelo.addRow(new Object[] {
+                    ingrediente.getId(),
+                    ingrediente.getNombre(),
+                    ingrediente.getUnidadMedida().toString(),
+                    ingrediente.getStock()
+                });
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por nombre: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
+        }
     }
     
     private void cargarIngredientesUnidadMedida(){
+        //1. Validación de campo vacío
+        if(cbxUnidadMedida.getSelectedItem() == null || cbxUnidadMedida.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(this, "Seleccione un campo válido para el nombre", "Información", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        
+        //Transformar unidad de medida
+        UnidadMedida unidadMedida = null;
+        String unidadSeleccionadaStr = (String) cbxUnidadMedida.getSelectedItem();
+        switch (unidadSeleccionadaStr) {
+                case "Piezas" -> unidadMedida = UnidadMedida.PIEZAS;
+                case "Gramos" -> unidadMedida = UnidadMedida.GRAMOS;
+                case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
+            }
+        
+        try{
+            List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorUnidadMedida(unidadMedida);
+            
+            if (ingredientes == null || ingredientes.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (IngredienteViejoDTO ingrediente : ingredientes) {
+                modelo.addRow(new Object[] {
+                    ingrediente.getId(),
+                    ingrediente.getNombre(),
+                    ingrediente.getUnidadMedida().toString(),
+                    ingrediente.getStock()
+                });
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por unidad de medida: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorIngredientesGUI.class.getName()).log(Level.SEVERE, null, ne);
+        }
+    }
+        
+    private IngredienteViejoDTO obtenerIngredienteDeFila(int fila) {
+        Long id = (Long) tblIngredientes.getValueAt(fila, 0);
+        String nombre = (String) tblIngredientes.getValueAt(fila, 1);
+        UnidadMedida unidadMedida = (UnidadMedida) tblIngredientes.getValueAt(fila, 2);
+        double stock = (double) tblIngredientes.getValueAt(fila, 3);
+        IngredienteViejoDTO ingrediente = new IngredienteViejoDTO();
+        ingrediente.setId(id);
+        ingrediente.setNombre(nombre);
+        ingrediente.setUnidadMedida(unidadMedida);
+        ingrediente.setStock(stock);
+        return ingrediente;
     }
 
 }
