@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +29,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "productos")
 @NamedQueries({
-    @NamedQuery(name = "Producto.buscarPorNombreParcial",
+    @NamedQuery(name = "Producto.buscarPorNombre",
                 query = "SELECT p FROM Producto p WHERE LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))"),
     
     @NamedQuery(name = "Producto.buscarPorTipo",
@@ -40,26 +42,24 @@ import javax.persistence.Table;
                 query = "SELECT p FROM Producto p WHERE p.estado = true")
 })
 public class Producto implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, unique = true)
     private String nombre;
     
     @Column(name = "tipo", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TipoProducto tipo;
     
     @Column(name = "precio", nullable = false)
-    private double precio;
+    private Double precio;
     
     @Column(name = "estado", nullable = false)
-    private boolean estado;
-    
-    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY) //lista de detalles
-    private List<DetalleComanda> detallesComanda = new ArrayList<>();
+    private Boolean estado;
     
     //lista de ingredientes con cantidad
     @OneToMany(mappedBy = "producto", cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE}, 
@@ -104,11 +104,11 @@ public class Producto implements Serializable {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -118,14 +118,6 @@ public class Producto implements Serializable {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
-    }
-
-    public List<DetalleComanda> getDetallesComanda() {
-        return detallesComanda;
-    }
-
-    public void setDetallesComanda(List<DetalleComanda> detallesComanda) {
-        this.detallesComanda = detallesComanda;
     }
 
     public List<ProductoIngrediente> getProductosIngredientes() {
@@ -138,7 +130,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", precio=" + precio + ", estado=" + estado + ", detallesComanda=" + detallesComanda + ", cantidadIngredientes=" + productosIngredientes + '}';
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", precio=" + precio + ", estado=" + estado + ", productosIngredientes=" + productosIngredientes + '}';
     }
     
 }

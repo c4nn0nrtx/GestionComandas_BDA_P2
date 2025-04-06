@@ -8,6 +8,7 @@ package modulo.ingredientes;
  *
  * @author Maximiliano
  */
-public class ProductoIngredienteDAO {
+public class ProductoIngredienteDAO implements IProductoIngredienteDAO
+{
     
 }

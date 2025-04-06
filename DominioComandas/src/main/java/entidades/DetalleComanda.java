@@ -35,15 +35,16 @@ public class DetalleComanda implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Column(name = "cantidad", nullable = false)
-    private int cantidad;
+    private Integer cantidad;
     
     @Column(name = "importeTotal", nullable = false)
-    private double importeTotal;
+    private Double importeTotal;
     
     @Column(name = "precioUnitario", nullable = false)
-    private double precioUnitario;
+    private Double precioUnitario;
     
     @Column(name = "notas", nullable = false)
     private String notas;
@@ -59,7 +60,7 @@ public class DetalleComanda implements Serializable {
     public DetalleComanda() {
     }
 
-    public DetalleComanda(int cantidad, double importeTotal, double precioUnitario, String notas, Comanda comanda, Producto producto) {
+    public DetalleComanda(Integer cantidad, Double importeTotal, Double precioUnitario, String notas, Comanda comanda, Producto producto) {
         this.cantidad = cantidad;
         this.importeTotal = importeTotal;
         this.precioUnitario = precioUnitario;
@@ -68,27 +69,35 @@ public class DetalleComanda implements Serializable {
         this.producto = producto;
     }
 
-    public int getCantidad() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public double getImporteTotal() {
+    public Double getImporteTotal() {
         return importeTotal;
     }
 
-    public void setImporteTotal(double importeTotal) {
+    public void setImporteTotal(Double importeTotal) {
         this.importeTotal = importeTotal;
     }
 
-    public double getPrecioUnitario() {
+    public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
-    public void setPrecioUnitario(double precioUnitario) {
+    public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
@@ -118,6 +127,6 @@ public class DetalleComanda implements Serializable {
 
     @Override
     public String toString() {
-        return "DetalleComanda{" + "cantidad=" + cantidad + ", importeTotal=" + importeTotal + ", precioUnitario=" + precioUnitario + ", notas=" + notas + ", comanda=" + comanda + ", producto=" + producto + '}';
+        return "DetalleComanda{" + "id=" + id + ", cantidad=" + cantidad + ", importeTotal=" + importeTotal + ", precioUnitario=" + precioUnitario + ", notas=" + notas + ", comanda=" + comanda + ", producto=" + producto + '}';
     }
 }

@@ -8,6 +8,7 @@ package modulo.ingredientes;
  *
  * @author Maximiliano
  */
-public class DetalleComandaDAO {
+public class DetalleComandaDAO implements IDetalleComandaDAO
+{
     
 }
