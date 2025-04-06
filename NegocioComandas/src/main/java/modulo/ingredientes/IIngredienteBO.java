@@ -20,7 +20,9 @@ public interface IIngredienteBO {
 
     boolean eliminarIngrediente(Long id) throws NegocioException;
 
-    Ingrediente actualizarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException;
+    Ingrediente actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
+    
+    public Ingrediente actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
 
     Ingrediente obtenerIngredientePorId(Long id) throws NegocioException;
 

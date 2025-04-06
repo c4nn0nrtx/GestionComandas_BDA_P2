@@ -255,7 +255,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
             //Deshabilitar la otra checkBox
             chbNombre.setSelected(false);
             txtNombre.setEnabled(false);
-            txtNombre.setText(null);
+            txtNombre.setText("");
         }else{
             cbxUnidadMedida.setSelectedIndex(-1);
             cbxUnidadMedida.setEnabled(false);
@@ -285,8 +285,9 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
                                                             "Confirmar elección",
                                                             JOptionPane.YES_NO_OPTION);
                     if(opcion == JOptionPane.YES_OPTION){
-                        JOptionPane.showMessageDialog(this, "Ingrediente fue seleccionado", "Información", JOptionPane.INFORMATION_MESSAGE);
                         listener.ingredienteSeleccionado(ingredienteSeleccionado);
+                    }else if(opcion == JOptionPane.NO_OPTION){
+                        return;
                     }
                     this.setVisible(false);
                 }
@@ -299,7 +300,8 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        dispose();
+        listener.ingredienteSeleccionado(null);
+        this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 
@@ -422,10 +424,14 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
     }
         
     private IngredienteViejoDTO obtenerIngredienteDeFila(int fila) {
-    if (fila >= 0 && fila < listaIngredientes.size()) {
-        return listaIngredientes.get(fila);
+        if (fila >= 0 && fila < listaIngredientes.size()) {
+            return listaIngredientes.get(fila);
+        }
+        return null;
     }
-    return null;
+    
+    public void recargarIngredientes() {
+        cargarIngredientes();   
     }
 
 }

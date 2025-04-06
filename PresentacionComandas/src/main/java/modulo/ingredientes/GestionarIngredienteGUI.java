@@ -41,28 +41,23 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAgregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnBuscarIngrediente = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         txtStock = new javax.swing.JTextField();
         cbxUnidadMedida = new javax.swing.JComboBox<>();
-        btnCancelar = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        btnBuscarIngrediente = new javax.swing.JButton();
+        chbAgregarStock = new javax.swing.JCheckBox();
+        chbActualizar = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        lblStock = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAgregar.setText("Actualizar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Broadway", 0, 18)); // NOI18N
         jLabel1.setText("Gestionar Ingrediente");
@@ -77,23 +72,11 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Nombre:");
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
-
-        txtStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtStockActionPerformed(evt);
-            }
-        });
-
-        cbxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piezas", "Gramos", "Mililitros" }));
-        cbxUnidadMedida.setSelectedIndex(-1);
-        cbxUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxUnidadMedidaActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -105,16 +88,13 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             }
         });
 
-        jCheckBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox1.setText("Agregar stock");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-
-        jCheckBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckBox2.setText("Actualizar ingrediente");
 
         btnBuscarIngrediente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnBuscarIngrediente.setText("buscar");
@@ -124,6 +104,50 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             }
         });
 
+        txtNombre.setEnabled(false);
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        txtStock.setEnabled(false);
+        txtStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStockActionPerformed(evt);
+            }
+        });
+
+        cbxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piezas", "Gramos", "Mililitros" }));
+        cbxUnidadMedida.setSelectedIndex(-1);
+        cbxUnidadMedida.setEnabled(false);
+        cbxUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxUnidadMedidaActionPerformed(evt);
+            }
+        });
+
+        chbAgregarStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chbAgregarStock.setText("Agregar stock");
+        chbAgregarStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbAgregarStockActionPerformed(evt);
+            }
+        });
+
+        chbActualizar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        chbActualizar.setText("Actualizar ingrediente");
+        chbActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbActualizarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Stock:");
+
+        lblStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,30 +155,39 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jCheckBox2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addGap(39, 39, 39)
                         .addComponent(btnCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar)))
-                .addGap(31, 31, 31))
+                        .addComponent(btnEliminar)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnActualizar)
+                        .addGap(6, 6, 6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(chbAgregarStock)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(29, 29, 29)
+                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(chbActualizar))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,38 +203,118 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarIngrediente))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(chbActualizar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox2)
-                        .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(35, 35, 35)
-                .addComponent(jCheckBox1)
-                .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chbAgregarStock)
+                            .addComponent(jLabel5)))
+                    .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnAgregar))
-                .addGap(26, 26, 26))
+                    .addComponent(btnActualizar)
+                    .addComponent(btnEliminar))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Mock: Actualizado!");
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:        
+        if(ingredienteGestionado == null){
+            JOptionPane.showMessageDialog(this, "Primero seleccione un ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
+            btnBuscarIngrediente.requestFocus();
+            return;
+        }
+        
+        if(!chbActualizar.isSelected() && !chbAgregarStock.isSelected()){
+            JOptionPane.showMessageDialog(this, "No se ha indicado una actualización", "Error", JOptionPane.ERROR_MESSAGE);
+            chbActualizar.requestFocus();
+            chbAgregarStock.requestFocus();
+            return;
+        }
+        
+        int opcion;
+        if(chbActualizar.isSelected()){
+            // Validación 1: Nombre
+            String nombre = txtNombre.getText();
+            if (nombre == null || nombre.isEmpty() || nombre.length() <= 2) {
+                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    txtNombre.requestFocus();
+                    return;
+            }
+
+            // Validación 2. UnidadMedida seleccionada
+            String unidadMedidaS = (String) cbxUnidadMedida.getSelectedItem();
+            if (unidadMedidaS == null || unidadMedidaS.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione una unidad de medida.", "Error", JOptionPane.ERROR_MESSAGE);
+                cbxUnidadMedida.requestFocus();
+                return;
+            }
+            
+            //Confirmación y función en BO
+            opcion = JOptionPane.showConfirmDialog(this,"¿Desea actualizar el ingrediente a (Nombre: " + txtNombre.getText() +
+                                                " y Unidad de medida: " + cbxUnidadMedida.getSelectedItem().toString() + ") ?",
+                                                "Confirmar elección", JOptionPane.YES_NO_OPTION);
+            if(opcion == JOptionPane.YES_OPTION){
+                try{
+                    IngredienteViejoDTO ingredienteNuevo = new IngredienteViejoDTO(ingredienteGestionado.getId(), txtNombre.getText(), 
+                                        cvrUnidadMedida(cbxUnidadMedida.getSelectedItem().toString()), ingredienteGestionado.getStock());
+                    ingredienteBO.actualizarIngrediente(ingredienteNuevo);
+
+                    //Se actualiza el ingrediente del frame
+                    ingredienteGestionado.setNombre(ingredienteNuevo.getNombre());
+                    ingredienteGestionado.setUnidadMedida(ingredienteNuevo.getUnidadMedida());
+                    
+                    JOptionPane.showMessageDialog(this, "El ingrediente ha sido actualizado con éxito", "Ingrediente actualizado", JOptionPane.INFORMATION_MESSAGE);
+                }catch(NegocioException ne){
+                    JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        
+        if(chbAgregarStock.isSelected()){
+            if(!validarFormatoStock(txtStock.getText())){
+                JOptionPane.showMessageDialog(this, "Por favor, Ingrese un valor de stock válido.", "Error", JOptionPane.ERROR_MESSAGE);
+                txtStock.requestFocus();
+                return;
+            }   
+            double stock = Double.parseDouble(txtStock.getText());
+                
+            opcion = JOptionPane.showConfirmDialog(this,"¿Desea agregar: " + stock + " " + getUMed(ingredienteGestionado.getUnidadMedida()) + 
+                                                    " al stock del ingrediente?", "Confirmar elección", JOptionPane.YES_NO_OPTION);
+            if(opcion == JOptionPane.YES_OPTION){
+                try{
+                IngredienteViejoDTO ingredienteNuevoStock = new IngredienteViejoDTO(ingredienteGestionado.getId(), ingredienteGestionado.getNombre(),
+                                                        ingredienteGestionado.getUnidadMedida(), ingredienteGestionado.getStock() + stock);
+                    ingredienteBO.actualizarStockIngrediente(ingredienteNuevoStock);
+                    ingredienteGestionado.setStock(ingredienteNuevoStock.getStock());
+                    JOptionPane.showMessageDialog(this, "Se ha añadido la cantidad al stock", "Stock actualizado", JOptionPane.INFORMATION_MESSAGE);
+                }catch(NegocioException ne){
+                    JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            //Fin
+            mostrarDatosIngrediente();
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
@@ -220,26 +333,76 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void chbAgregarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAgregarStockActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+        if(chbAgregarStock.isSelected()){
+            txtStock.setEnabled(true);
+            
+        }else{
+            txtStock.setText("");
+            txtStock.setEnabled(false);
+        }
+    }//GEN-LAST:event_chbAgregarStockActionPerformed
 
     private void btnBuscarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngredienteActionPerformed
         // TODO add your handling code here:
         abrirBuscadorIngredientes();
     }//GEN-LAST:event_btnBuscarIngredienteActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if(ingredienteGestionado == null){
+            JOptionPane.showMessageDialog(this, "Primero seleccione un ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
+            btnBuscarIngrediente.requestFocus();
+            return;
+        }
+        
+        int opcion = JOptionPane.showConfirmDialog(this,"¿Desea eliminar el ingrediente: " + ingredienteGestionado.getNombre() +
+                                                            " con unidad de medida: " + ingredienteGestionado.getUnidadMedida().toString() + " ?",
+                                                            "Confirmar elección",
+                                                            JOptionPane.YES_NO_OPTION);
+        if(opcion == JOptionPane.YES_OPTION){
+            try{
+                ingredienteBO.eliminarIngrediente(ingredienteGestionado.getId());
+                limpiarCampos();
+                ingredienteGestionado = null;
+                JOptionPane.showMessageDialog(this, "El ingrediente ha sido eliminado con éxito", "Ingrediente eliminado", JOptionPane.INFORMATION_MESSAGE);
+            }catch(NegocioException ne){
+                JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
+            }  
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void chbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbActualizarActionPerformed
+        // TODO add your handling code here:
+        if(chbActualizar.isSelected()){
+            cbxUnidadMedida.setEnabled(true);
+            txtNombre.setEnabled(true);
+            
+        }else{
+            if(ingredienteGestionado != null){
+                cbxUnidadMedida.setSelectedIndex(getIndex(ingredienteGestionado.getUnidadMedida()));
+                cbxUnidadMedida.setEnabled(false);
+                txtNombre.setText(ingredienteGestionado.getNombre());
+                txtNombre.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_chbActualizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscarIngrediente;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cbxUnidadMedida;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox chbActualizar;
+    private javax.swing.JCheckBox chbAgregarStock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
@@ -260,6 +423,9 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             System.out.println("Instancia del buscador en GestionarIngrediente: " + buscador);
             buscador.setIngredienteSeleccionadoListener(this);
             
+            buscador.recargarIngredientes();
+            control.mostrarFrame("BuscadorIngrediente");
+            
             //Se muestra el frame del buscador
             control.mostrarFrame("BuscadorIngrediente");
         }else{
@@ -271,6 +437,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     public void recibirDato(String clave, Object dato) {
         if (clave.equals("ingredienteAGestionar") && dato instanceof IngredienteViejoDTO) {
             this.ingredienteGestionado = (IngredienteViejoDTO) dato;
+            txtStock.setText("");
             mostrarDatosIngrediente();
         }
     }
@@ -287,7 +454,12 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     private void mostrarDatosIngrediente() {
         if (ingredienteGestionado != null) {
             txtNombre.setText(ingredienteGestionado.getNombre());
-//            cbxUnidadMedida.setSelectedIndex(num);
+            switch (ingredienteGestionado.getUnidadMedida()) {
+                case UnidadMedida.PIEZAS -> cbxUnidadMedida.setSelectedIndex(0);
+                case UnidadMedida.GRAMOS -> cbxUnidadMedida.setSelectedIndex(1);
+                case UnidadMedida.MILILITROS -> cbxUnidadMedida.setSelectedIndex(2);
+            }
+            lblStock.setText(ingredienteGestionado.getStock().toString() + " " + getUMed(ingredienteGestionado.getUnidadMedida()));
         } else {
             limpiarCampos();
         }
@@ -297,5 +469,90 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         txtNombre.setText("");
         cbxUnidadMedida.setSelectedIndex(-1);
         txtStock.setText("");
-    }    
+        lblStock.setText("");
+    }
+
+    private UnidadMedida cvrUnidadMedida(String unidadMedidaS){
+        UnidadMedida unidadMedida = null;
+        switch (unidadMedidaS) {
+            case "Piezas" -> unidadMedida = UnidadMedida.PIEZAS;
+            case "Gramos" -> unidadMedida = UnidadMedida.GRAMOS;
+            case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
+        }
+        if(unidadMedida == null){
+            System.err.println("Error con el comboBox de la unidad de medida");
+        }
+        return unidadMedida;
+    }
+    
+    private String getUMed(UnidadMedida unidadMedida){
+        String uMed = null;
+        switch (unidadMedida) {
+                case UnidadMedida.PIEZAS -> uMed = "pz";
+                case UnidadMedida.GRAMOS -> uMed = "gr";
+                case UnidadMedida.MILILITROS -> uMed = "ml";
+            }
+        if(unidadMedida == null){
+            System.err.println("Error con uMed");
+        }
+        return uMed;
+    }
+    
+    private int getIndex(UnidadMedida unidadMedida){
+        int index = -1;
+        switch (unidadMedida) {
+                case UnidadMedida.PIEZAS -> index = 0;
+                case UnidadMedida.GRAMOS -> index = 1;
+                case UnidadMedida.MILILITROS -> index = 2;
+            }
+        if(index == -1){
+            System.err.println("Error con uMed");
+        }
+        return index;
+    }
+    
+    public static boolean validarFormatoStock(String stock) {
+        //validar si es nulo
+        if (stock == null || stock.isEmpty()) {
+            return false;
+        }
+        
+        //Validar si empieza con . para ponerle 0 al principio
+        if (stock.startsWith(".")) {
+            stock = "0" + stock;
+        }
+        
+        //divide el texto para verificar 
+        String[] partes = stock.split("\\.");
+
+        //si es mas de dosdeciales falsoo
+        if (partes.length > 2) {
+            return false;
+        }
+        
+        //Validaciones con formato
+        String parteEntera = partes[0];
+        if (!parteEntera.matches("\\d+") || parteEntera.length() > 10) {
+            return false;
+        }
+
+        if (partes.length == 2) {
+            String parteDecimal = partes[1];
+            if (!parteDecimal.matches("\\d+")) {
+                return false;
+            }
+            if (parteDecimal.length() > 1) {
+                return false;
+            }
+        } else if (partes.length == 1 && !parteEntera.matches("\\d+")) {
+            return false;
+        }
+
+        try {
+            Double.valueOf(stock);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

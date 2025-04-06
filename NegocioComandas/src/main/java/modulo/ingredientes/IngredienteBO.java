@@ -40,7 +40,15 @@ public class IngredienteBO implements IIngredienteBO{
     @Override
     public Ingrediente agregarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException {
         // Validar campos vacíos
-        validarIngredienteDTO(ingredienteNuevo);
+        if (ingredienteNuevo == null) {
+            throw new NegocioException("El ingrediente no puede ser nulo.");
+        }
+        if (ingredienteNuevo.getNombre() == null || ingredienteNuevo.getNombre().trim().isEmpty()) {
+            throw new NegocioException("El nombre del ingrediente no puede estar vacío.");
+        }
+        if (ingredienteNuevo.getUnidadMedida() == null) {
+            throw new NegocioException("La unidad de medida del ingrediente no puede ser nula.");
+        }
         
         // Validar que un ingrediente no tenga nombre y unidad repetidos
         validarNombreConUnidadMedida(ingredienteNuevo.getNombre(), 
@@ -68,12 +76,27 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public Ingrediente actualizarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException {
+    public Ingrediente actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException {
         // Validaciones de campos vacíos
-        validarIngredienteDTO(ingredienteNuevo);
+        if (ingredienteViejo == null) {
+            throw new NegocioException("El ingrediente no puede ser nulo.");
+        }
+        if (ingredienteViejo.getId() == null) {
+            throw new NegocioException("El id del ingrediente no puede ser nulo.");
+        }
+        if (ingredienteViejo.getNombre() == null || ingredienteViejo.getNombre().trim().isEmpty()) {
+            throw new NegocioException("El nombre del ingrediente no puede estar vacío.");
+        }
+        if (ingredienteViejo.getUnidadMedida() == null) {
+            throw new NegocioException("La unidad de medida del ingrediente no puede ser nula.");
+        }
+        
+        // Validar que un ingrediente no tenga nombre y unidad repetidos
+        validarNombreConUnidadMedida(ingredienteViejo.getNombre(), 
+                ingredienteViejo.getUnidadMedida());
 
         // Convertir DTO a entidad
-        Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteNuevo);
+        Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteViejo);
 
         try {
             return ingredienteDAO.actualizar(ingrediente);
@@ -81,6 +104,23 @@ public class IngredienteBO implements IIngredienteBO{
             LOGGER.log(Level.SEVERE, "Error al actualizar ingrediente", ex);
             throw new NegocioException("Error al actualizar ingrediente", ex);
         }
+    }
+    
+    public Ingrediente actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException{
+        if (ingredienteViejo.getStock() == null) {
+            throw new NegocioException("El id del ingrediente no puede ser nulo.");
+        }
+        
+        // Convertir DTO a entidad
+        Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteViejo);
+
+        try {
+            return ingredienteDAO.actualizar(ingrediente);
+        } catch (PersistenciaException ex) {
+            LOGGER.log(Level.SEVERE, "Error al actualizar ingrediente", ex);
+            throw new NegocioException("Error al actualizar ingrediente", ex);
+        }
+        
     }
 
     @Override
@@ -120,23 +160,6 @@ public class IngredienteBO implements IIngredienteBO{
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al obtener ingredientes por unidad de medida", ex);
             throw new NegocioException("Error al obtener ingredientes por unidad de medida", ex);
-        }
-    }
-
-    /**
-     * Validación estándar (campos vacios)
-     * @param ingredienteNuevo el ingrediente que se esta agregando
-     * @throws NegocioException Si no cumple con los caractéres suficientes, etc.
-     */
-    private void validarIngredienteDTO(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException {
-        if (ingredienteNuevo == null) {
-            throw new NegocioException("El ingrediente no puede ser nulo.");
-        }
-        if (ingredienteNuevo.getNombre() == null || ingredienteNuevo.getNombre().trim().isEmpty()) {
-            throw new NegocioException("El nombre del ingrediente no puede estar vacío.");
-        }
-        if (ingredienteNuevo.getUnidadMedida() == null) {
-            throw new NegocioException("La unidad de medida del ingrediente no puede ser nula.");
         }
     }
     

@@ -69,7 +69,7 @@ public class IngredienteDAO implements IIngredienteDAO{
             //2. obtener por id
             Ingrediente ingredienteBuscado = em.find(Ingrediente.class, id);
             
-            //3. mezclamos (actualizamos)
+            //3. eliminamos
             em.remove(ingredienteBuscado);
             
             //4. Finalizamos la transacción

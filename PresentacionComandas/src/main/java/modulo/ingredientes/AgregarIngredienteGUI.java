@@ -48,7 +48,8 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Broadway", 0, 18)); // NOI18N
-        jLabel1.setText("Registrar Ingrediente");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Agregar Ingrediente");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -107,10 +108,6 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
                 .addComponent(btnAgregar)
                 .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
-                .addGap(136, 136, 136)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -126,13 +123,17 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                     .addComponent(cbxUnidadMedida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(15, 15, 15)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
@@ -143,7 +144,7 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnAgregar))
@@ -163,8 +164,8 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
         
         // Validación 1: Nombre
         String nombre = txtNombre.getText();
-        if (nombre == null || nombre.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        if (nombre == null || nombre.isEmpty() || nombre.length() <= 2) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido", "Error", JOptionPane.ERROR_MESSAGE);
                 txtNombre.requestFocus();
                 return;
         }
@@ -178,30 +179,19 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
         }
 
         // Validación 3: Stock
-        double stock;
-        try{
-            String stockS = (String) txtStock.getText();
-            stock = Double.parseDouble(stockS);
-        }catch(NumberFormatException nfe){
+        if(!validarFormatoStock(txtStock.getText())){
             JOptionPane.showMessageDialog(this, "Por favor, Ingrese un valor de stock válido.", "Error", JOptionPane.ERROR_MESSAGE);
             txtStock.requestFocus();
             return;
         }
+        double stock = Double.parseDouble(txtStock.getText());
         
         UnidadMedida unidadMedida = null;
         switch (unidadMedidaS) {
-            case "Piezas" -> {
-                unidadMedida = UnidadMedida.PIEZAS;
-            }
-            case "Gramos" -> {
-                unidadMedida = UnidadMedida.GRAMOS;
-            }
-            case "Mililitros" -> {
-                unidadMedida = UnidadMedida.MILILITROS;
-            }
-            default -> {
-                JOptionPane.showMessageDialog(this, "Prror con unidad de medida", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            case "Piezas" -> unidadMedida = UnidadMedida.PIEZAS;
+            case "Gramos" -> unidadMedida = UnidadMedida.GRAMOS;
+            case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
+            default -> JOptionPane.showMessageDialog(this, "Prror con unidad de medida", "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         try{
@@ -272,4 +262,51 @@ public class AgregarIngredienteGUI extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
+    public static boolean validarFormatoStock(String stock) {
+        //validar si es nulo
+        if (stock == null || stock.isEmpty()) {
+            return false;
+        }
+        
+        //Validar si empieza con . para ponerle 0 al principio
+        if (stock.startsWith(".")) {
+            stock = "0" + stock;
+        }
+        
+        //divide el texto para verificar 
+        String[] partes = stock.split("\\.");
+
+        //si es mas de dos puntos falsoo
+        if (partes.length > 2) {
+            return false;
+        }
+        
+        //Validaciones con formato
+        String parteEntera = partes[0];
+        if (!parteEntera.matches("\\d+") || parteEntera.length() > 10) {
+            return false;
+        }
+        
+        //Validaciones minuciosas
+        if (partes.length == 2) {
+            String parteDecimal = partes[1];
+            if (!parteDecimal.matches("\\d+")) {
+                return false;
+            }
+            if (parteDecimal.length() > 1) {
+                return false;
+            }
+        } else if (partes.length == 1 && !parteEntera.matches("\\d+")) {
+            return false;
+        }
+
+        try {
+            Double.valueOf(stock);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+    }
+
 }
