@@ -454,12 +454,12 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     private void mostrarDatosIngrediente() {
         if (ingredienteGestionado != null) {
             txtNombre.setText(ingredienteGestionado.getNombre());
+            lblStock.setText(ingredienteGestionado.getStock().toString() + " " + getUMed(ingredienteGestionado.getUnidadMedida()));
             switch (ingredienteGestionado.getUnidadMedida()) {
                 case UnidadMedida.PIEZAS -> cbxUnidadMedida.setSelectedIndex(0);
                 case UnidadMedida.GRAMOS -> cbxUnidadMedida.setSelectedIndex(1);
                 case UnidadMedida.MILILITROS -> cbxUnidadMedida.setSelectedIndex(2);
             }
-            lblStock.setText(ingredienteGestionado.getStock().toString() + " " + getUMed(ingredienteGestionado.getUnidadMedida()));
         } else {
             limpiarCampos();
         }
@@ -506,7 +506,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                 case UnidadMedida.MILILITROS -> index = 2;
             }
         if(index == -1){
-            System.err.println("Error con uMed");
+            System.err.println("Error con index");
         }
         return index;
     }

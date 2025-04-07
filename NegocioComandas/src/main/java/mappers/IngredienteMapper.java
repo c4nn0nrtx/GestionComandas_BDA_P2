@@ -22,7 +22,7 @@ public class IngredienteMapper {
         Ingrediente ingrediente = new Ingrediente();
         ingrediente.setNombre(dto.getNombre());
         ingrediente.setUnidadMedida(dto.getUnidadMedida());
-        ingrediente.setStock(dto.getStock()); // Asumiendo Double
+        ingrediente.setStock(dto.getStock());
         return ingrediente;
     }
 
@@ -31,10 +31,10 @@ public class IngredienteMapper {
             return null;
         }
         return new IngredienteViejoDTO(
-                ingrediente.getId(), // Asumiendo Long o Integer
+                ingrediente.getId(),
                 ingrediente.getNombre(),
                 ingrediente.getUnidadMedida(),
-                ingrediente.getStock() // Asumiendo Double
+                ingrediente.getStock()
         );
     }
 
@@ -43,14 +43,14 @@ public class IngredienteMapper {
             return null;
         }
         return new IngredienteViejoDTO(
-                null, // ID puede ser nulo al crear desde NuevoDTO
+                null,
                 ingredienteNuevoDTO.getNombre(),
                 ingredienteNuevoDTO.getUnidadMedida(),
-                ingredienteNuevoDTO.getStock() // Asumiendo Double
+                ingredienteNuevoDTO.getStock()
         );
     }
 
-    // Convierte IngredienteViejoDTO a Ingrediente
+    
     public static Ingrediente toEntity(IngredienteViejoDTO dto) {
         if (dto == null) {
             return null;

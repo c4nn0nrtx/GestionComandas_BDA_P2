@@ -80,7 +80,7 @@ public class IngredienteDAO implements IIngredienteDAO{
             em.getTransaction().rollback();
             
             //ex. Lanzamos una excepción de la capa
-            throw new PersistenciaException("Error al guardar el ingrediente: " + e.getMessage());
+            throw new PersistenciaException("Error al eliminar el ingrediente: " + e.getMessage());
         } finally {
             //fin. Independiente del resultado, se cierra el entityManager
             em.close();
@@ -107,7 +107,7 @@ public class IngredienteDAO implements IIngredienteDAO{
             em.getTransaction().rollback();
             
             //ex. Lanzamos una excepción de la capa
-            throw new PersistenciaException("Error al guardar el ingrediente: " + e.getMessage());
+            throw new PersistenciaException("Error al actualizar el ingrediente: " + e.getMessage());
         } finally {
             //fin. Independiente del resultado, se cierra el entityManager
             em.close();
@@ -123,7 +123,7 @@ public class IngredienteDAO implements IIngredienteDAO{
             return em.find(Ingrediente.class, id);
         } catch (Exception e) {
             //ex. Lanzamos una excepción de la capa
-            throw new PersistenciaException("No se encontró ningun profesor con el ID: " + id + ". " + e.getMessage());
+            throw new PersistenciaException("No se encontró ningun ingrediente con el ID: " + id + ". " + e.getMessage());
         } finally {
             //fin. Cerramos el entityManager
             em.close();
