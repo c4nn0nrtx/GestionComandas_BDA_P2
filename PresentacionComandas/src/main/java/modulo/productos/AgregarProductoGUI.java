@@ -305,7 +305,15 @@ public class AgregarProductoGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_cbxEstadoProductoActionPerformed
 
     private void btnAgregarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarIngredienteActionPerformed
-        // TODO add your handling code here:
+        BuscadorIngredienteGUI buscador = new BuscadorIngredienteGUI();
+        buscador.setListener(new IngredienteSeleccionadoListener() {
+        @Override
+        public void ingredienteSeleccionado(IngredienteViejoDTO ingrediente) {
+            ingredientesSeleccionados.add(ingrediente);
+            agregarIngredienteATabla(ingrediente); // <- método para reflejarlo en la tabla de ingredientes en esta GUI
+        }
+    });
+    buscador.setVisible(true);
     }//GEN-LAST:event_btnAgregarIngredienteActionPerformed
 
     /**

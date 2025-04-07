@@ -26,9 +26,9 @@ public class Main {
         
     //1.Modulo de ingredientes
         //1.1 Instanciar los frames
-        AgregarProductoGUI agregarIngredienteGUI = new AgregarProductoGUI();
-        BuscadorProductoGUI buscadorIngredienteGUI = new BuscadorProductoGUI();
-        GestionarProductoGUI gestionarIngredienteGUI = new GestionarProductoGUI();
+        AgregarIngredienteGUI agregarIngredienteGUI = new AgregarIngredienteGUI();
+        BuscadorIngredienteGUI buscadorIngredienteGUI = new BuscadorIngredienteGUI();
+        GestionarIngredienteGUI gestionarIngredienteGUI = new GestionarIngredienteGUI();
 
         //1.2 Añadirlos al controlador
         controlGUI.registrarFrame("AgregarIngrediente", agregarIngredienteGUI);
@@ -36,6 +36,15 @@ public class Main {
         controlGUI.registrarFrame("GestionarIngrediente", gestionarIngredienteGUI);
 
     //2. Modulo de productos
+        //1.1 Instanciar los frames
+        AgregarProductoGUI agregarProductoGUI = new AgregarProductoGUI();
+        BuscadorProductoGUI buscadorProductoGUI = new BuscadorProductoGUI();
+        GestionarProductoGUI gestionarProductoGUI = new GestionarProductoGUI();
+
+        //1.2 Añadirlos al controlador
+        controlGUI.registrarFrame("AgregarProducto", agregarProductoGUI);
+        controlGUI.registrarFrame("BuscadorProducto", buscadorProductoGUI);
+        controlGUI.registrarFrame("GestionarProducto", gestionarProductoGUI);
     
     //3. Modulo de clientes
     
