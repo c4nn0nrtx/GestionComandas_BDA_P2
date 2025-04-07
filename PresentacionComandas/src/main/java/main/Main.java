@@ -5,9 +5,9 @@
 package main;
 
 import controlGUI.ControlGUI;
-import modulo.ingredientes.AgregarIngredienteGUI;
-import modulo.ingredientes.BuscadorIngredienteGUI;
-import modulo.ingredientes.GestionarIngredienteGUI;
+import modulo.productos.AgregarProductoGUI;
+import modulo.productos.BuscadorProductoGUI;
+import modulo.productos.GestionarProductoGUI;
 
 /**
  *
@@ -26,9 +26,9 @@ public class Main {
         
     //1.Modulo de ingredientes
         //1.1 Instanciar los frames
-        AgregarIngredienteGUI agregarIngredienteGUI = new AgregarIngredienteGUI();
-        BuscadorIngredienteGUI buscadorIngredienteGUI = new BuscadorIngredienteGUI();
-        GestionarIngredienteGUI gestionarIngredienteGUI = new GestionarIngredienteGUI();
+        AgregarProductoGUI agregarIngredienteGUI = new AgregarProductoGUI();
+        BuscadorProductoGUI buscadorIngredienteGUI = new BuscadorProductoGUI();
+        GestionarProductoGUI gestionarIngredienteGUI = new GestionarProductoGUI();
 
         //1.2 Añadirlos al controlador
         controlGUI.registrarFrame("AgregarIngrediente", agregarIngredienteGUI);

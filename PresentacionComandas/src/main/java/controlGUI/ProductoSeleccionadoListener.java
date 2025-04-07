@@ -4,12 +4,12 @@
  */
 package controlGUI;
 
-import DTOs.viejos.IngredienteViejoDTO;
+import DTOs.viejos.ProductoViejoDTO;
 
 /**
  * Representa los frames que poseen listener del ingrediente
  * @author Beto_
  */
-public interface IngredienteSeleccionadoListener {
-    public void ingredienteSeleccionado(IngredienteViejoDTO ingrediente);
+public interface ProductoSeleccionadoListener {
+    public void productoSeleccionado(ProductoViejoDTO producto);
 }

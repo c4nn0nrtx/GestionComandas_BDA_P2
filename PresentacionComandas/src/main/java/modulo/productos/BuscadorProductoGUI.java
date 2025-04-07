@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package modulo.ingredientes;
+package modulo.productos;
 
 import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
-import controlGUI.IngredienteSeleccionadoListener;
 import excepciones.NegocioException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,22 +18,23 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import manejadoresBO.ManejadorBO;
+import controlGUI.ProductoSeleccionadoListener;
 
 /**
  *
  * @author Beto_
  */
-public class BuscadorIngredienteGUI extends javax.swing.JFrame {
+public class BuscadorProductoGUI extends javax.swing.JFrame {
     private IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
     private List<IngredienteViejoDTO> listaIngredientes = new ArrayList<>();
-    private IngredienteSeleccionadoListener listener;
+    private ProductoSeleccionadoListener listener;
     DefaultTableModel modelo;
 
     /**
      * Creates new form BuscadorIngredientesGUI
      */
-    //public BuscadorIngredienteGUI(IngredienteSeleccionadoListener listener)
-    public BuscadorIngredienteGUI() {
+    //public BuscadorProductoGUI(ProductoSeleccionadoListener listener)
+    public BuscadorProductoGUI() {
         initComponents();
         modelo = (DefaultTableModel) tblIngredientes.getModel();
         cargarIngredientes();
@@ -191,7 +191,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setIngredienteSeleccionadoListener(IngredienteSeleccionadoListener listener) {
+    public void setIngredienteSeleccionadoListener(ProductoSeleccionadoListener listener) {
         this.listener = listener;
     }
     
@@ -343,7 +343,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
     
@@ -377,7 +377,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por nombre: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
     
@@ -419,7 +419,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
             }
         }catch(NegocioException ne){
             JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por unidad de medida: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
         }
     }
         

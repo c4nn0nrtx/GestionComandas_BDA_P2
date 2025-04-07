@@ -2,24 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package modulo.ingredientes;
+package modulo.productos;
 
 import DTOs.nuevos.IngredienteNuevoDTO;
 import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
 import controlGUI.ControlGUI;
-import controlGUI.IngredienteSeleccionadoListener;
 import controlGUI.ReceptorDatos;
 import excepciones.NegocioException;
 import javax.swing.JOptionPane;
 import main.Main;
 import manejadoresBO.ManejadorBO;
+import controlGUI.ProductoSeleccionadoListener;
 
 /**
  *
  * @author Beto_
  */
-public class GestionarIngredienteGUI extends javax.swing.JFrame implements ReceptorDatos, IngredienteSeleccionadoListener {
+public class GestionarProductoGUI extends javax.swing.JFrame implements ReceptorDatos, ProductoSeleccionadoListener {
     IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
     
     //el ingrediente seleccionado del buscador de ingredientes
@@ -28,7 +28,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     /**
      * Creates new form IngredienteGestion
      */
-    public GestionarIngredienteGUI() {
+    public GestionarProductoGUI() {
         initComponents();
     }
 
@@ -416,7 +416,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         ControlGUI control = obtenerControlador();
         
         //Instancia el buscador de ingredientes
-        BuscadorIngredienteGUI buscador = (BuscadorIngredienteGUI) control.obtenerFrame("BuscadorIngrediente");
+        BuscadorProductoGUI buscador = (BuscadorProductoGUI) control.obtenerFrame("BuscadorIngrediente");
     
         if(buscador != null){
             //Esta clase se añade como clase oyente

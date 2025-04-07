@@ -8,12 +8,12 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>PersistenciaComandas</artifactId>
+            <artifactId>DominioComandas</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>DominioComandas</artifactId>
+            <artifactId>PersistenciaComandas</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
