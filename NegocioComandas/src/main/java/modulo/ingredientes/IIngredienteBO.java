@@ -16,19 +16,19 @@ import java.util.List;
  * @author Beto_
  */
 public interface IIngredienteBO {
-    Ingrediente agregarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException;
+    public IngredienteViejoDTO agregarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException;
 
-    boolean eliminarIngrediente(Long id) throws NegocioException;
+    public boolean eliminarIngrediente(Long id) throws NegocioException;
 
-    Ingrediente actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
+    public IngredienteViejoDTO actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
     
-    public Ingrediente actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
+    public IngredienteViejoDTO actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException;
 
-    Ingrediente obtenerIngredientePorId(Long id) throws NegocioException;
+    public IngredienteViejoDTO obtenerPorId(Long id) throws NegocioException;
 
-    List<IngredienteViejoDTO> obtenerTodos() throws NegocioException;
+    public List<IngredienteViejoDTO> obtenerTodos() throws NegocioException;
 
-    List<IngredienteViejoDTO> obtenerPorNombre(String nombre) throws NegocioException;
+    public List<IngredienteViejoDTO> obtenerPorNombre(String nombre) throws NegocioException;
 
-    List<IngredienteViejoDTO> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException;
+    public List<IngredienteViejoDTO> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException;
 }

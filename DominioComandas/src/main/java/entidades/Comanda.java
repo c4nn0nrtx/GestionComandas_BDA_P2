@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,6 +30,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "comandas")
+@NamedQuery(name = "Comanda.buscarPorFolio", query = "SELECT c FROM Comanda c WHERE c.folio = :folio")
 public class Comanda implements Serializable {
 
     private static final long serialVersionUID = 1L;

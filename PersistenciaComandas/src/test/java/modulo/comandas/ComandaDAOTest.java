@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -57,10 +60,12 @@ public class ComandaDAOTest {
     public void setUp() {
         comanda1 = new Comanda();
         comanda1.setId(1l);
+        comanda1.setFolio("OB-20250407-001");
         comanda2 = new Comanda();
         comanda2.setId(2l);
         cliente1 = new Cliente();
         cliente1.setId(8l);
+        comanda1.setFolio("OB-20250407-002");
         cliente2 = new Cliente();
         cliente2.setId(12l);
         
@@ -153,6 +158,34 @@ public class ComandaDAOTest {
             verify(em).close();
         }
     }
+    
+    @Test
+    void testObtenerPorFolio_ComandaNoEncontrada() throws PersistenciaException{
+        try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
+            // Simulación de la conexión y ejecución en el DAO
+            conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createNamedQuery("Comanda.buscarPorFolio", Comanda.class)).thenReturn(query);
+            when(query.setParameter("folio", "OB-20250407-001")).thenReturn(query); //En la simulación la que debe arrojar
+            when(query.getSingleResult()).thenReturn(comanda1);
+
+            // Ejecución del método a probar
+            Comanda result = comandaDAO.obtenerPorFolio("OB-20250407-001"); //Lo que arroja
+
+            // Verificar resultados
+            assertEquals(comanda1, result); // Se comparan ambas
+
+            // Verificar que se llamó a la namedQuery y se cerró la conexión
+            verify(em).createNamedQuery("Comanda.buscarPorFolio", Comanda.class);
+            verify(query).setParameter("folio", "OB-20250407-001");
+            verify(query).getSingleResult();
+            verify(em).close();
+
+            // Verificar que no se iniciaron ni commitearon transacciones (es una lectura)
+            verify(transaction, never()).begin();
+            verify(transaction, never()).commit();
+        }
+    }
+    
 
     /**
      * Test of obtenerTodos method, of class ComandaDAO.

@@ -10,6 +10,8 @@ import entidades.Comanda;
 import excepciones.PersistenciaException;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -123,6 +125,29 @@ public class ComandaDAO implements IComandaDAO{
             //ex. Lanzamos una excepción de la capa
             throw new PersistenciaException("No se encontró ninguna comanda con el ID: " + id + ". " + e.getMessage());
         } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+    
+    @Override
+    public Comanda obtenerPorFolio(String folio) throws PersistenciaException{
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try{            
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("Comanda.buscarPorFolio", Comanda.class);
+            
+            // 2. Añadimos parametros
+            consulta.setParameter("folio", folio);
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return (Comanda) consulta.getSingleResult();
+            
+        }catch(NoResultException e){
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        }finally{            
             //fin. Cerramos el entityManager
             em.close();
         }

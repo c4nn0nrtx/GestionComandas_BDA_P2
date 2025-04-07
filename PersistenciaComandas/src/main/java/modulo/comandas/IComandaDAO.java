@@ -22,6 +22,8 @@ public interface IComandaDAO {
     
     public Comanda obtenerPorId(Long id) throws PersistenciaException;
     
+    public Comanda obtenerPorFolio(String folio) throws PersistenciaException;
+    
     public List<Comanda> obtenerTodos() throws PersistenciaException;
     
     public boolean asignarCliente(Long idComanda, Long idCliente) throws PersistenciaException;

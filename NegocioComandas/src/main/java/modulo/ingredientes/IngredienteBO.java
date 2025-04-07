@@ -38,7 +38,7 @@ public class IngredienteBO implements IIngredienteBO{
     }
     
     @Override
-    public Ingrediente agregarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException {
+    public IngredienteViejoDTO agregarIngrediente(IngredienteNuevoDTO ingredienteNuevo) throws NegocioException {
         // Validar campos vacíos
         if (ingredienteNuevo == null) {
             throw new NegocioException("El ingrediente no puede ser nulo.");
@@ -58,7 +58,7 @@ public class IngredienteBO implements IIngredienteBO{
         Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteNuevo);
 
         try {
-            return ingredienteDAO.agregar(ingrediente);
+            return IngredienteMapper.toViejoDTO(ingredienteDAO.agregar(ingrediente));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al agregar ingrediente", ex);
             throw new NegocioException("Error al agregar ingrediente", ex);
@@ -67,6 +67,9 @@ public class IngredienteBO implements IIngredienteBO{
 
     @Override
     public boolean eliminarIngrediente(Long id) throws NegocioException {
+        if(obtenerPorId(id) == null){
+            throw new NegocioException("Error: El ingrediente a eliminar no existe");
+        }
         try {
             return ingredienteDAO.eliminar(id);
         } catch (PersistenciaException ex) {
@@ -76,7 +79,7 @@ public class IngredienteBO implements IIngredienteBO{
     }
 
     @Override
-    public Ingrediente actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException {
+    public IngredienteViejoDTO actualizarIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException {
         // Validaciones de campos vacíos
         if (ingredienteViejo == null) {
             throw new NegocioException("El ingrediente no puede ser nulo.");
@@ -91,6 +94,10 @@ public class IngredienteBO implements IIngredienteBO{
             throw new NegocioException("La unidad de medida del ingrediente no puede ser nula.");
         }
         
+        if(obtenerPorId(ingredienteViejo.getId()) == null){
+            throw new NegocioException("Error: El ingrediente a actualizar no existe");
+        }
+        
         // Validar que un ingrediente no tenga nombre y unidad repetidos
         validarNombreConUnidadMedida(ingredienteViejo.getNombre(), 
                 ingredienteViejo.getUnidadMedida());
@@ -99,14 +106,15 @@ public class IngredienteBO implements IIngredienteBO{
         Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteViejo);
 
         try {
-            return ingredienteDAO.actualizar(ingrediente);
+            return IngredienteMapper.toViejoDTO(ingredienteDAO.actualizar(ingrediente));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al actualizar ingrediente", ex);
             throw new NegocioException("Error al actualizar ingrediente", ex);
         }
     }
     
-    public Ingrediente actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException{
+    @Override
+    public IngredienteViejoDTO actualizarStockIngrediente(IngredienteViejoDTO ingredienteViejo) throws NegocioException{
         if (ingredienteViejo.getStock() == null) {
             throw new NegocioException("El id del ingrediente no puede ser nulo.");
         }
@@ -115,18 +123,17 @@ public class IngredienteBO implements IIngredienteBO{
         Ingrediente ingrediente = IngredienteMapper.toEntity(ingredienteViejo);
 
         try {
-            return ingredienteDAO.actualizar(ingrediente);
+            return IngredienteMapper.toViejoDTO(ingredienteDAO.actualizar(ingrediente));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al actualizar ingrediente", ex);
             throw new NegocioException("Error al actualizar ingrediente", ex);
         }
-        
     }
 
     @Override
-    public Ingrediente obtenerIngredientePorId(Long id) throws NegocioException {
+    public IngredienteViejoDTO obtenerPorId(Long id) throws NegocioException {
         try {
-            return ingredienteDAO.obtenerPorId(id);
+            return IngredienteMapper.toViejoDTO(ingredienteDAO.obtenerPorId(id));
         } catch (PersistenciaException ex) {
             LOGGER.log(Level.SEVERE, "Error al obtener ingrediente por ID", ex);
             throw new NegocioException("Error al obtener ingrediente por ID", ex);

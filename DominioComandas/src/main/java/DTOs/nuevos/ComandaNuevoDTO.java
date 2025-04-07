@@ -22,6 +22,11 @@ public class ComandaNuevoDTO {
     public ComandaNuevoDTO() {
     }
 
+    public ComandaNuevoDTO(Double totalVenta, Long idMesa) {
+        this.totalVenta = totalVenta;
+        this.idMesa = idMesa;
+    }
+
     public ComandaNuevoDTO(String folio, EstadoComanda estado, LocalDateTime fechaHora, Double totalVenta, Long idMesa, Long idCliente) {
         this.folio = folio;
         this.estado = estado;
