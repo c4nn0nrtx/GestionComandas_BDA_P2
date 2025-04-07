@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package modulo.ingredientes;
+package modulo;
 
 /**
  *
- * @author Beto_
+ * @author Maximiliano
  */
-public interface IIngredienteDAO {
+public interface IIngredienteBO {
     
 }

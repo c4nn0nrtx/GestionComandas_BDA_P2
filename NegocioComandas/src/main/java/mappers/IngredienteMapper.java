@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modulo.ingredientes;
+package mappers;
 
 /**
  *
- * @author Beto_
+ * @author Maximiliano
  */
-public class IngredienteDAO implements IIngredienteDAO{
+public class IngredienteMapper {
     
 }

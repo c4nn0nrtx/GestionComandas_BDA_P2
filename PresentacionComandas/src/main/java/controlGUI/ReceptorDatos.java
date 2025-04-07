@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package modulo.ingredientes;
+package controlGUI;
 
 /**
- *
- * @author Maximiliano
+ * Representa los frames que pueden recibir datos
+ * @author Beto_
  */
-public interface IProductoIngredienteDAO {
-    
+public interface ReceptorDatos {
+    public void recibirDato(String clave, Object dato);
 }

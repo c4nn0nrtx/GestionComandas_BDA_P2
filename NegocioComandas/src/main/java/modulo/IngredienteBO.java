@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package modulo.ingredientes;
+package modulo;
 
 /**
  *
  * @author Maximiliano
  */
-public class DetalleComandaDAO implements IDetalleComandaDAO
-{
+public class IngredienteBO {
     
 }
