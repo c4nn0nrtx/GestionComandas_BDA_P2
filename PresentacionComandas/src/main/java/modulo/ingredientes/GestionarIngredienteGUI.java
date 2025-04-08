@@ -129,6 +129,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
 
         chbAgregarStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         chbAgregarStock.setText("Agregar stock");
+        chbAgregarStock.setEnabled(false);
         chbAgregarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbAgregarStockActionPerformed(evt);
@@ -137,6 +138,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
 
         chbActualizar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         chbActualizar.setText("Actualizar ingrediente");
+        chbActualizar.setEnabled(false);
         chbActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chbActualizarActionPerformed(evt);
@@ -311,9 +313,9 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                     JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            //Fin
-            mostrarDatosIngrediente();
         }
+        //Fin
+        mostrarDatosIngrediente();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -366,6 +368,8 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                 ingredienteBO.eliminarIngrediente(ingredienteGestionado.getId());
                 limpiarCampos();
                 ingredienteGestionado = null;
+                chbActualizar.setEnabled(false);
+                chbAgregarStock.setEnabled(false);
                 JOptionPane.showMessageDialog(this, "El ingrediente ha sido eliminado con éxito", "Ingrediente eliminado", JOptionPane.INFORMATION_MESSAGE);
             }catch(NegocioException ne){
                 JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
@@ -428,6 +432,12 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             
             //Se muestra el frame del buscador
             control.mostrarFrame("BuscadorIngrediente");
+            
+            chbActualizar.setSelected(false);
+            txtNombre.setEnabled(false);
+            cbxUnidadMedida.setEnabled(false);
+            chbAgregarStock.setSelected(false);
+            txtStock.setEnabled(false);
         }else{
             System.err.println("Error: BuscadorIngrediente no registrado en el controlador");
         }
@@ -446,6 +456,8 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     public void ingredienteSeleccionado(IngredienteViejoDTO ingrediente) {
         this.ingredienteGestionado = ingrediente;
         mostrarDatosIngrediente();
+        chbActualizar.setEnabled(true);
+        chbAgregarStock.setEnabled(true);
         ControlGUI control = obtenerControlador();
         control.ocultarFrameActual(); // Ocultar el buscador
         control.mostrarFrame("GestionarIngrediente"); // Mostrar esta ventana

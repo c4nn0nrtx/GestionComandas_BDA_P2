@@ -17,6 +17,12 @@ import java.util.List;
  * @author Beto_
  */
 public class ComandaMapper {
+
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Comanda toEntity(ComandaNuevoDTO dto) {
         if (dto == null) {
             return null;
@@ -41,6 +47,11 @@ public class ComandaMapper {
         return comanda;
     }
 
+    /**
+     *
+     * @param comanda
+     * @return
+     */
     public static ComandaViejoDTO toViejoDTO(Comanda comanda) {
         if (comanda == null) {
             return null;
@@ -59,6 +70,11 @@ public class ComandaMapper {
         );
     }
 
+    /**
+     *
+     * @param comandaNuevoDTO
+     * @return
+     */
     public static ComandaViejoDTO toViejoDTO(ComandaNuevoDTO comandaNuevoDTO) {
         if (comandaNuevoDTO == null) {
             return null;
@@ -74,6 +90,11 @@ public class ComandaMapper {
         );
     }
 
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Comanda toEntity(ComandaViejoDTO dto) {
         if (dto == null) {
             return null;
@@ -98,6 +119,11 @@ public class ComandaMapper {
         return comanda;
     }
 
+    /**
+     *
+     * @param comandas
+     * @return
+     */
     public static List<ComandaViejoDTO> toViejoDTOList(List<Comanda> comandas) {
         if (comandas == null) {
             return null;
@@ -109,6 +135,11 @@ public class ComandaMapper {
         return dtos;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Comanda> toEntityList(List<ComandaNuevoDTO> dtos) {
         if (dtos == null) {
             return null;
@@ -120,6 +151,11 @@ public class ComandaMapper {
         return comandas;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Comanda> toEntityViejoDTOList(List<ComandaViejoDTO> dtos) {
         if (dtos == null) {
             return null;

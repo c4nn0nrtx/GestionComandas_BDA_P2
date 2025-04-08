@@ -23,6 +23,10 @@ public class IngredienteDAO implements IIngredienteDAO{
     private IngredienteDAO() {
     }
     
+    /**
+     *
+     * @return
+     */
     public static IngredienteDAO getInstanceDAO() {
         if (instanceIngredienteDAO == null) {
             instanceIngredienteDAO = new IngredienteDAO();

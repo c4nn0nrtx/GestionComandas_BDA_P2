@@ -30,29 +30,56 @@ public class Mesa implements Serializable {
     @Column(name = "numeroMesa", nullable = false, unique = true)
     private Integer numeroMesa;
     
+    /**
+     *
+     */
     public Mesa() {
     }
     
+    /**
+     *
+     * @param numeroMesa
+     */
     public Mesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getNumeroMesa() {
         return numeroMesa;
     }
 
+    /**
+     *
+     * @param numeroMesa
+     */
     public void setNumeroMesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Mesa{" + "id=" + id + ", numeroMesa=" + numeroMesa + ", comandas=" + '}';

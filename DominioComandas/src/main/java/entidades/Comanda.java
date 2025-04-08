@@ -30,7 +30,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "comandas")
-@NamedQuery(name = "Comanda.buscarPorFolio", query = "SELECT c FROM Comanda c WHERE c.folio = :folio")
+@NamedQuery(
+        name = "Comanda.buscarPorFolio", 
+        query = "SELECT c FROM Comanda c WHERE c.folio = :folio"
+)
+@NamedQuery(
+    name = "Comanda.buscarPorRangoFechas",
+    query = "SELECT c FROM Comanda c WHERE c.fechaHora > :fechaInicio AND c.fechaHora < :fechaFin"
+)
 public class Comanda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,9 +73,21 @@ public class Comanda implements Serializable {
             //existan detalles si la comanda no existe
     private List<DetalleComanda> detallesComanda = new ArrayList<>();
 
+    /**
+     *
+     */
     public Comanda() {
     }
 
+    /**
+     *
+     * @param folio
+     * @param estado
+     * @param fechaHora
+     * @param totalVenta
+     * @param mesa
+     * @param cliente
+     */
     public Comanda(String folio, EstadoComanda estado, LocalDateTime fechaHora, Double totalVenta, Mesa mesa, Cliente cliente) {
         this.folio = folio;
         this.estado = estado;
@@ -78,70 +97,138 @@ public class Comanda implements Serializable {
         this.cliente = cliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFolio() {
         return folio;
     }
 
+    /**
+     *
+     * @param folio
+     */
     public void setFolio(String folio) {
         this.folio = folio;
     }
 
+    /**
+     *
+     * @return
+     */
     public EstadoComanda getEstado() {
         return estado;
     }
 
+    /**
+     *
+     * @param estado
+     */
     public void setEstado(EstadoComanda estado) {
         this.estado = estado;
     }
 
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
+    /**
+     *
+     * @param fechaHora
+     */
     public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getTotalVenta() {
         return totalVenta;
     }
 
+    /**
+     *
+     * @param totalVenta
+     */
     public void setTotalVenta(Double totalVenta) {
         this.totalVenta = totalVenta;
     }
 
+    /**
+     *
+     * @return
+     */
     public Mesa getMesa() {
         return mesa;
     }
 
+    /**
+     *
+     * @param mesa
+     */
     public void setMesa(Mesa mesa) {
         this.mesa = mesa;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cliente getCliente() {
         return cliente;
     }
 
+    /**
+     *
+     * @param cliente
+     */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<DetalleComanda> getDetallesComanda() {
         return detallesComanda;
     }
 
+    /**
+     *
+     * @param detallesComanda
+     */
     public void setDetallesComanda(List<DetalleComanda> detallesComanda) {
         this.detallesComanda = detallesComanda;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Comanda{" + "id=" + id + ", folio=" + folio + ", estado=" + estado + ", fechaHora=" + fechaHora + ", totalVenta=" + totalVenta + ", mesa=" + mesa + ", cliente=" + cliente + ", detallesComanda=" + detallesComanda + '}';

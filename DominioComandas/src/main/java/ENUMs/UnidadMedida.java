@@ -9,5 +9,19 @@ package ENUMs;
  * @author Beto_
  */
 public enum UnidadMedida {
-    PIEZAS, GRAMOS, MILILITROS
+
+    /**
+     *
+     */
+    PIEZAS,
+
+    /**
+     *
+     */
+    GRAMOS,
+
+    /**
+     *
+     */
+    MILILITROS
 }
