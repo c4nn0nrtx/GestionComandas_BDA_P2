@@ -39,47 +39,92 @@ public class ProductoIngrediente implements Serializable {
     @JoinColumn(name = "id_ingrediente")
     private Ingrediente ingrediente;
 
+    /**
+     *
+     */
     public ProductoIngrediente() {
     }
     
+    /**
+     *
+     * @param cantidadRequerida
+     * @param producto
+     * @param ingrediente
+     */
     public ProductoIngrediente(double cantidadRequerida, Producto producto, Ingrediente ingrediente) {
         this.cantidadRequerida = cantidadRequerida;
         this.producto = producto;
         this.ingrediente = ingrediente;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCantidadRequerida() {
         return cantidadRequerida;
     }
 
+    /**
+     *
+     * @param cantidadRequerida
+     */
     public void setCantidadRequerida(double cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
     }
 
+    /**
+     *
+     * @return
+     */
     public Producto getProducto() {
         return producto;
     }
 
+    /**
+     *
+     * @param producto
+     */
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
 
+    /**
+     *
+     * @return
+     */
     public Ingrediente getIngrediente() {
         return ingrediente;
     }
 
+    /**
+     *
+     * @param ingrediente
+     */
     public void setIngrediente(Ingrediente ingrediente) {
         this.ingrediente = ingrediente;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "ProductoIngrediente{" + "id=" + id + ", cantidadRequerida=" + cantidadRequerida + ", producto=" + producto + ", ingrediente=" + ingrediente + '}';

@@ -11,21 +11,40 @@ package DTOs.nuevos;
 public class MesaNuevoDTO {
     private Integer numeroMesa;
 
+    /**
+     *
+     */
     public MesaNuevoDTO() {
     }
 
+    /**
+     *
+     * @param numeroMesa
+     */
     public MesaNuevoDTO(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getNumeroMesa() {
         return numeroMesa;
     }
 
+    /**
+     *
+     * @param numeroMesa
+     */
     public void setNumeroMesa(Integer numeroMesa) {
         this.numeroMesa = numeroMesa;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "MesaNuevoDTO{" + "numeroMesa=" + numeroMesa + '}';

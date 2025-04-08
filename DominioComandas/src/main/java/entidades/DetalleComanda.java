@@ -48,9 +48,21 @@ public class DetalleComanda implements Serializable {
     @JoinColumn(name = "id_producto")
     private Producto producto;
 
+    /**
+     *
+     */
     public DetalleComanda() {
     }
 
+    /**
+     *
+     * @param cantidad
+     * @param importeTotal
+     * @param precioUnitario
+     * @param notas
+     * @param comanda
+     * @param producto
+     */
     public DetalleComanda(Integer cantidad, Double importeTotal, Double precioUnitario, String notas, Comanda comanda, Producto producto) {
         this.cantidad = cantidad;
         this.importeTotal = importeTotal;
@@ -60,62 +72,122 @@ public class DetalleComanda implements Serializable {
         this.producto = producto;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getCantidad() {
         return cantidad;
     }
 
+    /**
+     *
+     * @param cantidad
+     */
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getImporteTotal() {
         return importeTotal;
     }
 
+    /**
+     *
+     * @param importeTotal
+     */
     public void setImporteTotal(Double importeTotal) {
         this.importeTotal = importeTotal;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getPrecioUnitario() {
         return precioUnitario;
     }
 
+    /**
+     *
+     * @param precioUnitario
+     */
     public void setPrecioUnitario(Double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNotas() {
         return notas;
     }
 
+    /**
+     *
+     * @param notas
+     */
     public void setNotas(String notas) {
         this.notas = notas;
     }
 
+    /**
+     *
+     * @return
+     */
     public Comanda getComanda() {
         return comanda;
     }
 
+    /**
+     *
+     * @param comanda
+     */
     public void setComanda(Comanda comanda) {
         this.comanda = comanda;
     }
 
+    /**
+     *
+     * @return
+     */
     public Producto getProducto() {
         return producto;
     }
 
+    /**
+     *
+     * @param producto
+     */
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "DetalleComanda{" + "id=" + id + ", cantidad=" + cantidad + ", importeTotal=" + importeTotal + ", precioUnitario=" + precioUnitario + ", notas=" + notas + ", comanda=" + comanda + ", producto=" + producto + '}';
