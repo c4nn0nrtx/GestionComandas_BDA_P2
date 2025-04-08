@@ -8,6 +8,18 @@ import modulo.ingredientes.IIngredienteBO;
 import modulo.ingredientes.IIngredienteDAO;
 import modulo.ingredientes.IngredienteBO;
 import modulo.ingredientes.IngredienteDAO;
+import modulo.productos.DetalleComandaBO;
+import modulo.productos.DetalleComandaDAO;
+import modulo.productos.IDetalleComandaBO;
+import modulo.productos.IDetalleComandaDAO;
+import modulo.productos.IProductoBO;
+import modulo.productos.IProductoDAO;
+import modulo.productos.IProductoIngredienteBO;
+import modulo.productos.IProductoIngredienteDAO;
+import modulo.productos.ProductoBO;
+import modulo.productos.ProductoDAO;
+import modulo.productos.ProductoIngredienteBO;
+import modulo.productos.ProductoIngredienteDAO;
 
 /**
  *
@@ -25,4 +37,23 @@ public class ManejadorBO {
         // 3. Retornamos la instancia del BO lista para ser utilizada.
         return ingredienteBO;
     }
+    
+     public static IProductoBO crearProductoBO() {
+        IProductoDAO productoDAO = ProductoDAO.getInstance();
+        IProductoBO productoBO = new ProductoBO(productoDAO);
+        return productoBO;
+    }
+
+    public static IDetalleComandaBO crearDetalleComandaBO() {
+        IDetalleComandaDAO detalleComandaDAO = DetalleComandaDAO.getInstance();
+        IDetalleComandaBO detalleComandaBO = new DetalleComandaBO(detalleComandaDAO);
+        return detalleComandaBO;
+    }
+
+    public static IProductoIngredienteBO crearProductoIngredienteBO() {
+        IProductoIngredienteDAO productoIngredienteDAO = ProductoIngredienteDAO.getInstance();
+        IProductoIngredienteBO productoIngredienteBO = new ProductoIngredienteBO(productoIngredienteDAO);
+        return productoIngredienteBO;
+    }
+    
 }

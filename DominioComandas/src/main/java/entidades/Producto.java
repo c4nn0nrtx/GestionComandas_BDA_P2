@@ -17,6 +17,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,6 +28,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "productos")
+@NamedQueries({
+    @NamedQuery(name = "Producto.buscarPorNombre",
+                query = "SELECT p FROM Producto p WHERE LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))"),
+    
+    @NamedQuery(name = "Producto.buscarPorTipo",
+                query = "SELECT p FROM Producto p WHERE p.tipo = :tipo"),
+    
+    @NamedQuery(name = "Producto.existeNombre",
+                query = "SELECT COUNT(p) FROM Producto p WHERE LOWER(p.nombre) = LOWER(:nombre)"),
+    
+    @NamedQuery(name = "Producto.todosActivos",
+                query = "SELECT p FROM Producto p WHERE p.estado = true"),
+
+    @NamedQuery(name = "Producto.buscarPorNombreOCategoria",
+    query = "SELECT p FROM Producto p WHERE p.estado = true AND (LOWER(p.nombre) LIKE LOWER(CONCAT('%', :nombreFiltro, '%')) OR p.tipo = :tipoFiltro)")
+})
 public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;

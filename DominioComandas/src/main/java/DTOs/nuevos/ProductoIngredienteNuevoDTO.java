@@ -2,35 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DTOs.viejos;
+package DTOs.nuevos;
 
 /**
  *
- * @author Beto_
+ * @author Maximiliano
  */
-public class ProductoIngredienteViejoDTO 
+public class ProductoIngredienteNuevoDTO 
 {
-    private Long id;
     private double cantidadRequerida;
     private Long idProducto;
     private Long idIngrediente;
 
-    public ProductoIngredienteViejoDTO() {
+    public ProductoIngredienteNuevoDTO() {
     }
 
-    public ProductoIngredienteViejoDTO(Long id, double cantidadRequerida, Long idProducto, Long idIngrediente) {
-        this.id = id;
+    public ProductoIngredienteNuevoDTO(double cantidadRequerida, Long idProducto, Long idIngrediente) {
         this.cantidadRequerida = cantidadRequerida;
         this.idProducto = idProducto;
         this.idIngrediente = idIngrediente;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public double getCantidadRequerida() {
@@ -59,11 +49,11 @@ public class ProductoIngredienteViejoDTO
 
     @Override
     public String toString() {
-        return "ProductoIngredienteViejoDTO{" +
-                "id=" + id +
-                ", cantidadRequerida=" + cantidadRequerida +
+        return "ProductoIngredienteNuevoDTO{" +
+                "cantidadRequerida=" + cantidadRequerida +
                 ", idProducto=" + idProducto +
                 ", idIngrediente=" + idIngrediente +
                 '}';
     }
+
 }
