@@ -22,6 +22,10 @@ public class MesaDAO implements IMesaDAO{
     private MesaDAO() {
     }
     
+    /**
+     *
+     * @return
+     */
     public static MesaDAO getInstanceDAO() {
         if (instanceMesaDAO == null) {
             instanceMesaDAO = new MesaDAO();

@@ -24,6 +24,10 @@ public class ComandaDAO implements IComandaDAO{
     private ComandaDAO() {
     }
     
+    /**
+     *
+     * @return
+     */
     public static ComandaDAO getInstanceDAO() {
         if (instanceComandaDAO == null) {
             instanceComandaDAO = new ComandaDAO();
