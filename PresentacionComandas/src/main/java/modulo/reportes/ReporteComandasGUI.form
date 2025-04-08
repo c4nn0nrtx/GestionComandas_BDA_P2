@@ -75,7 +75,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                      <Component id="cbhFechas" min="-2" max="-2" attributes="0"/>
+                      <Component id="chbFechas" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
@@ -101,7 +101,7 @@
               <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cbhFechas" min="-2" max="-2" attributes="0"/>
+              <Component id="chbFechas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -165,12 +165,12 @@
         <Property name="text" type="java.lang.String" value="Fecha Fin"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="cbhFechas">
+    <Component class="javax.swing.JCheckBox" name="chbFechas">
       <Properties>
         <Property name="text" type="java.lang.String" value="Filtrar por Periodo de fechas"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbhFechasActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chbFechasActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">

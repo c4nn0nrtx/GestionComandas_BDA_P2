@@ -6,10 +6,23 @@ package modulo.reportes;
 
 import DTOs.viejos.ComandaViejoDTO;
 import DTOs.viejos.MesaViejoDTO;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import excepciones.NegocioException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +45,16 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 //    ICliente clienteBO = ManejadorBO.crearClienteBO;
     List<ComandaViejoDTO> listaComandas;
     DefaultTableModel modelo;
+    
+    //VARIABLES DEL REPORTE
+        // tipos de letra, diferente para el titulo, cabecera para que se vea más bonito
+    private static final Font FUENTE_TITULO = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18);
+    private static final Font FUENTE_CABECERA = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
+    private static final Font FUENTE_NORMAL = FontFactory.getFont(FontFactory.HELVETICA, 10);
+    
+        // Formateo para la fecha para que se vea más bonita tmbn
+    private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
     
     /**
      * Creates new form ReporteComandasGUI
@@ -58,7 +81,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         dtcFechaFin = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        cbhFechas = new javax.swing.JCheckBox();
+        chbFechas = new javax.swing.JCheckBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblComandas = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
@@ -95,10 +118,10 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Fecha Fin");
 
-        cbhFechas.setText("Filtrar por Periodo de fechas");
-        cbhFechas.addActionListener(new java.awt.event.ActionListener() {
+        chbFechas.setText("Filtrar por Periodo de fechas");
+        chbFechas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbhFechasActionPerformed(evt);
+                chbFechasActionPerformed(evt);
             }
         });
 
@@ -171,7 +194,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(221, 221, 221)
-                        .addComponent(cbhFechas))
+                        .addComponent(chbFechas))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -190,7 +213,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbhFechas)
+                .addComponent(chbFechas)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -217,7 +240,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 
     private void btnVistaPreviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaPreviaActionPerformed
         // TODO add your handling code here:
-        if(cbhFechas.isSelected()){
+        if(chbFechas.isSelected()){
             if(dtcFechaInicio.getDate() == null || dtcFechaFin.getDate() == null){
                 JOptionPane.showMessageDialog(this, "Por favor, seleccione el lapso de fechas", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -230,9 +253,9 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnVistaPreviaActionPerformed
 
-    private void cbhFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbhFechasActionPerformed
+    private void chbFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbFechasActionPerformed
         // TODO add your handling code here:
-        if(cbhFechas.isSelected()){
+        if(chbFechas.isSelected()){
             dtcFechaInicio.setEnabled(true);
             dtcFechaFin.setEnabled(true);
         }else{
@@ -241,7 +264,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
             dtcFechaFin.setEnabled(false);
             dtcFechaFin.setDate(null);
         }
-    }//GEN-LAST:event_cbhFechasActionPerformed
+    }//GEN-LAST:event_chbFechasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
@@ -251,8 +274,14 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(tblComandas.getRowCount() <= 0){
             JOptionPane.showMessageDialog(this, "No se puede generar el reporte sin vista previa", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            return;
         }
+        if(listaComandas == null){
+            JOptionPane.showMessageDialog(this, "No se puede generar el reporte sin comandas", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        crearReporteComandas(listaComandas, "Reporte_comandas.pdf");
+        
         JOptionPane.showMessageDialog(this, "Reporte generado (No es cierto) ", "Operación exitosa", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnGenerarPDF1ActionPerformed
 
@@ -295,7 +324,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnGenerarPDF1;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVistaPrevia;
-    private javax.swing.JCheckBox cbhFechas;
+    private javax.swing.JCheckBox chbFechas;
     private com.toedter.calendar.JDateChooser dtcFechaFin;
     private com.toedter.calendar.JDateChooser dtcFechaInicio;
     private javax.swing.JLabel jLabel1;
@@ -433,4 +462,78 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 //    private ClienteViejoDTO obtenerCliente(Long idCliente){
 //        
 //    }
+    
+    private void crearReporteComandas(List<ComandaViejoDTO> comandas, String nombreArchivo){
+        try{
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(nombreArchivo));
+            document.open();
+
+            //Agregar el título
+            Paragraph titulo = new Paragraph("Reporte de Comandas", FUENTE_TITULO);
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            document.add(titulo);
+            document.add(new Paragraph(" "));
+            
+            //Agregar texto descriptivo si esta seleccionado el filtro de fechas
+            Paragraph descripcion;
+            if(chbFechas.isSelected()){
+                descripcion = new Paragraph("Reporte de comandas desde '" + dtcFechaInicio.getDate().toString() +
+                                                       "' hasta '" + dtcFechaFin.getDate().toString() + "' ", FUENTE_NORMAL);
+            }else{
+                descripcion = new Paragraph("Reporte de todas las comandas", FUENTE_NORMAL);
+            }
+            descripcion.setAlignment(Element.ALIGN_CENTER);
+            document.add(descripcion);
+            document.add(new Paragraph(" "));
+
+            //Crear la tabla
+            PdfPTable tabla = new PdfPTable(6);
+            tabla.setWidthPercentage(100);
+
+            //Agregar las cabeceras de la tabla
+            agregarCabecerasComanda(tabla);
+
+            //Aagregar los datos de las comandas a la tabla
+            for (ComandaViejoDTO comanda : comandas) {
+                agregarFilaComanda(tabla, comanda);
+            }
+
+            //Agregar la tabla al documento
+            document.add(tabla);
+
+            document.close(); //Cerramos para que no se le metan bichitos
+        }catch(DocumentException | FileNotFoundException e){
+            JOptionPane.showMessageDialog(this, "Error al crear el PDF del reporte", "Error", JOptionPane.ERROR);
+        }
+    }
+    //Se podría hacer un método, pero así mejor para mayor legibilidad
+    private void agregarCabecerasComanda(PdfPTable tabla) {
+        agregarCeldaCabecera(tabla, "Fecha");
+        agregarCeldaCabecera(tabla, "Hora");
+        agregarCeldaCabecera(tabla, "Mesa");
+        agregarCeldaCabecera(tabla, "Total venta");
+        agregarCeldaCabecera(tabla, "Estado");
+        agregarCeldaCabecera(tabla, "Cliente");
+    }
+    
+    private void agregarCeldaCabecera(PdfPTable tabla, String texto) {
+        PdfPCell cell = new PdfPCell(new Phrase(texto, FUENTE_CABECERA));
+        tabla.addCell(cell);
+    }
+    
+    private void agregarFilaComanda(PdfPTable tabla, ComandaViejoDTO comanda) {
+        String numMesa = obtenerMesa(comanda.getIdMesa()).getNumeroMesa().toString();
+        agregarCeldaNormal(tabla, comanda.getFechaHora() != null ? comanda.getFechaHora().format(FORMATO_FECHA) : "");
+        agregarCeldaNormal(tabla, comanda.getFechaHora() != null ? comanda.getFechaHora().format(FORMATO_HORA) : "");
+        agregarCeldaNormal(tabla, comanda.getIdMesa() != null ? numMesa : "");
+        agregarCeldaNormal(tabla, comanda.getTotalVenta() != null ? String.format("%.2f", comanda.getTotalVenta()) : ""); // Formatear a 2 decimales
+        agregarCeldaNormal(tabla, comanda.getEstado() != null ? comanda.getEstado().toString() : "");
+        agregarCeldaNormal(tabla, comanda.getIdCliente() != null ? comanda.getIdCliente().toString() : "");
+    }
+    
+    private void agregarCeldaNormal(PdfPTable tabla, String texto) {
+        PdfPCell cell = new PdfPCell(new Phrase(texto, FUENTE_NORMAL));
+        tabla.addCell(cell);
+    }
 }
