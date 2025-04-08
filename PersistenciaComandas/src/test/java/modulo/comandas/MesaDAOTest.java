@@ -8,6 +8,8 @@ import conexionBD.Conexion;
 import entidades.Ingrediente;
 import entidades.Mesa;
 import excepciones.PersistenciaException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -73,6 +75,20 @@ public class MesaDAOTest {
     }
     
     @Test
+    public void testObtenerPorId() throws PersistenciaException {
+        try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
+            conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
+            when(em.find(Mesa.class, 1l)).thenReturn(mesa1);
+
+            Mesa result = mesaDAO.obtenerPorId(1l);
+
+            assertEquals(mesa1, result);
+            verify(em).find(Mesa.class, 1l);
+            verify(em).close();
+        }
+    }
+    
+    @Test
     void testObtenerPorNumeroMesa() throws PersistenciaException {
         try(MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)){
             
@@ -81,7 +97,7 @@ public class MesaDAOTest {
             when(em.createNamedQuery("Mesa.buscarPorNumeroMesa", Mesa.class)).thenReturn(query);
             when(query.setParameter("numeroMesa", 2)).thenReturn(query);
             when(query.getSingleResult()).thenReturn(mesa2);
-            Mesa result = mesaDAO.ObtenerPorNumeroMesa(2);
+            Mesa result = mesaDAO.obtenerPorNumeroMesa(2);
             
             //Verificar resultados
             assertEquals(mesa2, result);
@@ -96,6 +112,25 @@ public class MesaDAOTest {
             //Al ser una lectura, no debería o causaría errores en cadena
             verify(transaction, never()).begin();
             verify(transaction, never()).commit();
+        }
+    }
+    
+    @Test
+    public void testObtenerTodas() throws PersistenciaException {
+        try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
+            conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
+            List<Mesa> mesas = new ArrayList<>();
+            mesas.add(mesa1);
+            mesas.add(mesa2);
+            when(em.createQuery("SELECT m FROM Mesa m", Mesa.class)).thenReturn(query);
+            when(query.getResultList()).thenReturn(mesas);
+
+            List<Mesa> result = mesaDAO.obtenerTodas();
+
+            assertEquals(mesas, result);
+            verify(em).createQuery("SELECT m FROM Mesa m", Mesa.class);
+            verify(query).getResultList();
+            verify(em).close();
         }
     }
 }

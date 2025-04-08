@@ -7,6 +7,8 @@ package modulo.comandas;
 import DTOs.nuevos.ComandaNuevoDTO;
 import DTOs.viejos.ComandaViejoDTO;
 import excepciones.NegocioException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,6 +27,8 @@ public interface IComandaBO {
     public ComandaViejoDTO obtenerPorId(Long id) throws NegocioException;
     
     public ComandaViejoDTO obtenerPorFolio(String folio) throws NegocioException;
+    
+    public List<ComandaViejoDTO> obtenerPorFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws NegocioException;
     
     public List<ComandaViejoDTO> obtenerTodos() throws NegocioException;
     

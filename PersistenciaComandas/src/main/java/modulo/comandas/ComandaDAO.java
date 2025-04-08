@@ -8,6 +8,7 @@ import conexionBD.Conexion;
 import entidades.Cliente;
 import entidades.Comanda;
 import excepciones.PersistenciaException;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -152,6 +153,30 @@ public class ComandaDAO implements IComandaDAO{
             em.close();
         }
     }
+    
+    @Override
+    public List<Comanda> obtenerPorFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException{
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try{            
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class);
+            
+            // 2. Añadimos parametros
+            consulta.setParameter("fechaInicio", fechaInicio);
+            consulta.setParameter("fechaFin", fechaFin);
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+            
+        }catch(NoResultException e){
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        }finally{            
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
 
     @Override
     public List<Comanda> obtenerTodos() throws PersistenciaException {
@@ -238,6 +263,4 @@ public class ComandaDAO implements IComandaDAO{
             em.close();
         }
     }
-    
-    
 }

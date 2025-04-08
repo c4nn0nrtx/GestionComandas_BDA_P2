@@ -8,7 +8,10 @@ import conexionBD.Conexion;
 import entidades.Cliente;
 import entidades.Comanda;
 import excepciones.PersistenciaException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -61,11 +64,13 @@ public class ComandaDAOTest {
         comanda1 = new Comanda();
         comanda1.setId(1l);
         comanda1.setFolio("OB-20250407-001");
+        comanda1.setFechaHora(LocalDateTime.of(2025, 4, 6, 10, 00, 00));
         comanda2 = new Comanda();
         comanda2.setId(2l);
+        comanda1.setFolio("OB-20250407-002");
+        comanda2.setFechaHora(LocalDateTime.of(2025, 4, 5, 10, 00, 00));
         cliente1 = new Cliente();
         cliente1.setId(8l);
-        comanda1.setFolio("OB-20250407-002");
         cliente2 = new Cliente();
         cliente2.setId(12l);
         
@@ -160,7 +165,7 @@ public class ComandaDAOTest {
     }
     
     @Test
-    void testObtenerPorFolio_ComandaNoEncontrada() throws PersistenciaException{
+    void testObtenerPorFolio() throws PersistenciaException{
         try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
             // Simulación de la conexión y ejecución en el DAO
             conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
@@ -181,6 +186,33 @@ public class ComandaDAOTest {
             verify(em).close();
 
             // Verificar que no se iniciaron ni commitearon transacciones (es una lectura)
+            verify(transaction, never()).begin();
+            verify(transaction, never()).commit();
+        }
+    }
+    
+    @Test
+    void testObtenerPorFechas() throws PersistenciaException {
+        try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
+            conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class)).thenReturn(query);
+            LocalDateTime fechaInicio = LocalDateTime.of(2025, 4, 1, 00, 00);
+            LocalDateTime fechaFin = LocalDateTime.of(2025, 4, 10, 00, 00);
+            when(query.setParameter("fechaInicio", fechaInicio)).thenReturn(query);
+            when(query.setParameter("fechaFin", fechaFin)).thenReturn(query);
+            when(query.getResultList()).thenReturn(Arrays.asList(comanda1, comanda2)); // Ambas dentro del rango
+
+            List<Comanda> result = comandaDAO.obtenerPorFechas(fechaInicio, fechaFin);
+
+            assertEquals(2, result.size());
+            assertEquals(comanda1, result.get(0));
+            assertEquals(comanda2, result.get(1));
+
+            verify(em).createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class);
+            verify(query).setParameter("fechaInicio", fechaInicio);
+            verify(query).setParameter("fechaFin", fechaFin);
+            verify(query).getResultList();
+            verify(em).close();
             verify(transaction, never()).begin();
             verify(transaction, never()).commit();
         }

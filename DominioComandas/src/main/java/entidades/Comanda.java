@@ -30,7 +30,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "comandas")
-@NamedQuery(name = "Comanda.buscarPorFolio", query = "SELECT c FROM Comanda c WHERE c.folio = :folio")
+@NamedQuery(
+        name = "Comanda.buscarPorFolio", 
+        query = "SELECT c FROM Comanda c WHERE c.folio = :folio"
+)
+@NamedQuery(
+    name = "Comanda.buscarPorRangoFechas",
+    query = "SELECT c FROM Comanda c WHERE c.fechaHora > :fechaInicio AND c.fechaHora < :fechaFin"
+)
 public class Comanda implements Serializable {
 
     private static final long serialVersionUID = 1L;

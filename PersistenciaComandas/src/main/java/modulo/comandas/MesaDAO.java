@@ -7,6 +7,7 @@ package modulo.comandas;
 import conexionBD.Conexion;
 import entidades.Mesa;
 import excepciones.PersistenciaException;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -54,9 +55,25 @@ public class MesaDAO implements IMesaDAO{
             em.close();
         }
     }
+    
+    @Override
+    public Mesa obtenerPorId(Long id) throws PersistenciaException{
+        //0. Crear la conexión
+        EntityManager em = Conexion.crearConexion();
+        try {
+            //1. retornamos el resultado obtenido
+            return em.find(Mesa.class, id);
+        } catch (Exception e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontró ninguna mesa con el ID: " + id + ". " + e.getMessage());
+        } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
 
     @Override
-    public Mesa ObtenerPorNumeroMesa(Integer numeroMesa) throws PersistenciaException {
+    public Mesa obtenerPorNumeroMesa(Integer numeroMesa) throws PersistenciaException {
         // 0. Creamos el entityManager
         EntityManager em = Conexion.crearConexion();
         try{            
@@ -73,6 +90,22 @@ public class MesaDAO implements IMesaDAO{
             //ex. Lanzamos una excepción de la capa
             throw new PersistenciaException("No se encontraron resultados");
         }finally{            
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+    
+    @Override
+    public List<Mesa> obtenerTodas() throws PersistenciaException {
+        //0. Crear la conexión
+        EntityManager em = Conexion.crearConexion();
+        try {
+            //1. retornamos el resultado obtenido
+            return em.createQuery("SELECT m FROM Mesa m", Mesa.class).getResultList();
+        } catch (Exception e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("Error al obtener todas las mesas " + e.getMessage());
+        } finally {
             //fin. Cerramos el entityManager
             em.close();
         }

@@ -39,7 +39,6 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
         modelo = (DefaultTableModel) tblIngredientes.getModel();
         cargarIngredientes();
         agregarListeners();
-        System.out.println("Instancia del buscador creada: " + this);
     }
 
     /**
@@ -295,6 +294,8 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, seleccione un ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un ingrediente.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnElegirActionPerformed
 
@@ -384,7 +385,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
     private void cargarIngredientesUnidadMedida(){
         //1. Validación de campo vacío
         if(cbxUnidadMedida.getSelectedItem() == null || cbxUnidadMedida.getSelectedIndex() < 0){
-            JOptionPane.showMessageDialog(this, "Seleccione un campo válido para el nombre", "Información", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Seleccione una unidad de medida", "Información", JOptionPane.WARNING_MESSAGE);
             return;
         }
         

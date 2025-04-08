@@ -9,7 +9,10 @@ import java.util.Map;
 import javax.swing.JFrame;
 
 /**
- *
+ * La clase {@code ControlGUI} gestiona la visualización y el intercambio de
+ * datos entre diferentes ventanas ({@link JFrame}) de la aplicación. Utiliza
+ * un {@link Map} para almacenar y acceder a los frames por su nombre,
+ * permitiendo mostrar, ocultar y pasar información entre ellos.
  * @author Beto_
  */
 public class ControlGUI {
