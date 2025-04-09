@@ -16,9 +16,19 @@ public class IngredienteViejoDTO {
     private UnidadMedida unidadMedida;
     private Double stock;
 
+    /**
+     *
+     */
     public IngredienteViejoDTO() {
     }
 
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param unidadMedida
+     * @param stock
+     */
     public IngredienteViejoDTO(Long id, String nombre, UnidadMedida unidadMedida, Double stock) {
         this.id = id;
         this.nombre = nombre;
@@ -26,38 +36,74 @@ public class IngredienteViejoDTO {
         this.stock = stock;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public UnidadMedida getUnidadMedida() {
         return unidadMedida;
     }
 
+    /**
+     *
+     * @param unidadMedida
+     */
     public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getStock() {
         return stock;
     }
 
+    /**
+     *
+     * @param stock
+     */
     public void setStock(Double stock) {
         this.stock = stock;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "IngredienteViejoDTO{" + "id=" + id + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", stock=" + stock + '}';

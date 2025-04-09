@@ -10,14 +10,27 @@ package excepciones;
  */
 public class NegocioException extends Exception{
 
+    /**
+     *
+     * @param message
+     */
     public NegocioException(String message) {
         super(message);
     }
 
+    /**
+     *
+     * @param cause
+     */
     public NegocioException(Throwable cause) {
         super(cause);
     }
 
+    /**
+     *
+     * @param message
+     * @param cause
+     */
     public NegocioException(String message, Throwable cause) {
         super(message, cause);
     }

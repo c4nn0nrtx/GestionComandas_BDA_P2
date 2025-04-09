@@ -8,6 +8,62 @@ package DTOs.viejos;
  *
  * @author Beto_
  */
-public class ProductoIngredienteViejoDTO {
-    
+public class ProductoIngredienteViejoDTO 
+{
+    private Long id;
+    private double cantidadRequerida;
+    private Long idProducto;
+    private Long idIngrediente;
+
+    public ProductoIngredienteViejoDTO() {
+    }
+
+    public ProductoIngredienteViejoDTO(Long id, double cantidadRequerida, Long idProducto, Long idIngrediente) {
+        this.id = id;
+        this.cantidadRequerida = cantidadRequerida;
+        this.idProducto = idProducto;
+        this.idIngrediente = idIngrediente;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getCantidadRequerida() {
+        return cantidadRequerida;
+    }
+
+    public void setCantidadRequerida(double cantidadRequerida) {
+        this.cantidadRequerida = cantidadRequerida;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Long getIdIngrediente() {
+        return idIngrediente;
+    }
+
+    public void setIdIngrediente(Long idIngrediente) {
+        this.idIngrediente = idIngrediente;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductoIngredienteViejoDTO{" +
+                "id=" + id +
+                ", cantidadRequerida=" + cantidadRequerida +
+                ", idProducto=" + idProducto +
+                ", idIngrediente=" + idIngrediente +
+                '}';
+    }
 }

@@ -41,47 +41,92 @@ public class Ingrediente implements Serializable {
     @Column(name = "stock", nullable = false)
     private Double stock;
    
+    /**
+     *
+     */
     public Ingrediente() {
     }
 
+    /**
+     *
+     * @param nombre
+     * @param unidadMedida
+     * @param stock
+     */
     public Ingrediente(String nombre, UnidadMedida unidadMedida, Double stock) {
         this.nombre = nombre;
         this.unidadMedida = unidadMedida;
         this.stock = stock;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public UnidadMedida getUnidadMedida() {
         return unidadMedida;
     }
 
+    /**
+     *
+     * @param unidadMedida
+     */
     public void setUnidadMedida(UnidadMedida unidadMedida) {
         this.unidadMedida = unidadMedida;
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getStock() {
         return stock;
     }
 
+    /**
+     *
+     * @param stock
+     */
     public void setStock(Double stock) {
         this.stock = stock;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Ingrediente{" + "id=" + id + ", nombre=" + nombre + ", unidadMedida=" + unidadMedida + ", stock=" + stock + '}';

@@ -15,6 +15,12 @@ import java.util.List;
  * @author Beto_
  */
 public class IngredienteMapper {
+
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Ingrediente toEntity(IngredienteNuevoDTO dto) {
         if (dto == null) {
             return null;
@@ -26,6 +32,11 @@ public class IngredienteMapper {
         return ingrediente;
     }
 
+    /**
+     *
+     * @param ingrediente
+     * @return
+     */
     public static IngredienteViejoDTO toViejoDTO(Ingrediente ingrediente) {
         if (ingrediente == null) {
             return null;
@@ -38,6 +49,11 @@ public class IngredienteMapper {
         );
     }
 
+    /**
+     *
+     * @param ingredienteNuevoDTO
+     * @return
+     */
     public static IngredienteViejoDTO toViejoDTO(IngredienteNuevoDTO ingredienteNuevoDTO){
         if(ingredienteNuevoDTO == null){
             return null;
@@ -50,7 +66,11 @@ public class IngredienteMapper {
         );
     }
 
-    
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Ingrediente toEntity(IngredienteViejoDTO dto) {
         if (dto == null) {
             return null;
@@ -63,6 +83,11 @@ public class IngredienteMapper {
         return ingrediente;
     }
 
+    /**
+     *
+     * @param ingredientes
+     * @return
+     */
     public static List<IngredienteViejoDTO> toViejoDTOList(List<Ingrediente> ingredientes) {
         if (ingredientes == null) {
             return null;
@@ -74,6 +99,11 @@ public class IngredienteMapper {
         return dtos;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Ingrediente> toEntityList(List<IngredienteNuevoDTO> dtos) {
         if (dtos == null) {
             return null;
@@ -85,6 +115,11 @@ public class IngredienteMapper {
         return ingredientes;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Ingrediente> toEntityViejoDTOList(List<IngredienteViejoDTO> dtos) {
         if (dtos == null) {
             return null;

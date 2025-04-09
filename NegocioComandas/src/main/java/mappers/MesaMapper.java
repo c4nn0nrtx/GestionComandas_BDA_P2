@@ -15,6 +15,12 @@ import java.util.List;
  * @author Beto_
  */
 public class MesaMapper {
+
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Mesa toEntity(MesaNuevoDTO dto) {
         if (dto == null) {
             return null;
@@ -24,6 +30,11 @@ public class MesaMapper {
         return mesa;
     }
 
+    /**
+     *
+     * @param mesa
+     * @return
+     */
     public static MesaViejoDTO toViejoDTO(Mesa mesa) {
         if (mesa == null) {
             return null;
@@ -34,6 +45,11 @@ public class MesaMapper {
         );
     }
 
+    /**
+     *
+     * @param mesaNuevoDTO
+     * @return
+     */
     public static MesaViejoDTO toViejoDTO(MesaNuevoDTO mesaNuevoDTO) {
         if (mesaNuevoDTO == null) {
             return null;
@@ -45,6 +61,12 @@ public class MesaMapper {
     }
 
     // Convierte MesaViejoDTO a Mesa
+
+    /**
+     *
+     * @param dto
+     * @return
+     */
     public static Mesa toEntity(MesaViejoDTO dto) {
         if (dto == null) {
             return null;
@@ -55,6 +77,11 @@ public class MesaMapper {
         return mesa;
     }
 
+    /**
+     *
+     * @param mesas
+     * @return
+     */
     public static List<MesaViejoDTO> toViejoDTOList(List<Mesa> mesas) {
         if (mesas == null) {
             return null;
@@ -66,6 +93,11 @@ public class MesaMapper {
         return dtos;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Mesa> toEntityList(List<MesaNuevoDTO> dtos) {
         if (dtos == null) {
             return null;
@@ -77,6 +109,11 @@ public class MesaMapper {
         return mesas;
     }
 
+    /**
+     *
+     * @param dtos
+     * @return
+     */
     public static List<Mesa> toEntityViejoDTOList(List<MesaViejoDTO> dtos) {
         if (dtos == null) {
             return null;

@@ -26,9 +26,24 @@ public class ClienteFrecuente extends Cliente implements Serializable {
     @Transient
     private Integer puntosFidelidad;
 
+    /**
+     *
+     */
     public ClienteFrecuente() {
     }
 
+    /**
+     *
+     * @param totalGastado
+     * @param visitas
+     * @param puntosFidelidad
+     * @param nombres
+     * @param apellidoPaterno
+     * @param apellidoMaterno
+     * @param correo
+     * @param telefono
+     * @param fechaRegistro
+     */
     public ClienteFrecuente(Double totalGastado, Integer visitas, Integer puntosFidelidad, String nombres, String apellidoPaterno, String apellidoMaterno, String correo, String telefono, LocalDate fechaRegistro) {
         super(nombres, apellidoPaterno, apellidoMaterno, correo, telefono, fechaRegistro);
         this.totalGastado = totalGastado;
@@ -36,26 +51,50 @@ public class ClienteFrecuente extends Cliente implements Serializable {
         this.puntosFidelidad = puntosFidelidad;
     }
     
+    /**
+     *
+     * @return
+     */
     public Double getTotalGastado() {
         return totalGastado;
     }
 
+    /**
+     *
+     * @param totalGastado
+     */
     public void setTotalGastado(Double totalGastado) {
         this.totalGastado = totalGastado;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getVisitas() {
         return visitas;
     }
 
+    /**
+     *
+     * @param visitas
+     */
     public void setVisitas(Integer visitas) {
         this.visitas = visitas;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getPuntosFidelidad() {
         return puntosFidelidad;
     }
 
+    /**
+     *
+     * @param puntosFidelidad
+     */
     public void setPuntosFidelidad(Integer puntosFidelidad) {
         this.puntosFidelidad = puntosFidelidad;
     }

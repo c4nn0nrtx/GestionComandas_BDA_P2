@@ -9,5 +9,19 @@ package ENUMs;
  * @author Beto_
  */
 public enum EstadoComanda {
-    ABIERTA, ENTREGADA, CANCELADA
+
+    /**
+     *
+     */
+    ABIERTA,
+
+    /**
+     *
+     */
+    ENTREGADA,
+
+    /**
+     *
+     */
+    CANCELADA
 }

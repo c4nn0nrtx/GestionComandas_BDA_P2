@@ -9,10 +9,20 @@ package excepciones;
  * @author Beto_
  */
 public class PersistenciaException extends Exception{
+
+    /**
+     *
+     * @param message
+     */
     public PersistenciaException(String message) {
         super(message);
     }
 
+    /**
+     *
+     * @param message
+     * @param cause
+     */
     public PersistenciaException(String message, Throwable cause) {
         super(message, cause);
     }
