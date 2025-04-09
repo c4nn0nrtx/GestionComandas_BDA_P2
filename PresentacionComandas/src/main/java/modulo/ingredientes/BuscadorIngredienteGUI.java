@@ -51,8 +51,6 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        chbNombre = new javax.swing.JCheckBox();
-        chbUnidadMedida = new javax.swing.JCheckBox();
         txtNombre = new javax.swing.JTextField();
         cbxUnidadMedida = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -60,33 +58,15 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblIngredientes = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Broadway", 0, 18)); // NOI18N
         jLabel1.setText("Buscador de ingredintes");
 
-        chbNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbNombre.setText("Buscar por nombre");
-        chbNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbNombreActionPerformed(evt);
-            }
-        });
-
-        chbUnidadMedida.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbUnidadMedida.setText("Buscar por unidad de medida");
-        chbUnidadMedida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbUnidadMedidaActionPerformed(evt);
-            }
-        });
-
-        txtNombre.setEnabled(false);
-
-        cbxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Piezas", "Gramos", "Mililitros" }));
-        cbxUnidadMedida.setSelectedIndex(-1);
-        cbxUnidadMedida.setEnabled(false);
+        cbxUnidadMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No Aplica", "Piezas", "Gramos", "Mililitros" }));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -129,20 +109,39 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblIngredientes);
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Buscar por nombre");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Buscar por unidad de medida");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chbUnidadMedida)
-                    .addComponent(chbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                    .addComponent(cbxUnidadMedida, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(17, 17, 17))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnElegir)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(cbxUnidadMedida, 0, 201, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(63, 63, 63)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,35 +150,26 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
                         .addGap(98, 98, 98))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnElegir)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                        .addGap(137, 137, 137))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chbNombre))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chbUnidadMedida))
-                .addGap(32, 32, 32)
+                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnElegir)
                     .addComponent(btnCancelar))
@@ -199,16 +189,12 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
                 new DocumentListener() {
                     @Override
                     public void insertUpdate(DocumentEvent e) {
-                        if (chbNombre.isSelected()) {
                             cargarIngredientesNombre();
-                        }
                     }
 
                     @Override
                     public void removeUpdate(DocumentEvent e) {
-                        if (chbNombre.isSelected()) {
                             cargarIngredientesNombre();
-                        }
                     }
 
                     @Override
@@ -222,49 +208,11 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
         cbxUnidadMedida.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (chbUnidadMedida.isSelected()) {
-                    cargarIngredientesUnidadMedida();
-                }
+                    cargarIngredientesNombre();
             }
         });
     }
     
-    private void chbNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbNombreActionPerformed
-        // TODO add your handling code here:
-        if(chbNombre.isSelected()){
-            txtNombre.setEnabled(true);
-            chbUnidadMedida.setSelected(false);
-            cbxUnidadMedida.setEnabled(false);
-        }else{
-            txtNombre.setEnabled(false);
-            txtNombre.setText(null);
-            cargarIngredientes();
-            if (!chbUnidadMedida.isSelected()) {
-                cargarIngredientes();
-            } 
-        }
-        
-    }//GEN-LAST:event_chbNombreActionPerformed
-
-    private void chbUnidadMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbUnidadMedidaActionPerformed
-        // TODO add your handling code here:
-        if(chbUnidadMedida.isSelected()){
-            cbxUnidadMedida.setEnabled(true);
-            
-            //Deshabilitar la otra checkBox
-            chbNombre.setSelected(false);
-            txtNombre.setEnabled(false);
-            txtNombre.setText("");
-        }else{
-            cbxUnidadMedida.setSelectedIndex(-1);
-            cbxUnidadMedida.setEnabled(false);
-            if (!chbNombre.isSelected()) {
-                cargarIngredientes();
-            }
-        }
-       
-    }//GEN-LAST:event_chbUnidadMedidaActionPerformed
-
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
                 
@@ -310,10 +258,10 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnElegir;
     private javax.swing.JComboBox<String> cbxUnidadMedida;
-    private javax.swing.JCheckBox chbNombre;
-    private javax.swing.JCheckBox chbUnidadMedida;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblIngredientes;
     private javax.swing.JTextField txtNombre;
@@ -350,23 +298,32 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
     
     private void cargarIngredientesNombre(){
         
-        //1. Validación de campo vacío
-//        if(txtNombre.getText() == null || txtNombre.getText().isEmpty()){
-//            JOptionPane.showMessageDialog(this, "Seleccione un campo válido para el nombre", "Información", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-        
         //Empezar de 0 la tabla
         modelo.setRowCount(0);
         listaIngredientes.clear();
         
+        //validar cbx y txt
+        String nombreParam = null;
+        UnidadMedida unidadMedidaParam = null;
+        
+        //Validar si hay algo en el txt del nombre
+        if(txtNombre != null || !txtNombre.getText().isEmpty()){
+            nombreParam = txtNombre.getText();
+        }
+        
+        //Validar si hay algo seleccionado en la cbx de la unidad de medida
+        if(cbxUnidadMedida.getSelectedItem() != null || cbxUnidadMedida.getSelectedIndex() > 0){
+            //Transformar unidad de medida
+            String unidadSeleccionadaStr = (String) cbxUnidadMedida.getSelectedItem();
+            switch (unidadSeleccionadaStr) {
+                    case "Piezas" -> unidadMedidaParam = UnidadMedida.PIEZAS;
+                    case "Gramos" -> unidadMedidaParam = UnidadMedida.GRAMOS;
+                    case "Mililitros" -> unidadMedidaParam = UnidadMedida.MILILITROS;
+            }
+        }
+
         try{
-            List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorNombre(txtNombre.getText());
-            
-//            if (ingredientes == null || ingredientes.isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Información", JOptionPane.INFORMATION_MESSAGE);
-//                return;
-//            }
+            List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorFiltro(nombreParam, unidadMedidaParam);
             
             for (IngredienteViejoDTO ingrediente : ingredientes) {
                 modelo.addRow(new Object[] {
@@ -400,7 +357,7 @@ public class BuscadorIngredienteGUI extends javax.swing.JFrame {
                 case "Piezas" -> unidadMedida = UnidadMedida.PIEZAS;
                 case "Gramos" -> unidadMedida = UnidadMedida.GRAMOS;
                 case "Mililitros" -> unidadMedida = UnidadMedida.MILILITROS;
-            }
+        }
         
         try{
             List<IngredienteViejoDTO> ingredientes = ingredienteBO.obtenerPorUnidadMedida(unidadMedida);

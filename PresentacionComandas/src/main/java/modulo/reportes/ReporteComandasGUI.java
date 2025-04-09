@@ -81,7 +81,6 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         dtcFechaFin = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        chbFechas = new javax.swing.JCheckBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblComandas = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
@@ -103,12 +102,8 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        dtcFechaInicio.setEnabled(false);
-
         jLabel1.setFont(new java.awt.Font("Broadway", 0, 18)); // NOI18N
         jLabel1.setText("Reporte de comandas");
-
-        dtcFechaFin.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -117,13 +112,6 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Fecha Fin");
-
-        chbFechas.setText("Filtrar por Periodo de fechas");
-        chbFechas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbFechasActionPerformed(evt);
-            }
-        });
 
         tblComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -193,18 +181,15 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(chbFechas))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGenerarPDF1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(108, 108, 108)
-                                .addComponent(btnVistaPrevia, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(126, 126, 126)
+                        .addComponent(btnGenerarPDF1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(108, 108, 108)
+                        .addComponent(btnVistaPrevia, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -212,8 +197,6 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chbFechas)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -224,9 +207,9 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(dtcFechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar)
                     .addComponent(btnVistaPrevia)
@@ -240,31 +223,29 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 
     private void btnVistaPreviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVistaPreviaActionPerformed
         // TODO add your handling code here:
-        if(chbFechas.isSelected()){
-            if(dtcFechaInicio.getDate() == null || dtcFechaFin.getDate() == null){
-                JOptionPane.showMessageDialog(this, "Por favor, seleccione el lapso de fechas", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            cargarComandasPorFecha(toLocalDateTime(dtcFechaInicio.getDate()), toLocalDateTime(dtcFechaFin.getDate()));
-        }else{
-            cargarComandas();
+        LocalDateTime fechaInicio = null;
+        LocalDateTime fechaFin = null;
+        if(dtcFechaInicio.getDate() != null){
+            fechaInicio = toLocalDateTime(dtcFechaInicio.getDate());
         }
+        if(dtcFechaFin.getDate() != null){
+            fechaFin = toLocalDateTime(dtcFechaInicio.getDate());
+        }
+
+        if(fechaInicio == null && fechaFin != null){
+            JOptionPane.showMessageDialog(this, "Selecciones una fecha de inicio", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if(fechaInicio != null && fechaFin == null){
+            JOptionPane.showMessageDialog(this, "Selecciones una fecha fin", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        cargarComandasPorFecha(toLocalDateTime(dtcFechaInicio.getDate()), toLocalDateTime(dtcFechaFin.getDate()));
         
         
     }//GEN-LAST:event_btnVistaPreviaActionPerformed
-
-    private void chbFechasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbFechasActionPerformed
-        // TODO add your handling code here:
-        if(chbFechas.isSelected()){
-            dtcFechaInicio.setEnabled(true);
-            dtcFechaFin.setEnabled(true);
-        }else{
-            dtcFechaInicio.setEnabled(false);
-            dtcFechaInicio.setDate(null);
-            dtcFechaFin.setEnabled(false);
-            dtcFechaFin.setDate(null);
-        }
-    }//GEN-LAST:event_chbFechasActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
@@ -324,7 +305,6 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnGenerarPDF1;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnVistaPrevia;
-    private javax.swing.JCheckBox chbFechas;
     private com.toedter.calendar.JDateChooser dtcFechaFin;
     private com.toedter.calendar.JDateChooser dtcFechaInicio;
     private javax.swing.JLabel jLabel1;
@@ -353,50 +333,6 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         return localDateTime;
     }
     
-    private void cargarComandas(){
-        //Empezar de 0 la tabla
-        modelo.setRowCount(0);
-        listaComandas.clear();
-        
-        try{
-            List<ComandaViejoDTO> comandas = comandaBO.obtenerTodos();
-            
-            if (comandas == null || comandas.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "No se encontraron comandas", "Información", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
-            for (ComandaViejoDTO comanda : comandas) {
-                String fecha = crearFechaFormato(
-                        comanda.getFechaHora().getYear(), 
-                        comanda.getFechaHora().getMonthValue(),
-                        comanda.getFechaHora().getDayOfMonth()
-                    );
-                String hora = crearHoraFormato(
-                        comanda.getFechaHora().getHour(),
-                        comanda.getFechaHora().getMinute()
-                );
-                
-                MesaViejoDTO mesa = obtenerMesa(comanda.getIdMesa());
-                if(mesa == null){
-                    JOptionPane.showMessageDialog(this, "Chale, esto no debería pasar", "Error", JOptionPane.ERROR);
-                }
-                
-                modelo.addRow(new Object[] {
-                    fecha,
-                    hora,
-                    mesa.getNumeroMesa(),
-                    comanda.getTotalVenta(),
-                    comanda.getEstado(),
-                    comanda.getIdCliente() //Aqui va el nombre VD BRANDON
-                });
-                listaComandas.add(comanda);
-            }
-        }catch(NegocioException ne){
-            JOptionPane.showMessageDialog(this, "Error al buscar ingredientes por unidad de medida: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                Logger.getLogger(BuscadorIngredienteGUI.class.getName()).log(Level.SEVERE, null, ne);
-        }
-    }
     
     private void cargarComandasPorFecha(LocalDateTime fechaInicio, LocalDateTime fechaFin){
         //Empezar de 0 la tabla
@@ -477,7 +413,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
             
             //Agregar texto descriptivo si esta seleccionado el filtro de fechas
             Paragraph descripcion;
-            if(chbFechas.isSelected()){
+            if(dtcFechaInicio.getDate() != null && dtcFechaFin.getDate() != null){
                 descripcion = new Paragraph("Reporte de comandas desde '" + dtcFechaInicio.getDate().toString() +
                                                        "' hasta '" + dtcFechaFin.getDate().toString() + "' ", FUENTE_NORMAL);
             }else{
@@ -507,6 +443,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al crear el PDF del reporte", "Error", JOptionPane.ERROR);
         }
     }
+    
     //Se podría hacer un método, pero así mejor para mayor legibilidad
     private void agregarCabecerasComanda(PdfPTable tabla) {
         agregarCeldaCabecera(tabla, "Fecha");

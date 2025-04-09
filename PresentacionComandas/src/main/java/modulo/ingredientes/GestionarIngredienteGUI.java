@@ -4,7 +4,6 @@
  */
 package modulo.ingredientes;
 
-import DTOs.nuevos.IngredienteNuevoDTO;
 import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
 import controlGUI.ControlGUI;
@@ -52,8 +51,6 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         txtNombre = new javax.swing.JTextField();
         txtStock = new javax.swing.JTextField();
         cbxUnidadMedida = new javax.swing.JComboBox<>();
-        chbAgregarStock = new javax.swing.JCheckBox();
-        chbActualizar = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         lblStock = new javax.swing.JLabel();
 
@@ -127,24 +124,6 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             }
         });
 
-        chbAgregarStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbAgregarStock.setText("Agregar stock");
-        chbAgregarStock.setEnabled(false);
-        chbAgregarStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbAgregarStockActionPerformed(evt);
-            }
-        });
-
-        chbActualizar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        chbActualizar.setText("Actualizar ingrediente");
-        chbActualizar.setEnabled(false);
-        chbActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chbActualizarActionPerformed(evt);
-            }
-        });
-
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Stock:");
 
@@ -159,7 +138,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                         .addComponent(btnEliminar)
                         .addGap(64, 64, 64)
                         .addComponent(btnActualizar)
@@ -168,27 +147,23 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(chbAgregarStock)
-                                .addGap(18, 18, 18)
+                                .addGap(130, 130, 130)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(txtStock, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(chbActualizar))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -204,24 +179,21 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarIngrediente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(chbActualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(22, 22, 22)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel4)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(cbxUnidadMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel2))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(chbAgregarStock)
-                            .addComponent(jLabel5)))
-                    .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(42, 42, 42)
+                        .addComponent(lblStock, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -231,7 +203,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                     .addComponent(btnCancelar)
                     .addComponent(btnActualizar)
                     .addComponent(btnEliminar))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
@@ -245,74 +217,103 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             btnBuscarIngrediente.requestFocus();
             return;
         }
+        //Tomamos los atributos a actualizar
+        String nombre = txtNombre.getText();
+        String unidadMedidaS = (String) cbxUnidadMedida.getSelectedItem();
+        double stock = 0;
+        boolean stockActualizado = false;
+        boolean ingredienteActualizado = false;
         
-        if(!chbActualizar.isSelected() && !chbAgregarStock.isSelected()){
-            JOptionPane.showMessageDialog(this, "No se ha indicado una actualización", "Error", JOptionPane.ERROR_MESSAGE);
-            chbActualizar.requestFocus();
-            chbAgregarStock.requestFocus();
+        if(!nombre.equalsIgnoreCase(ingredienteGestionado.getNombre())){
+            ingredienteActualizado = true;
+        }
+        
+        if(!cvrUnidadMedida(unidadMedidaS).equals(ingredienteGestionado.getUnidadMedida())){
+            ingredienteActualizado = true;
+        }
+        
+        //Si no hay cambios en los campos o no hay nada no se ejecuta la actualización
+        if(!ingredienteActualizado && txtStock.getText().length() <= 0){
+            JOptionPane.showMessageDialog(this, "No hay nada que actualizar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
-        int opcion;
-        if(chbActualizar.isSelected()){
-            // Validación 1: Nombre
-            String nombre = txtNombre.getText();
-            if (nombre == null || nombre.isEmpty() || nombre.length() <= 2) {
-                    JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido", "Error", JOptionPane.ERROR_MESSAGE);
-                    txtNombre.requestFocus();
-                    return;
-            }
-
-            // Validación 2. UnidadMedida seleccionada
-            String unidadMedidaS = (String) cbxUnidadMedida.getSelectedItem();
-            if (unidadMedidaS == null || unidadMedidaS.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, seleccione una unidad de medida.", "Error", JOptionPane.ERROR_MESSAGE);
-                cbxUnidadMedida.requestFocus();
+        // Validación 1: Nombre
+        if (ingredienteActualizado && nombre.length() <= 2) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido con más de dos caracteres", "Error", JOptionPane.ERROR_MESSAGE);
+                txtNombre.requestFocus();
                 return;
-            }
-            
-            //Confirmación y función en BO
-            opcion = JOptionPane.showConfirmDialog(this,"¿Desea actualizar el ingrediente a (Nombre: " + txtNombre.getText() +
-                                                " y Unidad de medida: " + cbxUnidadMedida.getSelectedItem().toString() + ") ?",
-                                                "Confirmar elección", JOptionPane.YES_NO_OPTION);
-            if(opcion == JOptionPane.YES_OPTION){
-                try{
-                    IngredienteViejoDTO ingredienteNuevo = new IngredienteViejoDTO(ingredienteGestionado.getId(), txtNombre.getText(), 
-                                        cvrUnidadMedida(cbxUnidadMedida.getSelectedItem().toString()), ingredienteGestionado.getStock());
-                    ingredienteBO.actualizarIngrediente(ingredienteNuevo);
-
-                    //Se actualiza el ingrediente del frame
-                    ingredienteGestionado.setNombre(ingredienteNuevo.getNombre());
-                    ingredienteGestionado.setUnidadMedida(ingredienteNuevo.getUnidadMedida());
-                    
-                    JOptionPane.showMessageDialog(this, "El ingrediente ha sido actualizado con éxito", "Ingrediente actualizado", JOptionPane.INFORMATION_MESSAGE);
-                }catch(NegocioException ne){
-                    JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
         }
-        
-        if(chbAgregarStock.isSelected()){
-            if(!validarFormatoStock(txtStock.getText())){
+
+        // Validación 2: Stock Válido
+        if(txtStock.getText().length() > 0){
+            // Validación 3. Stock válido
+            stockActualizado = validarFormatoStock(txtStock.getText());
+            if(!stockActualizado){
                 JOptionPane.showMessageDialog(this, "Por favor, Ingrese un valor de stock válido.", "Error", JOptionPane.ERROR_MESSAGE);
                 txtStock.requestFocus();
                 return;
-            }   
-            double stock = Double.parseDouble(txtStock.getText());
+            }
+            stock = Double.parseDouble(txtStock.getText());
+        }
+
+        int opcion;
+        try{
+            IngredienteViejoDTO ingredienteNuevo = new IngredienteViejoDTO(ingredienteGestionado.getId(), 
+                                                           ingredienteGestionado.getNombre(), 
+                                                           ingredienteGestionado.getUnidadMedida(),
+                                                           ingredienteGestionado.getStock());
+            if(ingredienteActualizado && stockActualizado){
+                opcion = JOptionPane.showConfirmDialog(this,"¿Desea actualizar el ingrediente a (Nombre: " + txtNombre.getText() +
+                                        " y Unidad de medida: " + cbxUnidadMedida.getSelectedItem().toString() + ") y añadirle " + 
+                                        stock + " " + getUMed(cvrUnidadMedida(unidadMedidaS)) +" al stock?",
+                                        "Confirmar elección", JOptionPane.YES_NO_OPTION);
                 
-            opcion = JOptionPane.showConfirmDialog(this,"¿Desea agregar: " + stock + " " + getUMed(ingredienteGestionado.getUnidadMedida()) + 
-                                                    " al stock del ingrediente?", "Confirmar elección", JOptionPane.YES_NO_OPTION);
-            if(opcion == JOptionPane.YES_OPTION){
-                try{
-                IngredienteViejoDTO ingredienteNuevoStock = new IngredienteViejoDTO(ingredienteGestionado.getId(), ingredienteGestionado.getNombre(),
-                                                        ingredienteGestionado.getUnidadMedida(), ingredienteGestionado.getStock() + stock);
-                    ingredienteBO.actualizarStockIngrediente(ingredienteNuevoStock);
-                    ingredienteGestionado.setStock(ingredienteNuevoStock.getStock());
-                    JOptionPane.showMessageDialog(this, "Se ha añadido la cantidad al stock", "Stock actualizado", JOptionPane.INFORMATION_MESSAGE);
-                }catch(NegocioException ne){
-                    JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
+                if(opcion == JOptionPane.YES_OPTION){
+                    //Modificar los valores del ingrediente
+                    ingredienteNuevo.setNombre(txtNombre.getText());
+                    ingredienteNuevo.setUnidadMedida(cvrUnidadMedida(cbxUnidadMedida.getSelectedItem().toString()));
+
+                    //Actualizamos el ingrediente sin stock
+                    ingredienteGestionado = ingredienteBO.actualizarIngrediente(ingredienteNuevo);
+
+                    //Agregamos el valor a aumentar del stock
+                    ingredienteNuevo.setStock(ingredienteGestionado.getStock() + stock);
+
+                    //Actualizamos el stock
+                    ingredienteGestionado = ingredienteBO.actualizarStockIngrediente(ingredienteNuevo);
+                    JOptionPane.showMessageDialog(this, "El ingrediente ha sido actualizado y se ha añadido al stock con éxito", "Ingrediente actualizado", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else if(ingredienteActualizado){
+                opcion = JOptionPane.showConfirmDialog(this,"¿Desea actualizar el ingrediente a (Nombre: " + txtNombre.getText() +
+                                        " y Unidad de medida: " + cbxUnidadMedida.getSelectedItem().toString() + ") ?",
+                                        "Confirmar elección", JOptionPane.YES_NO_OPTION);
+                
+                if(opcion == JOptionPane.YES_OPTION){
+                    //Modificar los valores del ingrediente
+                    ingredienteNuevo.setNombre(txtNombre.getText());
+                    ingredienteNuevo.setUnidadMedida(cvrUnidadMedida(cbxUnidadMedida.getSelectedItem().toString()));
+
+                    //Actualizamos el ingrediente sin stock
+                    ingredienteGestionado = ingredienteBO.actualizarIngrediente(ingredienteNuevo);
+                    JOptionPane.showMessageDialog(this, "El ingrediente ha sido actualizado con éxito", "Ingrediente actualizado", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else if(stockActualizado){
+                opcion = JOptionPane.showConfirmDialog(this,"¿Desea actualizar el stock del ingrediente: " + txtNombre.getText() +
+                                        "en : " + stock + " " + cbxUnidadMedida.getSelectedItem().toString() + " ?",
+                                        "Confirmar elección", JOptionPane.YES_NO_OPTION);
+                
+                if(opcion == JOptionPane.YES_OPTION){
+                //Agregamos el valor a aumentar del stock
+                ingredienteNuevo.setStock(ingredienteGestionado.getStock() + stock);
+
+                //Actualizamos el stock
+                ingredienteGestionado = ingredienteBO.actualizarStockIngrediente(ingredienteNuevo);
+                JOptionPane.showMessageDialog(this, "Se ha añadido la cantidad al stock", "Stock actualizado", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
         }
         //Fin
         mostrarDatosIngrediente();
@@ -334,17 +335,6 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void chbAgregarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbAgregarStockActionPerformed
-        // TODO add your handling code here:
-        if(chbAgregarStock.isSelected()){
-            txtStock.setEnabled(true);
-            
-        }else{
-            txtStock.setText("");
-            txtStock.setEnabled(false);
-        }
-    }//GEN-LAST:event_chbAgregarStockActionPerformed
 
     private void btnBuscarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngredienteActionPerformed
         // TODO add your handling code here:
@@ -368,8 +358,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                 ingredienteBO.eliminarIngrediente(ingredienteGestionado.getId());
                 limpiarCampos();
                 ingredienteGestionado = null;
-                chbActualizar.setEnabled(false);
-                chbAgregarStock.setEnabled(false);
+                inhabilitarCampos();
                 JOptionPane.showMessageDialog(this, "El ingrediente ha sido eliminado con éxito", "Ingrediente eliminado", JOptionPane.INFORMATION_MESSAGE);
             }catch(NegocioException ne){
                 JOptionPane.showMessageDialog(this, ne, "Error", JOptionPane.ERROR_MESSAGE);
@@ -377,30 +366,12 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void chbActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbActualizarActionPerformed
-        // TODO add your handling code here:
-        if(chbActualizar.isSelected()){
-            cbxUnidadMedida.setEnabled(true);
-            txtNombre.setEnabled(true);
-            
-        }else{
-            if(ingredienteGestionado != null){
-                cbxUnidadMedida.setSelectedIndex(getIndex(ingredienteGestionado.getUnidadMedida()));
-                cbxUnidadMedida.setEnabled(false);
-                txtNombre.setText(ingredienteGestionado.getNombre());
-                txtNombre.setEnabled(false);
-            }
-        }
-    }//GEN-LAST:event_chbActualizarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscarIngrediente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cbxUnidadMedida;
-    private javax.swing.JCheckBox chbActualizar;
-    private javax.swing.JCheckBox chbAgregarStock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -433,11 +404,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             //Se muestra el frame del buscador
             control.mostrarFrame("BuscadorIngrediente");
             
-            chbActualizar.setSelected(false);
-            txtNombre.setEnabled(false);
-            cbxUnidadMedida.setEnabled(false);
-            chbAgregarStock.setSelected(false);
-            txtStock.setEnabled(false);
+            inhabilitarCampos();
         }else{
             System.err.println("Error: BuscadorIngrediente no registrado en el controlador");
         }
@@ -456,8 +423,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     public void ingredienteSeleccionado(IngredienteViejoDTO ingrediente) {
         this.ingredienteGestionado = ingrediente;
         mostrarDatosIngrediente();
-        chbActualizar.setEnabled(true);
-        chbAgregarStock.setEnabled(true);
+        habilitarCampos();
         ControlGUI control = obtenerControlador();
         control.ocultarFrameActual(); // Ocultar el buscador
         control.mostrarFrame("GestionarIngrediente"); // Mostrar esta ventana
@@ -465,6 +431,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     
     private void mostrarDatosIngrediente() {
         if (ingredienteGestionado != null) {
+            txtStock.setText("");
             txtNombre.setText(ingredienteGestionado.getNombre());
             lblStock.setText(ingredienteGestionado.getStock().toString() + " " + getUMed(ingredienteGestionado.getUnidadMedida()));
             switch (ingredienteGestionado.getUnidadMedida()) {
@@ -524,10 +491,6 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     }
     
     public static boolean validarFormatoStock(String stock) {
-        //validar si es nulo
-        if (stock == null || stock.isEmpty()) {
-            return false;
-        }
         
         //Validar si empieza con . para ponerle 0 al principio
         if (stock.startsWith(".")) {
@@ -566,5 +529,17 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+    
+    private void habilitarCampos(){
+        txtNombre.setEnabled(true);
+        cbxUnidadMedida.setEnabled(true);
+        txtStock.setEnabled(true);
+    }
+    
+    private void inhabilitarCampos(){
+        txtNombre.setEnabled(false);
+        cbxUnidadMedida.setEnabled(false);
+        txtStock.setEnabled(false);
     }
 }
