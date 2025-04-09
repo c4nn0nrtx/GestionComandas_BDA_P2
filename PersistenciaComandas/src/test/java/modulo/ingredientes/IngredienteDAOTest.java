@@ -63,6 +63,7 @@ public class IngredienteDAOTest {
         ingrediente1 = new Ingrediente();
         ingrediente1.setId(1L);
         ingrediente1.setNombre("Tomate");
+        ingrediente1.setUnidadMedida(UnidadMedida.GRAMOS);
 
         ingrediente2 = new Ingrediente();
         ingrediente2.setId(2L);
@@ -195,6 +196,86 @@ public class IngredienteDAOTest {
             assertEquals(1, result.size());
             assertEquals("Tomate", result.get(0).getNombre());
             verify(em).createNamedQuery("Ingrediente.buscarPorUnidadMedida", Ingrediente.class);
+            verify(em).close();
+        }
+    }
+    
+    @Test
+    void testObtenerPorFiltro_porNombreYUnidad() throws PersistenciaException {
+        try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
+            mockedConexion.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createQuery(
+                    "SELECT i FROM Ingrediente i WHERE i.nombre LIKE :nombre AND i.unidadMedida = :unidadMedida",
+                    Ingrediente.class))
+                    .thenReturn(query);
+            when(query.setParameter("nombre", "%Tomate%")).thenReturn(query);
+            when(query.setParameter("unidadMedida", UnidadMedida.GRAMOS)).thenReturn(query);
+            when(query.getResultList()).thenReturn(Arrays.asList(ingrediente1));
+
+            List<Ingrediente> result = ingredienteDAO.obtenerPorFiltro("Tomate", UnidadMedida.GRAMOS);
+
+            assertEquals(1, result.size());
+            assertEquals("Tomate", result.get(0).getNombre());
+            assertEquals(UnidadMedida.GRAMOS, result.get(0).getUnidadMedida());
+            verify(em).createQuery(
+                    "SELECT i FROM Ingrediente i WHERE i.nombre LIKE :nombre AND i.unidadMedida = :unidadMedida",
+                    Ingrediente.class);
+            verify(query).setParameter("nombre", "%Tomate%");
+            verify(query).setParameter("unidadMedida", UnidadMedida.GRAMOS);
+            verify(em).close();
+        }
+    }
+    
+    @Test
+    void testObtenerPorFiltro_porNombre() throws PersistenciaException {
+        try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
+            mockedConexion.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createNamedQuery("Ingrediente.buscarPorNombre", Ingrediente.class)).thenReturn(query);
+            when(query.setParameter("nombre", "%Cebolla%")).thenReturn(query);
+            when(query.getResultList()).thenReturn(Arrays.asList(ingrediente2));
+
+            List<Ingrediente> result = ingredienteDAO.obtenerPorFiltro("Cebolla", null);
+
+            assertEquals(1, result.size());
+            assertEquals("Cebolla", result.get(0).getNombre());
+            verify(em).createNamedQuery("Ingrediente.buscarPorNombre", Ingrediente.class);
+            verify(query).setParameter("nombre", "%Cebolla%");
+            verify(em).close();
+        }
+    }
+
+    @Test
+    void testObtenerPorFiltro_porUnidad() throws PersistenciaException {
+        try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
+            mockedConexion.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createNamedQuery("Ingrediente.buscarPorUnidadMedida", Ingrediente.class)).thenReturn(query);
+            when(query.setParameter("unidadMedida", UnidadMedida.GRAMOS)).thenReturn(query);
+            when(query.getResultList()).thenReturn(Arrays.asList(ingrediente1));
+
+            List<Ingrediente> result = ingredienteDAO.obtenerPorFiltro(null, UnidadMedida.GRAMOS);
+
+            assertEquals(1, result.size());
+            assertEquals("Tomate", result.get(0).getNombre());
+            assertEquals(UnidadMedida.GRAMOS, result.get(0).getUnidadMedida());
+            verify(em).createNamedQuery("Ingrediente.buscarPorUnidadMedida", Ingrediente.class);
+            verify(query).setParameter("unidadMedida", UnidadMedida.GRAMOS);
+            verify(em).close();
+        }
+    }
+
+    @Test
+    void testObtenerPorFiltro_obtenerTodos() throws PersistenciaException {
+        try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
+            mockedConexion.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createQuery("SELECT i FROM Ingrediente i", Ingrediente.class)).thenReturn(query);
+            when(query.getResultList()).thenReturn(ingredientes);
+
+            List<Ingrediente> result = ingredienteDAO.obtenerPorFiltro(null, null);
+
+            assertEquals(2, result.size());
+            assertEquals("Tomate", result.get(0).getNombre());
+            assertEquals("Cebolla", result.get(1).getNombre());
+            verify(em).createQuery("SELECT i FROM Ingrediente i", Ingrediente.class);
             verify(em).close();
         }
     }

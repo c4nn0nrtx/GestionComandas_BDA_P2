@@ -181,7 +181,7 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
         EntityManager em = Conexion.crearConexion();
         try {
             //1. retornamos el resultado obtenido
-            return em.createQuery("SELECT cf FROM ClientesFrecuentes cf", ClienteFrecuente.class).getResultList();
+            return em.createQuery("SELECT cf FROM ClienteFrecuente cf", ClienteFrecuente.class).getResultList();
         } catch (Exception e) {
             //ex. Lanzamos una excepción de la capa
             throw new PersistenciaException("Error al obtener todos los clientes frecuentes: " + e.getMessage());

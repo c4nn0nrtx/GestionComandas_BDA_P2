@@ -63,7 +63,7 @@ public class ProductoMapper
         producto.setNombre(dto.getNombre());
         producto.setPrecio(dto.getPrecio());
         producto.setTipo(dto.getTipo());
-        producto.setEstado(dto.isEstado());
+        producto.setEstado(dto.getEstado());
         return producto;
     }
 

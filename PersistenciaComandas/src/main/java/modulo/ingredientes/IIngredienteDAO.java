@@ -110,4 +110,6 @@ public interface IIngredienteDAO {
      * a la base de datos.
      */
     public List<Ingrediente> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws PersistenciaException;
+    
+    public List<Ingrediente> obtenerPorFiltro(String nombre, UnidadMedida unidadMedida) throws PersistenciaException;
 }

@@ -90,7 +90,7 @@ public interface IComandaDAO {
      * @param fechaInicio La fecha de inicio del rango (inclusive).
      * @param fechaFin La fecha de fin del rango (inclusive).
      * @return Una {@link List} de objetos {@link Comanda} que se crearon dentro
-     * del rango de fechas especificado. Puede devolver una lista vacía si no
+     * del rango de fechas especificado. Puede devolver una lista con todas si no
      * se encuentran comandas en ese rango.
      * @throws PersistenciaException Si ocurre algún error durante la operación
      * de búsqueda, como problemas de conexión a la base de datos.

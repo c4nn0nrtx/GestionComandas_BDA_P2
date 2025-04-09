@@ -115,4 +115,6 @@ public interface IIngredienteBO {
      * @throws NegocioException Si ocurre un error en la capa de persistencia.
      */
     public List<IngredienteViejoDTO> obtenerPorUnidadMedida(UnidadMedida unidadMedida) throws NegocioException;
+    
+    public List<IngredienteViejoDTO> obtenerPorFiltro(String nombre, UnidadMedida unidadMedida) throws NegocioException;
 }

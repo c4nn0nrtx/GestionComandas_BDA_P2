@@ -235,22 +235,28 @@ public class ComandaBO implements IComandaBO{
      * @param fechaFin La fecha de fin del rango (inclusive).
      * @return Una {@link List} de {@link ComandaViejoDTO} que representan las
      * comandas encontradas dentro del rango de fechas. Puede ser una lista
-     * vacía si no hay comandas en ese rango.
-     * @throws NegocioException Si las fechas de inicio o fin son nulas, si el
-     * periodo de fechas es inválido o si ocurre un error
+     * con todas si no hay comandas en ese rango.
+     * @throws NegocioException Si el periodo de fechas es inválido o si ocurre un error
      * en la capa de persistencia.
      */
     @Override
     public List<ComandaViejoDTO> obtenerPorFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws NegocioException {
-        if (fechaInicio == null || fechaFin == null) {
-            throw new NegocioException("Las fechas están vacías");
+        if (fechaInicio == null && fechaFin != null) {
+            throw new NegocioException("Periodo inválido, fecha de inicio vacía");
         }
-        if (fechaInicio.isAfter(fechaFin) || fechaFin.isBefore(fechaInicio)) {
-            throw new NegocioException("Periodo de fechas inválido");
+        if (fechaInicio != null && fechaFin == null) {
+            throw new NegocioException("Periodo inválido, fecha fin vacía");
         }
-        // hora y minutos 0 para que no afecte la búsqueda por día completo
-        fechaInicio = LocalDateTime.of(fechaInicio.getYear(), fechaInicio.getMonthValue(), fechaInicio.getDayOfMonth(), 0, 0);
-        fechaFin = LocalDateTime.of(fechaFin.getYear(), fechaFin.getMonthValue(), fechaFin.getDayOfMonth(), 23, 59, 59);
+        
+        if(fechaInicio != null && fechaFin != null){
+            if (fechaInicio.isAfter(fechaFin) || fechaFin.isBefore(fechaInicio)) {
+                throw new NegocioException("Periodo de fechas inválido");
+            }
+            
+            // hora y minutos 0 para que no afecte la búsqueda por día completo
+            fechaInicio = LocalDateTime.of(fechaInicio.getYear(), fechaInicio.getMonthValue(), fechaInicio.getDayOfMonth(), 0, 0);
+            fechaFin = LocalDateTime.of(fechaFin.getYear(), fechaFin.getMonthValue(), fechaFin.getDayOfMonth(), 23, 59, 59);
+        }
 
         try {
             List<ComandaViejoDTO> comandasFecha = ComandaMapper.toViejoDTOList(comandaDAO.obtenerPorFechas(fechaInicio, fechaFin));

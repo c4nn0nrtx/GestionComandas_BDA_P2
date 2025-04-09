@@ -196,4 +196,44 @@ public class IngredienteDAO implements IIngredienteDAO{
         }
     }
     
+    @Override
+    public List<Ingrediente> obtenerPorFiltro(String nombre, UnidadMedida unidadMedida) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try{
+            // x. Si el nombre y la unidad de medidas no son nulos, se aplican ambos filtros
+            if (nombre != null && !nombre.trim().isEmpty() && unidadMedida != null && !unidadMedida.toString().trim().isEmpty()) {
+                TypedQuery<Ingrediente> query = em.createQuery(
+                        "SELECT i FROM Ingrediente i WHERE i.nombre LIKE :nombre AND i.unidadMedida = :unidadMedida",
+                        Ingrediente.class);
+                query.setParameter("nombre", "%" + nombre + "%");
+                query.setParameter("unidadMedida", unidadMedida);
+                return query.getResultList();
+                
+                //Si solo el nombre no esta vacío
+            } else if (nombre != null && !nombre.trim().isEmpty()) {
+                TypedQuery<Ingrediente> query = em.createNamedQuery("Ingrediente.buscarPorNombre", Ingrediente.class);
+                query.setParameter("nombre", "%" + nombre + "%"); // Usar LIKE con comodines
+                return query.getResultList();
+                
+                //Si solo la unidad de medida no esta vacia
+            } else if (unidadMedida != null && !unidadMedida.toString().trim().isEmpty()) {
+                TypedQuery<Ingrediente> query = em.createNamedQuery("Ingrediente.buscarPorUnidadMedida", Ingrediente.class);
+                query.setParameter("unidadMedida", unidadMedida);
+                return query.getResultList();
+                //Si ambos campos estan vacíos, se devuelven todos los ingredientes
+            } else {
+                // Ambos parámetros son nulos o vacíos: obtener todos los ingredientes
+                TypedQuery<Ingrediente> query = em.createQuery("SELECT i FROM Ingrediente i", Ingrediente.class);
+                return query.getResultList();
+            }
+            
+        }catch(NoResultException e){
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        }finally{            
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }    
 }

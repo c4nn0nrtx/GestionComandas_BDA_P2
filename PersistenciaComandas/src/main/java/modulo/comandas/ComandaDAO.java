@@ -162,16 +162,21 @@ public class ComandaDAO implements IComandaDAO{
     public List<Comanda> obtenerPorFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) throws PersistenciaException{
         // 0. Creamos el entityManager
         EntityManager em = Conexion.crearConexion();
-        try{            
-            // 1. Creamos la consulta
-            TypedQuery consulta = em.createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class);
-            
-            // 2. Añadimos parametros
-            consulta.setParameter("fechaInicio", fechaInicio);
-            consulta.setParameter("fechaFin", fechaFin);
-
-            // 3. validamos resultado de la consulta y devolvemos
-            return consulta.getResultList();
+        try{                        
+            if(fechaInicio == null || fechaFin == null){
+                //1. retornamos el resultado obtenido
+                return em.createQuery("SELECT c FROM Comanda c", Comanda.class).getResultList();
+            }else{
+                // 1. Creamos la consulta de fechas
+                TypedQuery consulta = em.createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class);
+                
+                // 2. Añadimos parametros
+                consulta.setParameter("fechaInicio", fechaInicio);
+                consulta.setParameter("fechaFin", fechaFin);
+                
+                // 3. validamos resultado de la consulta y devolvemos
+                return consulta.getResultList();
+            }
             
         }catch(NoResultException e){
             //ex. Lanzamos una excepción de la capa
@@ -207,8 +212,12 @@ public class ComandaDAO implements IComandaDAO{
             Comanda comanda = em.find(Comanda.class, idComanda); // buscamos la comanda
             Cliente cliente = em.find(Cliente.class, idCliente); // buscamos al client
 
-            if (comanda == null || cliente == null) {
-                throw new PersistenciaException("comanda o cliente no encontrados.");
+            if (comanda == null) {
+                throw new PersistenciaException("comanda no encontrada.");
+            }
+            
+            if (cliente == null) {
+                throw new PersistenciaException("cliente no encontrado.");
             }
 
             // Si la comanda ya tiene un cliente lo quitamos a agregamos al nuevo

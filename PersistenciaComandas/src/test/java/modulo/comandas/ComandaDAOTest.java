@@ -192,29 +192,46 @@ public class ComandaDAOTest {
     }
     
     @Test
-    void testObtenerPorFechas() throws PersistenciaException {
+    void testObtenerPorFechas_rangoValido() throws PersistenciaException {
         try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
             conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
             when(em.createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class)).thenReturn(query);
-            LocalDateTime fechaInicio = LocalDateTime.of(2025, 4, 1, 00, 00);
-            LocalDateTime fechaFin = LocalDateTime.of(2025, 4, 10, 00, 00);
+            LocalDateTime fechaInicio = LocalDateTime.of(2025, 4, 8, 00, 00);
+            LocalDateTime fechaFin = LocalDateTime.of(2025, 4, 9, 23, 59);
             when(query.setParameter("fechaInicio", fechaInicio)).thenReturn(query);
             when(query.setParameter("fechaFin", fechaFin)).thenReturn(query);
-            when(query.getResultList()).thenReturn(Arrays.asList(comanda1, comanda2)); // Ambas dentro del rango
+            when(query.getResultList()).thenReturn(Arrays.asList(comanda2, comanda1));
 
             List<Comanda> result = comandaDAO.obtenerPorFechas(fechaInicio, fechaFin);
-
+            
+            //Lo que debe haber obtenido y ejecutado
             assertEquals(2, result.size());
-            assertEquals(comanda1, result.get(0));
-            assertEquals(comanda2, result.get(1));
-
+            assertEquals(comanda2, result.get(0));
+            assertEquals(comanda1, result.get(1));
             verify(em).createNamedQuery("Comanda.buscarPorRangoFechas", Comanda.class);
             verify(query).setParameter("fechaInicio", fechaInicio);
             verify(query).setParameter("fechaFin", fechaFin);
             verify(query).getResultList();
             verify(em).close();
-            verify(transaction, never()).begin();
-            verify(transaction, never()).commit();
+        }
+    }
+
+    @Test
+    void testObtenerPorFechas_obtenerTodos() throws PersistenciaException {
+        try (MockedStatic<Conexion> conexionMockeada = Mockito.mockStatic(Conexion.class)) {
+            conexionMockeada.when(Conexion::crearConexion).thenReturn(em);
+            when(em.createQuery("SELECT c FROM Comanda c", Comanda.class)).thenReturn(query);
+            when(query.getResultList()).thenReturn(Arrays.asList(comanda1, comanda2));
+
+            List<Comanda> result = comandaDAO.obtenerPorFechas(null, null);
+            
+            //Lo que debe haber obtenido y ejecutado
+            assertEquals(2, result.size());
+            assertEquals(comanda1, result.get(0));
+            assertEquals(comanda2, result.get(1));
+            verify(em).createQuery("SELECT c FROM Comanda c", Comanda.class);
+            verify(query).getResultList();
+            verify(em).close();
         }
     }
     

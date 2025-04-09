@@ -302,6 +302,19 @@ public class IngredienteBO implements IIngredienteBO {
             throw new NegocioException("Error al obtener ingredientes por unidad de medida", ex);
         }
     }
+    
+    @Override
+    public List<IngredienteViejoDTO> obtenerPorFiltro(String nombre, UnidadMedida unidadMedida) throws NegocioException {
+        try {
+            // Obtener la lista de entidades por unidad de medida y/o nombre utilizando el DAO y convertirlas a una lista de DTOs
+            return IngredienteMapper.toViejoDTOList(ingredienteDAO.obtenerPorFiltro(nombre, unidadMedida));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener ingredientes por unidad de medida", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener ingredientes por unidad de medida", ex);
+        }
+    }
 
     /**
      * Valida si ya existe un ingrediente con el mismo nombre y unidad de medida
