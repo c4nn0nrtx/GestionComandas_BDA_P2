@@ -522,6 +522,7 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
         tabla.addCell(cell);
     }
     
+    //Lo mismo, pero para la info
     private void agregarFilaComanda(PdfPTable tabla, ComandaViejoDTO comanda) {
         String numMesa = obtenerMesa(comanda.getIdMesa()).getNumeroMesa().toString();
         agregarCeldaNormal(tabla, comanda.getFechaHora() != null ? comanda.getFechaHora().format(FORMATO_FECHA) : "");
