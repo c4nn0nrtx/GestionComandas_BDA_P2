@@ -8,11 +8,17 @@ import controlGUI.ControlGUI;
 import miscelanea.MenuComandasGUI;
 import miscelanea.MenuIngredientesGUI;
 import miscelanea.MenuPrincipalGUI;
+import miscelanea.MenuProductosGUI;
 import miscelanea.MenuReportesGUI;
 import modulo.comandas.AgregarComandaGUI;
 import modulo.ingredientes.AgregarIngredienteGUI;
 import modulo.ingredientes.BuscadorIngredienteGUI;
 import modulo.ingredientes.GestionarIngredienteGUI;
+import modulo.productos.ActualizarProductoGUI;
+import modulo.productos.AgregarProductoGUI;
+import modulo.productos.BuscadorProductoGUI;
+import modulo.productos.GestionarProductoGUI;
+import modulo.productos.ProductoHabilitadoGUI;
 import modulo.reportes.ReporteClientesGUI;
 import modulo.reportes.ReporteComandasGUI;
 
@@ -43,6 +49,19 @@ public class Main {
         controlGUI.registrarFrame("GestionarIngredienteGUI", gestionarIngredienteGUI);
 
     //2. Modulo de productos
+         //2.1 Instanciar los frames
+         AgregarProductoGUI agregarProductoGUI = new AgregarProductoGUI();
+         BuscadorProductoGUI buscadorProductoGUI = new BuscadorProductoGUI();
+         GestionarProductoGUI gestionarProductoGUI = new GestionarProductoGUI();
+         ActualizarProductoGUI actualizarProductoGUI = new ActualizarProductoGUI();
+         ProductoHabilitadoGUI productoHabilitadoGUI = new ProductoHabilitadoGUI();
+         
+         //2.2 Añadirlos al controlador
+         controlGUI.registrarFrame("AgregarProductoGUI", agregarProductoGUI);
+         controlGUI.registrarFrame("BuscadorProductoGUI", buscadorProductoGUI);
+         controlGUI.registrarFrame("GestionarProductoGUI", gestionarProductoGUI);
+         controlGUI.registrarFrame("ActualizarProductoGUI", actualizarProductoGUI);
+         controlGUI.registrarFrame("ProductoHabilitadoGUI", productoHabilitadoGUI);
     
     //3. Modulo de clientes
     
@@ -67,12 +86,14 @@ public class Main {
         //1.1 Instanciar los frames
         MenuPrincipalGUI menuPrincipalGUI = new MenuPrincipalGUI();
         MenuIngredientesGUI menuIngredientesGUI = new MenuIngredientesGUI();
+        MenuProductosGUI menuProductosGUI = new MenuProductosGUI();
         MenuComandasGUI menuComandasGUI = new MenuComandasGUI();
         MenuReportesGUI menuReportesGUI = new MenuReportesGUI();
         
         //1.2 Añadirlos al controlador
         controlGUI.registrarFrame("MenuPrincipalGUI", menuPrincipalGUI);
         controlGUI.registrarFrame("MenuIngredientesGUI", menuIngredientesGUI);
+        controlGUI.registrarFrame("MenuProductosGUI", menuProductosGUI);
         controlGUI.registrarFrame("MenuComandasGUI", menuComandasGUI);
         controlGUI.registrarFrame("MenuReportesGUI", menuReportesGUI);
         
