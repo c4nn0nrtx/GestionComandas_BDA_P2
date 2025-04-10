@@ -6,6 +6,7 @@ package modulo.productos;
 
 import DTOs.nuevos.ProductoNuevoDTO;
 import DTOs.viejos.ProductoViejoDTO;
+import ENUMs.TipoProducto;
 import entidades.Producto;
 import excepciones.NegocioException;
 import java.util.List;
@@ -29,4 +30,9 @@ public interface IProductoBO
     List<ProductoViejoDTO> buscarPorNombre(String nombre) throws NegocioException;
 
     List<ProductoViejoDTO> buscarPorTipo(String tipo) throws NegocioException;
+    
+    List<ProductoViejoDTO> obtenerPorTipo(TipoProducto tipoProducto) throws NegocioException;
+    
+    List<ProductoViejoDTO> obtenerPorFiltro(String nombre, TipoProducto tipo) throws NegocioException;
+
 }

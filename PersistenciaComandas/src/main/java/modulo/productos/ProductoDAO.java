@@ -4,6 +4,7 @@
  */
 package modulo.productos;
 
+import ENUMs.TipoProducto;
 import conexionBD.Conexion;
 import entidades.Producto;
 import excepciones.PersistenciaException;
@@ -126,20 +127,6 @@ public class ProductoDAO implements IProductoDAO
             em.close();
         }
     }
-
-    /*@Override
-    public List<Producto> buscarPorCategoria(String categoria) throws PersistenciaException {
-        EntityManager em = Conexion.crearConexion();
-        try {
-            TypedQuery<Producto> query = em.createNamedQuery("Producto.buscarPorCategoria", Producto.class);
-            query.setParameter("categoria", categoria);
-            return query.getResultList();
-        } catch (NoResultException e) {
-            throw new PersistenciaException("No se encontraron productos con esa categoría.");
-        } finally {
-            em.close();
-        }
-    }*/
     
     @Override
     public List<Producto> buscarPorNombreOCategoria(String filtro) throws PersistenciaException {
@@ -152,6 +139,70 @@ public class ProductoDAO implements IProductoDAO
         throw new PersistenciaException("No se encontraron productos que coincidan con el filtro.");
         } finally {
           em.close();
+        }
+    }
+    
+    @Override
+    public List<Producto> obtenerPorTipo(TipoProducto tipo) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try{            
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("Producto.buscarPorTipo", Producto.class);
+            
+            // 2. Añadimos parametros
+            consulta.setParameter("tipo", tipo);
+            
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+            
+        }catch(NoResultException e){
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        }finally{            
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+    
+    @Override
+    public List<Producto> obtenerPorFiltro(String nombre, TipoProducto tipo) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try{
+            // x. Si el nombre y la unidad de medidas no son nulos, se aplican ambos filtros
+            if (nombre != null && !nombre.trim().isEmpty() && tipo != null && !tipo.toString().trim().isEmpty()) {
+                TypedQuery<Producto> query = em.createQuery(
+                        "SELECT p FROM Producto p WHERE p.nombre LIKE :nombre AND p.tipo = :tipo",
+                        Producto.class);
+                query.setParameter("nombre", "%" + nombre + "%");
+                query.setParameter("tipo", tipo);
+                return query.getResultList();
+                
+                //Si solo el nombre no esta vacío
+            } else if (nombre != null && !nombre.trim().isEmpty()) {
+                TypedQuery<Producto> query = em.createNamedQuery("Producto.buscarPorNombre", Producto.class);
+                query.setParameter("nombre", "%" + nombre + "%"); // Usar LIKE con comodines
+                return query.getResultList();
+                
+                //Si solo la unidad de medida no esta vacia
+            } else if (tipo != null && !tipo.toString().trim().isEmpty()) {
+                TypedQuery<Producto> query = em.createNamedQuery("Producto.buscarPorTipo", Producto.class);
+                query.setParameter("tipo", tipo);
+                return query.getResultList();
+                //Si ambos campos estan vacíos, se devuelven todos los ingredientes
+            } else {
+                // Ambos parámetros son nulos o vacíos: obtener todos los ingredientes
+                TypedQuery<Producto> query = em.createQuery("SELECT p FROM Producto p", Producto.class);
+                return query.getResultList();
+            }
+            
+        }catch(NoResultException e){
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        }finally{            
+            //fin. Cerramos el entityManager
+            em.close();
         }
     }
 

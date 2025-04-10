@@ -4,17 +4,43 @@
  */
 package modulo.productos;
 
+import DTOs.viejos.IngredienteViejoDTO;
+import DTOs.viejos.ProductoViejoDTO;
+import ENUMs.TipoProducto;
+import controlGUI.ProductoSeleccionadoListener;
+import excepciones.NegocioException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import manejadoresBO.ManejadorBO;
+import modulo.ingredientes.BuscadorIngredienteGUI;
+
 /**
  *
  * @author Maximiliano
  */
 public class BuscadorProductoGUI extends javax.swing.JFrame {
 
+    private IProductoBO productoBO = ManejadorBO.crearProductoBO();
+    private List<ProductoViejoDTO> listaProductos = new ArrayList<>();
+    private ProductoSeleccionadoListener listener;
+    DefaultTableModel modelo;
+    
     /**
      * Creates new form BuscadorProductoGUI
      */
     public BuscadorProductoGUI() {
         initComponents();
+        modelo = (DefaultTableModel) tblProductos.getModel();
+        cargarProductos();
+        agregarListeners();
     }
 
     /**
@@ -26,57 +52,342 @@ public class BuscadorProductoGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cbxTipoProducto = new javax.swing.JComboBox<>();
+        txtNombre = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProductos = new javax.swing.JTable();
+        btnCancelar = new javax.swing.JButton();
+        btnElegir = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Buscador de Productos");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Buscar por nombre:");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setText("Buscar por categoría:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jLabel4.setText("Productos encontrados");
+
+        cbxTipoProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "No aplica", "Platillos", "Postres", "Bebidas" }));
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Nombre", "Precio", "Categoría"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProductos);
+
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnElegir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnElegir.setText("Elegir producto");
+        btnElegir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(36, 36, 36))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnElegir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbxTipoProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(52, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(179, 179, 179))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(166, 166, 166))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNombre)
+                    .addComponent(cbxTipoProducto))
+                .addGap(44, 44, 44)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnElegir))
+                .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void setProductoSeleccionadoListener(ProductoSeleccionadoListener listener) {
+        this.listener = listener;
+    }
+    
+    private void agregarListeners(){
+        txtNombre.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                            cargarProductosNombre();
+                    }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                            cargarProductosNombre();
+                    }
+
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                        //Vacío porque se usa para JTextField simple
+                        // Ignorar
+                    }
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BuscadorProductoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BuscadorProductoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BuscadorProductoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BuscadorProductoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BuscadorProductoGUI().setVisible(true);
+        );
+        
+        cbxTipoProducto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    cargarProductosNombre();
             }
         });
     }
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+        
+        //Tomamos la fila seleccionada para enviarla
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        
+        //Si la fila es válida
+        if (filaSeleccionada >= 0) {
+            //obtiene el ingrediente de la fila seleccionada
+            ProductoViejoDTO productoSeleccionado = obtenerProductoDeFila(filaSeleccionada);
+            
+            // Válida el ingrediente y el listener para enviar el ingrediente
+            if (productoSeleccionado != null) {
+                if (listener != null) {
+                    int opcion = JOptionPane.showConfirmDialog(this,"¿Desea seleccionar el producto: " + productoSeleccionado.getNombre() +
+                                                            " con categoría: " + productoSeleccionado.getTipo().toString() + " ?",
+                                                            "Confirmar elección",
+                                                            JOptionPane.YES_NO_OPTION);
+                    if(opcion == JOptionPane.YES_OPTION){
+                        listener.productoSeleccionado(productoSeleccionado);
+                    }else if(opcion == JOptionPane.NO_OPTION){
+                        return;
+                    }
+                    this.setVisible(false);
+                }
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        listener.productoSeleccionado(null);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnElegirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnElegir;
+    private javax.swing.JComboBox<String> cbxTipoProducto;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+private void cargarProductos(){
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        listaProductos.clear();
+        
+        try{
+            //Los ingredientes que se van a obtener
+            List<ProductoViejoDTO> productos = productoBO.obtenerTodos();
+            
+            //Verificar la lista de ingredientes
+            if (productos == null || productos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron productos", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (ProductoViejoDTO producto : productos) {
+                modelo.addRow(new Object[] {
+                    producto.getNombre(),
+                    producto.getTipo().toString(),
+                    producto.getPrecio()
+                });
+                listaProductos.add(producto);
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar productos: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
+        }
+    }
+    
+    private void cargarProductosNombre(){
+        
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        listaProductos.clear();
+        
+        //validar cbx y txt
+        String nombreParam = null;
+        TipoProducto tipoParam = null;
+        
+        //Validar si hay algo en el txt del nombre
+        if(txtNombre != null || !txtNombre.getText().isEmpty()){
+            nombreParam = txtNombre.getText();
+        }
+        
+        //Validar si hay algo seleccionado en la cbx de la unidad de medida
+        if(cbxTipoProducto.getSelectedItem() != null || cbxTipoProducto.getSelectedIndex() > 0){
+            //Transformar unidad de medida
+            String tipoSeleccionadoStr = (String) cbxTipoProducto.getSelectedItem();
+            switch (tipoSeleccionadoStr) {
+                    case "Platillos" -> tipoParam = TipoProducto.PLATILLO;
+                    case "Postres" -> tipoParam = TipoProducto.POSTRE;
+                    case "Bebidas" -> tipoParam = TipoProducto.BEBIDA;
+            }
+        }
+
+        try{
+            List<ProductoViejoDTO> productos = productoBO.obtenerPorFiltro(nombreParam, tipoParam);
+            
+            for (ProductoViejoDTO producto : productos) {
+                modelo.addRow(new Object[] {
+                    producto.getNombre(),
+                    producto.getTipo().toString(),
+                    producto.getPrecio()
+                });
+                listaProductos.add(producto);
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar productos por nombre: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
+        }
+    }
+    
+    private void cargarProductosTipoProducto(){
+        //1. Validación de campo vacío
+        if(cbxTipoProducto.getSelectedItem() == null || cbxTipoProducto.getSelectedIndex() < 0){
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría", "Información", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //Empezar de 0 la tabla
+        modelo.setRowCount(0);
+        listaProductos.clear();
+        
+        //Transformar unidad de medida
+        TipoProducto tipo = null;
+        String tipoSeleccionadoStr = (String) cbxTipoProducto.getSelectedItem();
+        switch (tipoSeleccionadoStr) {
+                case "Platillo" -> tipo = TipoProducto.PLATILLO;
+                case "Postre" -> tipo = TipoProducto.POSTRE;
+                case "Bebida" -> tipo = TipoProducto.BEBIDA;
+        }
+        
+        try{
+            List<ProductoViejoDTO> productos = productoBO.obtenerPorTipo(tipo);
+            
+            if (productos == null || productos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No se encontraron productos", "Información", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            for (ProductoViejoDTO producto : productos) {
+                modelo.addRow(new Object[] {
+                    producto.getNombre(),
+                    producto.getTipo().toString(),
+                    producto.getPrecio()
+                });
+                listaProductos.add(producto);
+            }
+        }catch(NegocioException ne){
+            JOptionPane.showMessageDialog(this, "Error al buscar productos por categoría: " + ne.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(BuscadorProductoGUI.class.getName()).log(Level.SEVERE, null, ne);
+        }
+    }
+        
+    private ProductoViejoDTO obtenerProductoDeFila(int fila) {
+        if (fila >= 0 && fila < listaProductos.size()) {
+            return listaProductos.get(fila);
+        }
+        return null;
+    }
+    
+    public void recargarProductos() {
+        cargarProductos();   
+    }
 }

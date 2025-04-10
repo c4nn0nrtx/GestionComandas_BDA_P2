@@ -4,6 +4,7 @@
  */
 package modulo.productos;
 
+import ENUMs.TipoProducto;
 import entidades.Producto;
 import excepciones.PersistenciaException;
 import java.util.List;
@@ -27,4 +28,9 @@ public interface IProductoDAO
     public List<Producto> buscarPorNombre(String nombre) throws PersistenciaException;
 
     public List<Producto> buscarPorNombreOCategoria(String filtro) throws PersistenciaException;
+    
+    public List<Producto> obtenerPorTipo(TipoProducto tipo) throws PersistenciaException;
+    
+    public List<Producto> obtenerPorFiltro(String nombre, TipoProducto tipo) throws PersistenciaException;
+
 }
