@@ -190,4 +190,211 @@ public class ClienteFrecuenteDAO implements IClienteFrecuenteDAO {
             em.close();
         }
     }
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param correo Correo del cliente frecuente.
+     * @return Lista de los clientes que su nombre y correo coincide con el
+     * nombre y correo del parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorNombreConCorreo(String nombre, String correo) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("ClienteFrecuente.buscarPorNombreCorreo", ClienteFrecuente.class);
+
+            // 2. Añadimos parametros
+            consulta.setParameter("nombre", "%" + nombre + "%");
+            consulta.setParameter("correo", "%" + correo + "%");
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+
+        } catch (NoResultException e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su nombre y teléfono coincide con el
+     * nombre y teléfono del parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorNombreConTelefono(String nombre, String telefono) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("ClienteFrecuente.buscarPorNombreTelefono", ClienteFrecuente.class);
+
+            // 2. Añadimos parametros
+            consulta.setParameter("nombre", "%" + nombre + "%");
+            consulta.setParameter("telefono", "%" + telefono + "%");
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+
+        } catch (NoResultException e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param correo Correo del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su correo y teléfono coincide con el
+     * correo y teléfono del parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorCorreoConTelefono(String correo, String telefono) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("ClienteFrecuente.buscarPorCorreoTelefono", ClienteFrecuente.class);
+
+            // 2. Añadimos parametros
+            consulta.setParameter("correo", "%" + correo + "%");
+            consulta.setParameter("telefono", "%" + telefono + "%");
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+
+        } catch (NoResultException e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param correo Correo del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su nombre, correo y teléfono coincide
+     * con el nombre, correo y teléfono del parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws PersistenciaException {
+        // 0. Creamos el entityManager
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery consulta = em.createNamedQuery("ClienteFrecuente.buscarPorNombreCorreoTelefono", ClienteFrecuente.class);
+
+            // 2. Añadimos parametros
+            consulta.setParameter("nombre", "%" + nombre + "%");
+            consulta.setParameter("correo", "%" + correo + "%");
+            consulta.setParameter("telefono", "%" + telefono + "%");
+
+            // 3. validamos resultado de la consulta y devolvemos
+            return consulta.getResultList();
+
+        } catch (NoResultException e) {
+            //ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("No se encontraron resultados");
+        } finally {
+            //fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+
+    /**
+     * Método para filtrar los clientes por número de visitas.
+     *
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes con un mínimo de visitas. El mínimo de
+     * visitas es dado por el parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorNumeroVisitas(Integer visitas) throws PersistenciaException {
+        // 0. Crear la conexión
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery<ClienteFrecuente> consulta = em.createQuery(
+                    "SELECT cf FROM ClienteFrecuente cf WHERE cf.numeroVisitas >= :visitas", ClienteFrecuente.class);
+
+            // 2. Añadimos parámetros
+            consulta.setParameter("visitas", visitas);
+
+            // 3. Retornamos el resultado
+            return consulta.getResultList();
+
+        } catch (Exception e) {
+            // ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("Error al obtener los clientes por número de visitas: " + e.getMessage());
+        } finally {
+            // fin. Cerramos el entityManager
+            em.close();
+        }
+    }
+
+    /**
+     * Método para filtrar los clientes por nombre y numero de visitas.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes filtrados por nombre y con un mínimo de
+     * visitas. El mínimo de visitas es dado por el parámetro.
+     * @throws PersistenciaException Lanza una exception desde la capa de
+     * persistencia en caso de error.
+     */
+    @Override
+    public List<ClienteFrecuente> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws PersistenciaException {
+        // 0. Crear la conexión
+        EntityManager em = Conexion.crearConexion();
+        try {
+            // 1. Creamos la consulta
+            TypedQuery<ClienteFrecuente> consulta = em.createQuery(
+                    "SELECT cf FROM ClienteFrecuente cf WHERE cf.nombre LIKE :nombre AND cf.numeroVisitas >= :visitas",
+                    ClienteFrecuente.class);
+
+            // 2. Añadimos parámetros
+            consulta.setParameter("nombre", "%" + nombre + "%");
+            consulta.setParameter("visitas", visitas);
+
+            // 3. Retornamos el resultado
+            return consulta.getResultList();
+
+        } catch (Exception e) {
+            // ex. Lanzamos una excepción de la capa
+            throw new PersistenciaException("Error al obtener los clientes por nombre y visitas: " + e.getMessage());
+        } finally {
+            // fin. Cerramos el entityManager
+            em.close();
+        }
+    }
 }
