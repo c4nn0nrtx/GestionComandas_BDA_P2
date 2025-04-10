@@ -16,13 +16,13 @@ import java.util.List;
  */
 public interface IProductoBO 
 {
-    Producto agregarProducto(ProductoNuevoDTO productoNuevo) throws NegocioException;
+    ProductoViejoDTO agregarProducto(ProductoNuevoDTO productoNuevo) throws NegocioException;
 
     boolean deshabilitarProducto(Long id) throws NegocioException;
 
-    Producto modificarProducto(ProductoNuevoDTO productoNuevo) throws NegocioException;
+    ProductoViejoDTO modificarProducto(ProductoNuevoDTO productoNuevo) throws NegocioException;
 
-    Producto obtenerProductoPorId(Long id) throws NegocioException;
+    ProductoViejoDTO obtenerProductoPorId(Long id) throws NegocioException; 
 
     List<ProductoViejoDTO> obtenerTodos() throws NegocioException;
 
