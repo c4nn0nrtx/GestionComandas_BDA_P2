@@ -68,31 +68,54 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         if (nuevoCliente.getNombres() == null || nuevoCliente.getNombres().trim().isEmpty()) {
             throw new NegocioException("El nombre del cliente no puede estar vacío.");
         }
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nuevoCliente.getNombres().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
 
         // Validar que el apellido paterno no esté vacío
         if (nuevoCliente.getaPaterno() == null || nuevoCliente.getaPaterno().trim().isEmpty()) {
             throw new NegocioException("El apellido paterno del cliente no puede estar vacío.");
+        }
+        // Validar que el apellido paterno solo contenga letras
+        if (!nuevoCliente.getaPaterno().matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El apellido paterno solo puede contener letras.");
         }
 
         // Validar que el correo no esté vacío
         if (nuevoCliente.getCorreo() == null || nuevoCliente.getCorreo().trim().isEmpty()) {
             throw new NegocioException("El correo del cliente no puede estar vacío.");
         }
-
-        // Validar que el teléfono del cliente no esté vacío
-        if (nuevoCliente.getTelefono() == null || nuevoCliente.getTelefono().trim().isEmpty()) {
-            throw new NegocioException("El el telefono del cliente no puede estar vacío.");
+        // Validar formato del correo (que contenga un '@' y no tenga caracteres especiales)
+        if (!nuevoCliente.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+            throw new NegocioException("El correo electrónico no es válido.");
         }
 
-        // Validar que no exista ya un ingrediente con el mismo nombre y correo
-        validarNombreConCorreo(nuevoCliente.getNombres(),
-                nuevoCliente.getCorreo());
+        // Validar que el teléfono no esté vacío
+        if (nuevoCliente.getTelefono() == null || nuevoCliente.getTelefono().trim().isEmpty()) {
+            throw new NegocioException("El teléfono del cliente no puede estar vacío.");
+        }
+        // Validar que el teléfono contenga solo números y tenga exactamente 10 caracteres
+        if (!nuevoCliente.getTelefono().matches("\\d{10}")) {
+            throw new NegocioException("El teléfono debe contener exactamente 10 números.");
+        }
 
-        // Validar que no exista ya un cliente con el mismo nombre y telefono
-        validarNombreConTelefono(nuevoCliente.getNombres(),
-                nuevoCliente.getTelefono());
+        // Validar que las visitas sean un valor válido
+        if (nuevoCliente.getVisitas() == null) {
+            throw new NegocioException("Las visitas no pueden ser nulas.");
+        }
+        // Validar que las visitas sean un número positivo
+        if (nuevoCliente.getVisitas() < 0) {
+            throw new NegocioException("El número de visitas debe ser un valor positivo.");
+        }
 
-        // Convertir el DTO de entrada a la entidad Ingrediente
+        // Validar que no exista ya un cliente con el mismo nombre y correo
+        validarNombreConCorreo(nuevoCliente.getNombres(), nuevoCliente.getCorreo());
+
+        // Validar que no exista ya un cliente con el mismo nombre y teléfono
+        validarNombreConTelefono(nuevoCliente.getNombres(), nuevoCliente.getTelefono());
+
+        // Convertir el DTO de entrada a la entidad ClienteFrecuente
         ClienteFrecuente frecuente = ClienteFrecuenteMapper.dtoToEntity(nuevoCliente);
 
         try {
@@ -116,6 +139,16 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      */
     @Override
     public List<ClientesFrecuentesDTO> obtenerClientesPorNombre(String nombre) throws NegocioException {
+        // Validar que el nombre no esté vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre no puede estar vacío.");
+        }
+
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
+
         try {
             // Obtener la lista de entidades por nombre utilizando el DAO y convertirlas a una lista de DTOs
             return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombre(nombre));
@@ -137,8 +170,23 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      */
     @Override
     public List<ClientesFrecuentesDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException {
+        // Validar que el teléfono no esté vacío ni nulo
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new NegocioException("El teléfono no puede estar vacío.");
+        }
+
+        // Validar que el teléfono contenga solo números
+        if (!telefono.matches("\\d+")) {
+            throw new NegocioException("El teléfono solo puede contener números.");
+        }
+
+        // Validar que el teléfono tenga exactamente 10 dígitos
+        if (telefono.length() != 10) {
+            throw new NegocioException("El teléfono debe tener exactamente 10 dígitos.");
+        }
+
         try {
-            // Obtener la lista de entidades por nombre utilizando el DAO y convertirlas a una lista de DTOs
+            // Obtener la lista de entidades por teléfono utilizando el DAO y convertirlas a una lista de DTOs
             return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerClientePorTelefono(telefono));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
@@ -158,9 +206,20 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      */
     @Override
     public List<ClientesFrecuentesDTO> obtenerClientesPorCorreo(String correo) throws NegocioException {
+        // Validar que el correo no esté vacío ni nulo
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new NegocioException("El correo no puede estar vacío.");
+        }
+
+        // Validar que el correo tenga un formato válido
+        String correoRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!correo.matches(correoRegex)) {
+            throw new NegocioException("El correo no tiene un formato válido.");
+        }
+
         try {
-            // Obtener la lista de entidades por nombre utilizando el DAO y convertirlas a una lista de DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerClientePorTelefono(correo));
+            // Obtener la lista de entidades por correo utilizando el DAO y convertirlas a una lista de DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerClientePorCorreoElectronico(correo));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por correo", ex);
@@ -180,13 +239,219 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     public List<ClientesFrecuentesDTO> obtenerTodos() throws NegocioException {
         try {
             // Obtener la lista de entidades utilizando el DAO y convertirlas a una lista de DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerTodos());
+            List<ClientesFrecuentesDTO> clientes = ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerTodos());
+
+            // Validar que la lista de clientes no sea nula ni esté vacía
+            if (clientes == null || clientes.isEmpty()) {
+                throw new NegocioException("No se encontraron clientes.");
+            }
+
+            return clientes;
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener todos los clientes", ex);
             // Lanzar una excepción de negocio
             throw new NegocioException("Error al obtener todos los clientes", ex);
         }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException {
+        // Validar que el nombre no esté vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre no puede estar vacío.");
+        }
+
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
+
+        // Validar que el correo no sea nulo, vacío y tenga una estructura válida
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new NegocioException("El correo no puede estar vacío.");
+        }
+        // Validar que el correo tenga un formato válido
+        String correoRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!correo.matches(correoRegex)) {
+            throw new NegocioException("El correo no tiene un formato válido.");
+        }
+
+        // Validar que el teléfono no sea nulo, vacío y contenga solo números con longitud de 10
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new NegocioException("El teléfono no puede estar vacío.");
+        }
+        if (!telefono.matches("\\d{10}")) {
+            throw new NegocioException("El teléfono debe contener exactamente 10 dígitos numéricos.");
+        }
+
+        try {
+            // Obtener la lista de clientes por nombre, correo y teléfono utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreCorreoTelefono(nombre, correo, telefono));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre, correo y telefono", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por nombre, correo y telefono", ex);
+        }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException {
+        // Validar que el número de visitas no sea nulo
+        if (visitas == null) {
+            throw new NegocioException("El número de visitas no puede ser nulo.");
+        }
+
+        // Validar que el número de visitas sea mayor o igual a 0
+        if (visitas < 0) {
+            throw new NegocioException("El número de visitas no puede ser negativo.");
+        }
+
+        try {
+            // Obtener la lista de clientes por número de visitas utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNumeroVisitas(visitas));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por número de visitas", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por número de visitas", ex);
+        }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException {
+        // Validar que el nombre no esté vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre no puede estar vacío.");
+        }
+
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
+
+        // Validar que el número de visitas no sea nulo
+        if (visitas == null) {
+            throw new NegocioException("El número de visitas no puede ser nulo.");
+        }
+
+        // Validar que el número de visitas sea mayor o igual a 0
+        if (visitas < 0) {
+            throw new NegocioException("El número de visitas no puede ser negativo.");
+        }
+
+        try {
+            // Obtener la lista de clientes por nombre y número de visitas utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConVisitas(nombre, visitas));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y visitas", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por nombre y visitas", ex);
+        }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException {
+        // Validar que el nombre no esté vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre no puede estar vacío.");
+        }
+
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
+
+        // Validar que el correo no sea nulo ni vacío
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new NegocioException("El correo no puede ser nulo o vacío.");
+        }
+
+        // Validar que el correo tenga un formato válido
+        String correoRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!correo.matches(correoRegex)) {
+            throw new NegocioException("El correo no tiene un formato válido.");
+        }
+
+        try {
+            // Obtener la lista de clientes por nombre y correo utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConCorreo(nombre, correo));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y correo", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por nombre y correo", ex);
+        }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException {
+        // Validar que el nombre no esté vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new NegocioException("El nombre no puede estar vacío.");
+        }
+
+        // Validar que el nombre solo contenga letras (sin números ni caracteres especiales)
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")) {
+            throw new NegocioException("El nombre solo puede contener letras.");
+        }
+
+        // Validar que el teléfono no sea nulo ni vacío
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new NegocioException("El teléfono no puede ser nulo o vacío.");
+        }
+
+        // Validar que el teléfono contenga solo números y tenga exactamente 10 caracteres
+        if (!telefono.matches("\\d{10}")) {
+            throw new NegocioException("El teléfono debe contener exactamente 10 dígitos numéricos.");
+        }
+
+        try {
+            // Obtener la lista de clientes por nombre y teléfono utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConTelefono(nombre, telefono));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y telefono", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por nombre y telefono", ex);
+        }
+    }
+
+    @Override
+    public List<ClientesFrecuentesDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException {
+        // Validar que el correo no sea nulo ni vacío
+        if (correo == null || correo.trim().isEmpty()) {
+            throw new NegocioException("El correo no puede ser nulo o vacío.");
+        }
+
+        // Validar que el correo tenga un formato válido
+        String correoRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!correo.matches(correoRegex)) {
+            throw new NegocioException("El correo no tiene un formato válido.");
+        }
+
+        // Validar que el teléfono no sea nulo ni vacío
+        if (telefono == null || telefono.trim().isEmpty()) {
+            throw new NegocioException("El teléfono no puede ser nulo o vacío.");
+        }
+
+        // Validar que el teléfono contenga solo números y tenga exactamente 10 caracteres
+        if (!telefono.matches("\\d{10}")) {
+            throw new NegocioException("El teléfono debe contener exactamente 10 dígitos numéricos.");
+        }
+
+        try {
+            // Obtener la lista de clientes por correo y teléfono utilizando el DAO y convertirlas a DTOs
+            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorCorreoConTelefono(correo, telefono));
+        } catch (PersistenciaException ex) {
+            // Loggear el error de persistencia
+            LOGGER.log(Level.SEVERE, "Error al obtener clientes por correo y telefono", ex);
+            // Lanzar una excepción de negocio
+            throw new NegocioException("Error al obtener clientes por correo y telefono", ex);
+        }
+
     }
 
     /**

@@ -51,7 +51,80 @@ public interface IClienteFrecuenteBO {
     public List<ClientesFrecuentesDTO> obtenerClientesPorCorreo(String correo) throws NegocioException;
 
     /**
-     * Obtiene la lista completa de clientes frecuentes registrados en el sistema.
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param correo Correo del cliente frecuente.
+     * @return Lista de los clientes que su nombre y correo coincide con el
+     * nombre y correo del parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException;
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su nombre y teléfono coincide con el
+     * nombre y teléfono del parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException;
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param correo Correo del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su correo y teléfono coincide con el
+     * correo y teléfono del parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException;
+
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param correo Correo del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su nombre, correo y teléfono coincide
+     * con el nombre, correo y teléfono del parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException;
+
+    /**
+     * Método para filtrar los clientes por número de visitas.
+     *
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes con un mínimo de visitas. El mínimo de
+     * visitas es dado por el parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException;
+
+    /**
+     * Método para filtrar los clientes por nombre y numero de visitas.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes filtrados por nombre y con un mínimo de
+     * visitas. El mínimo de visitas es dado por el parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
+    public List<ClientesFrecuentesDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException;
+
+    /**
+     * Obtiene la lista completa de clientes frecuentes registrados en el
+     * sistema.
      *
      * @return Lista de todos los clientes frecuentes.
      * @throws NegocioException Si ocurre un error en la consulta.
