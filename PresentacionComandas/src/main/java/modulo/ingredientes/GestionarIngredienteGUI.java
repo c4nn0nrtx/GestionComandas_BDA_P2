@@ -6,12 +6,12 @@ package modulo.ingredientes;
 
 import DTOs.viejos.IngredienteViejoDTO;
 import ENUMs.UnidadMedida;
-import controlGUI.ControlGUI;
 import controlGUI.IngredienteSeleccionadoListener;
 import controlGUI.ReceptorDatos;
 import excepciones.NegocioException;
 import javax.swing.JOptionPane;
 import main.Main;
+import controlGUI.ControlGUI;
 import manejadoresBO.ManejadorBO;
 
 /**
@@ -20,6 +20,7 @@ import manejadoresBO.ManejadorBO;
  */
 public class GestionarIngredienteGUI extends javax.swing.JFrame implements ReceptorDatos, IngredienteSeleccionadoListener {
     IIngredienteBO ingredienteBO = ManejadorBO.crearIngredienteBO();
+    ControlGUI control = obtenerControlador();
     
     //el ingrediente seleccionado del buscador de ingredientes
     private IngredienteViejoDTO ingredienteGestionado;
@@ -234,7 +235,7 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         
         //Si no hay cambios en los campos o no hay nada no se ejecuta la actualización
         if(!ingredienteActualizado && txtStock.getText().length() <= 0){
-            JOptionPane.showMessageDialog(this, "No hay nada que actualizar", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error: No hay nada que actualizar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -255,6 +256,11 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
                 return;
             }
             stock = Double.parseDouble(txtStock.getText());
+            if(stock == 0){
+                JOptionPane.showMessageDialog(this, "Por favor, Ingrese un valor mayor a 0 para agregar al stock.", "Error", JOptionPane.ERROR_MESSAGE);
+                txtStock.requestFocus();
+                return;
+            }
         }
 
         int opcion;
@@ -333,7 +339,8 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        dispose();
+        control.ocultarFrameActual();
+        control.mostrarFrame("MenuIngredientesGUI");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnBuscarIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarIngredienteActionPerformed
@@ -387,11 +394,9 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
     }
     
     private void abrirBuscadorIngredientes(){
-        //Instancia el control estático del main
-        ControlGUI control = obtenerControlador();
         
         //Instancia el buscador de ingredientes
-        BuscadorIngredienteGUI buscador = (BuscadorIngredienteGUI) control.obtenerFrame("BuscadorIngrediente");
+        BuscadorIngredienteGUI buscador = (BuscadorIngredienteGUI) control.obtenerFrame("BuscadorIngredienteGUI");
     
         if(buscador != null){
             //Esta clase se añade como clase oyente
@@ -399,14 +404,14 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
             buscador.setIngredienteSeleccionadoListener(this);
             
             buscador.recargarIngredientes();
-            control.mostrarFrame("BuscadorIngrediente");
+            control.mostrarFrame("BuscadorIngredienteGUI");
             
             //Se muestra el frame del buscador
-            control.mostrarFrame("BuscadorIngrediente");
+            control.mostrarFrame("BuscadorIngredienteGUI");
             
             inhabilitarCampos();
         }else{
-            System.err.println("Error: BuscadorIngrediente no registrado en el controlador");
+            System.err.println("Error: BuscadorIngredienteGUI no registrado en el controlador");
         }
     }
     
@@ -424,9 +429,8 @@ public class GestionarIngredienteGUI extends javax.swing.JFrame implements Recep
         this.ingredienteGestionado = ingrediente;
         mostrarDatosIngrediente();
         habilitarCampos();
-        ControlGUI control = obtenerControlador();
         control.ocultarFrameActual(); // Ocultar el buscador
-        control.mostrarFrame("GestionarIngrediente"); // Mostrar esta ventana
+        control.mostrarFrame("GestionarIngredienteGUI"); // Mostrar esta ventana
     }
     
     private void mostrarDatosIngrediente() {

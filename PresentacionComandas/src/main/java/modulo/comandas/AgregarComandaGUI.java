@@ -6,30 +6,33 @@ package modulo.comandas;
 
 import DTOs.viejos.MesaViejoDTO;
 import DTOs.viejos.ProductoViejoDTO;
+import controlGUI.ControlGUI;
 import excepciones.NegocioException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import main.Main;
 import manejadoresBO.ManejadorBO;
 
 /**
  *
  * @author Beto_
  */
-public class agregarComanda extends javax.swing.JFrame {
+public class AgregarComandaGUI extends javax.swing.JFrame {
+    ControlGUI control = obtenerControlador();
     private IComandaBO comandaBO = ManejadorBO.crearComandaBO();
     private IMesaBO mesaBO = ManejadorBO.crearMesaBO();
     private List<ProductoViejoDTO> listaProductos = new ArrayList<>();
 //    private ClienteViejoDTO cliente;
     private MesaViejoDTO mesaSeleccionada;
-//    private ProdcutoSeleccionadoListener listener;
+//    private ProductoSeleccionadoListener listener;
     DefaultTableModel modelo;
     
     /**
      * Creates new form agregarComanda
      */
-    public agregarComanda() {
+    public AgregarComandaGUI() {
         initComponents();
         llenarComboMesas();
     }
@@ -57,6 +60,7 @@ public class agregarComanda extends javax.swing.JFrame {
         cbxMesa = new javax.swing.JComboBox<>();
         txtNombreCliente = new javax.swing.JTextField();
         btnBuscarCliente = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,6 +154,14 @@ public class agregarComanda extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,9 +189,12 @@ public class agregarComanda extends javax.swing.JFrame {
                                         .addGap(27, 27, 27))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(12, 12, 12))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(15, 15, 15)
@@ -222,7 +237,7 @@ public class agregarComanda extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblTotalVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
-                        .addGap(138, 194, Short.MAX_VALUE)))
+                        .addGap(138, 205, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -231,7 +246,9 @@ public class agregarComanda extends javax.swing.JFrame {
                             .addComponent(btnEliminarProducto))
                         .addGap(39, 39, 39))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnConfirmar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnConfirmar)
+                            .addComponent(btnRegresar))
                         .addGap(20, 20, 20))))
         );
 
@@ -278,6 +295,12 @@ public class agregarComanda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        control.ocultarFrameActual();
+        control.mostrarFrame("MenuComandasGUI");
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,20 +318,23 @@ public class agregarComanda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(agregarComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarComandaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(agregarComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarComandaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(agregarComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarComandaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(agregarComanda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AgregarComandaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new agregarComanda().setVisible(true);
+                new AgregarComandaGUI().setVisible(true);
             }
         });
     }
@@ -318,6 +344,7 @@ public class agregarComanda extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnEliminarProducto;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cbxMesa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -329,7 +356,11 @@ public class agregarComanda extends javax.swing.JFrame {
     private javax.swing.JTable tblProductos;
     private javax.swing.JTextField txtNombreCliente;
     // End of variables declaration//GEN-END:variables
-
+    
+    private ControlGUI obtenerControlador(){
+        return Main.controlGUI;
+    }
+    
     private void llenarComboMesas(){
         try{
             List<MesaViejoDTO> mesas = mesaBO.obtenerTodas();

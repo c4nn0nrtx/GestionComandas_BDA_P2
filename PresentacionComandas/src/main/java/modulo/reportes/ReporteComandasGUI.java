@@ -16,6 +16,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import controlGUI.ControlGUI;
 import excepciones.NegocioException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import main.Main;
 import manejadoresBO.ManejadorBO;
 import modulo.comandas.IComandaBO;
 import modulo.comandas.IMesaBO;
@@ -40,6 +42,7 @@ import modulo.ingredientes.BuscadorIngredienteGUI;
  * @author Beto_
  */
 public class ReporteComandasGUI extends javax.swing.JFrame {
+    ControlGUI control = obtenerControlador();
     IComandaBO comandaBO = ManejadorBO.crearComandaBO();
     IMesaBO mesaBO = ManejadorBO.crearMesaBO();
 //    ICliente clienteBO = ManejadorBO.crearClienteBO;
@@ -249,6 +252,8 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         // TODO add your handling code here:
+        control.ocultarFrameActual();
+        control.mostrarFrame("MenuReportesGUI");
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGenerarPDF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarPDF1ActionPerformed
@@ -316,6 +321,10 @@ public class ReporteComandasGUI extends javax.swing.JFrame {
     private javax.swing.JTable tblComandas;
     // End of variables declaration//GEN-END:variables
 
+    private ControlGUI obtenerControlador(){
+        return Main.controlGUI;
+    }
+    
     private LocalDateTime toLocalDateTime (Date date) {
         if (date == null) {
             return null;
