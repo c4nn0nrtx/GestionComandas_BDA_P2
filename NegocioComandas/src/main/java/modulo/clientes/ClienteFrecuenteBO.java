@@ -1,6 +1,7 @@
 package modulo.clientes;
 
-import DTOs.nuevos.ClientesFrecuentesDTO;
+import DTOs.nuevos.ClienteFrecuenteNuevoDTO;
+import DTOs.viejos.ClienteFrecuenteViejoDTO;
 import entidades.ClienteFrecuente;
 import excepciones.NegocioException;
 import excepciones.PersistenciaException;
@@ -57,7 +58,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * persistencia.
      */
     @Override
-    public ClientesFrecuentesDTO agregarClienteFrecuente(ClientesFrecuentesDTO nuevoCliente) throws NegocioException {
+    public ClienteFrecuenteViejoDTO agregarClienteFrecuente(ClienteFrecuenteNuevoDTO nuevoCliente) throws NegocioException {
 
         // Validar que el DTO de entrada no sea nulo
         if (nuevoCliente == null) {
@@ -116,11 +117,11 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         validarNombreConTelefono(nuevoCliente.getNombres(), nuevoCliente.getTelefono());
 
         // Convertir el DTO de entrada a la entidad ClienteFrecuente
-        ClienteFrecuente frecuente = ClienteFrecuenteMapper.dtoToEntity(nuevoCliente);
+        ClienteFrecuente frecuente = ClienteFrecuenteMapper.nuevodtoToEntity(nuevoCliente);
 
         try {
             // Persistir la entidad utilizando el DAO y convertir el resultado a DTO de salida
-            return ClienteFrecuenteMapper.entityToDTO(frecuenteDAO.agregar(frecuente));
+            return ClienteFrecuenteMapper.entityToViejodto(frecuenteDAO.agregar(frecuente));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al agregar cliente", ex);
@@ -138,7 +139,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * @throws NegocioException Si ocurre un error en la consulta.
      */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerClientesPorNombre(String nombre) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorNombre(String nombre) throws NegocioException {
         // Validar que el nombre no esté vacío
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
@@ -151,7 +152,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de entidades por nombre utilizando el DAO y convertirlas a una lista de DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombre(nombre));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNombre(nombre));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre", ex);
@@ -169,7 +170,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * @throws NegocioException Si ocurre un error en la consulta.
      */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException {
         // Validar que el teléfono no esté vacío ni nulo
         if (telefono == null || telefono.trim().isEmpty()) {
             throw new NegocioException("El teléfono no puede estar vacío.");
@@ -187,7 +188,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de entidades por teléfono utilizando el DAO y convertirlas a una lista de DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerClientePorTelefono(telefono));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerClientePorTelefono(telefono));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por telefono", ex);
@@ -205,7 +206,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * @throws NegocioException Si ocurre un error en la consulta.
      */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerClientesPorCorreo(String correo) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorCorreo(String correo) throws NegocioException {
         // Validar que el correo no esté vacío ni nulo
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("El correo no puede estar vacío.");
@@ -219,7 +220,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de entidades por correo utilizando el DAO y convertirlas a una lista de DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerClientePorCorreoElectronico(correo));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerClientePorCorreoElectronico(correo));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por correo", ex);
@@ -236,10 +237,10 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
      * @throws NegocioException Si ocurre un error en la consulta.
      */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerTodos() throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerTodos() throws NegocioException {
         try {
             // Obtener la lista de entidades utilizando el DAO y convertirlas a una lista de DTOs
-            List<ClientesFrecuentesDTO> clientes = ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerTodos());
+            List<ClienteFrecuenteViejoDTO> clientes = ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerTodos());
 
             // Validar que la lista de clientes no sea nula ni esté vacía
             if (clientes == null || clientes.isEmpty()) {
@@ -255,8 +256,19 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Método para obtener los clientes por nombre.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param correo Correo del cliente frecuente.
+     * @param telefono Teléfono del cliente frecuente.
+     * @return Lista de los clientes que su nombre, correo y teléfono coincide
+     * con el nombre, correo y teléfono del parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException {
         // Validar que el nombre no esté vacío
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
@@ -287,7 +299,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por nombre, correo y teléfono utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreCorreoTelefono(nombre, correo, telefono));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNombreCorreoTelefono(nombre, correo, telefono));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre, correo y telefono", ex);
@@ -296,8 +308,17 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Método para filtrar los clientes por número de visitas.
+     *
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes con un mínimo de visitas. El mínimo de
+     * visitas es dado por el parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException {
         // Validar que el número de visitas no sea nulo
         if (visitas == null) {
             throw new NegocioException("El número de visitas no puede ser nulo.");
@@ -310,7 +331,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por número de visitas utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNumeroVisitas(visitas));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNumeroVisitas(visitas));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por número de visitas", ex);
@@ -319,8 +340,18 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
         }
     }
 
+    /**
+     * Método para filtrar los clientes por nombre y numero de visitas.
+     *
+     * @param nombre Nombre del cliente frecuente.
+     * @param visitas Visitas realizadas por el cliente frecuente.
+     * @return Lista de los clientes filtrados por nombre y con un mínimo de
+     * visitas. El mínimo de visitas es dado por el parámetro.
+     * @throws NegocioException Lanza una exception desde la capa de negocio en
+     * caso de error.
+     */
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException {
         // Validar que el nombre no esté vacío
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
@@ -343,7 +374,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por nombre y número de visitas utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConVisitas(nombre, visitas));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNombreConVisitas(nombre, visitas));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y visitas", ex);
@@ -353,7 +384,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException {
         // Validar que el nombre no esté vacío
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
@@ -377,7 +408,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por nombre y correo utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConCorreo(nombre, correo));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNombreConCorreo(nombre, correo));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y correo", ex);
@@ -387,7 +418,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException {
         // Validar que el nombre no esté vacío
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new NegocioException("El nombre no puede estar vacío.");
@@ -410,7 +441,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por nombre y teléfono utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorNombreConTelefono(nombre, telefono));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorNombreConTelefono(nombre, telefono));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por nombre y telefono", ex);
@@ -420,7 +451,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
     }
 
     @Override
-    public List<ClientesFrecuentesDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException {
+    public List<ClienteFrecuenteViejoDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException {
         // Validar que el correo no sea nulo ni vacío
         if (correo == null || correo.trim().isEmpty()) {
             throw new NegocioException("El correo no puede ser nulo o vacío.");
@@ -444,7 +475,7 @@ public class ClienteFrecuenteBO implements IClienteFrecuenteBO {
 
         try {
             // Obtener la lista de clientes por correo y teléfono utilizando el DAO y convertirlas a DTOs
-            return ClienteFrecuenteMapper.entityListToDTOList(frecuenteDAO.obtenerPorCorreoConTelefono(correo, telefono));
+            return ClienteFrecuenteMapper.entityListToViejodtoList(frecuenteDAO.obtenerPorCorreoConTelefono(correo, telefono));
         } catch (PersistenciaException ex) {
             // Loggear el error de persistencia
             LOGGER.log(Level.SEVERE, "Error al obtener clientes por correo y telefono", ex);

@@ -1,6 +1,7 @@
 package modulo.clientes;
 
-import DTOs.nuevos.ClientesFrecuentesDTO;
+import DTOs.nuevos.ClienteFrecuenteNuevoDTO;
+import DTOs.viejos.ClienteFrecuenteViejoDTO;
 import excepciones.NegocioException;
 import java.util.List;
 
@@ -14,11 +15,11 @@ public interface IClienteFrecuenteBO {
      * Agrega un nuevo cliente frecuente al sistema tras validar la información.
      *
      * @param frecuente DTO que contiene la información del nuevo cliente.
-     * @return Un ClientesFrecuentesDTO que representa el cliente agregado.
+     * @return Un ClienteFrecuenteViejoDTO que representa el cliente agregado.
      * @throws NegocioException Si se violan reglas de negocio o hay un error de
      * persistencia.
      */
-    public ClientesFrecuentesDTO agregarClienteFrecuente(ClientesFrecuentesDTO frecuente) throws NegocioException;
+    public ClienteFrecuenteViejoDTO agregarClienteFrecuente(ClienteFrecuenteNuevoDTO frecuente) throws NegocioException;
 
     /**
      * Obtiene una lista de clientes frecuentes cuyo nombre coincide con el
@@ -28,7 +29,7 @@ public interface IClienteFrecuenteBO {
      * @return Lista de clientes con el nombre especificado.
      * @throws NegocioException Si ocurre un error en la consulta.
      */
-    public List<ClientesFrecuentesDTO> obtenerClientesPorNombre(String nombre) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorNombre(String nombre) throws NegocioException;
 
     /**
      * Obtiene una lista de clientes frecuentes cuyo teléfono coincide con el
@@ -38,7 +39,7 @@ public interface IClienteFrecuenteBO {
      * @return Lista de clientes con el teléfono especificado.
      * @throws NegocioException Si ocurre un error en la consulta.
      */
-    public List<ClientesFrecuentesDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorTelefono(String telefono) throws NegocioException;
 
     /**
      * Obtiene una lista de clientes frecuentes cuyo correo electrónico coincide
@@ -48,7 +49,7 @@ public interface IClienteFrecuenteBO {
      * @return Lista de clientes con el correo especificado.
      * @throws NegocioException Si ocurre un error en la consulta.
      */
-    public List<ClientesFrecuentesDTO> obtenerClientesPorCorreo(String correo) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerClientesPorCorreo(String correo) throws NegocioException;
 
     /**
      * Método para obtener los clientes por nombre.
@@ -60,7 +61,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConCorreo(String nombre, String correo) throws NegocioException;
 
     /**
      * Método para obtener los clientes por nombre.
@@ -72,7 +73,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConTelefono(String nombre, String telefono) throws NegocioException;
 
     /**
      * Método para obtener los clientes por nombre.
@@ -84,7 +85,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorCorreoConTelefono(String correo, String telefono) throws NegocioException;
 
     /**
      * Método para obtener los clientes por nombre.
@@ -97,7 +98,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreCorreoTelefono(String nombre, String correo, String telefono) throws NegocioException;
 
     /**
      * Método para filtrar los clientes por número de visitas.
@@ -108,7 +109,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNumeroVisitas(Integer visitas) throws NegocioException;
 
     /**
      * Método para filtrar los clientes por nombre y numero de visitas.
@@ -120,7 +121,7 @@ public interface IClienteFrecuenteBO {
      * @throws NegocioException Lanza una exception desde la capa de negocio en
      * caso de error.
      */
-    public List<ClientesFrecuentesDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerPorNombreConVisitas(String nombre, Integer visitas) throws NegocioException;
 
     /**
      * Obtiene la lista completa de clientes frecuentes registrados en el
@@ -129,5 +130,5 @@ public interface IClienteFrecuenteBO {
      * @return Lista de todos los clientes frecuentes.
      * @throws NegocioException Si ocurre un error en la consulta.
      */
-    public List<ClientesFrecuentesDTO> obtenerTodos() throws NegocioException;
+    public List<ClienteFrecuenteViejoDTO> obtenerTodos() throws NegocioException;
 }
