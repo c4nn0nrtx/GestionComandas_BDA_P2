@@ -34,5 +34,7 @@ public interface IProductoBO
     List<ProductoViejoDTO> obtenerPorTipo(TipoProducto tipoProducto) throws NegocioException;
     
     List<ProductoViejoDTO> obtenerPorFiltro(String nombre, TipoProducto tipo) throws NegocioException;
+    
+    boolean habilitarProducto(Long id) throws NegocioException;
 
 }

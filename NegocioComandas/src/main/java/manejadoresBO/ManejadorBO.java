@@ -61,17 +61,50 @@ public class ManejadorBO {
         return ingredienteBO;
     }
     
-     public static IProductoBO crearProductoBO() {
+    /**
+     * Este método crea y devuelve una instancia del Business Object para la gestión de productos ProductoBO.
+     *
+     * Este método utiliza el patrón Singleton para obtener una única instancia del DAO de productos
+     * ProductoDAO a través del método estático getInstance(), y luego inyecta esta instancia en el constructor del BO.
+     *
+     * Esta estrategia permite centralizar la lógica de negocio relacionada con productos, tales como:
+     * - Alta, modificación o baja lógica de productos.
+     * - Validación de nombres únicos.
+     * - Búsquedas por nombre o tipo de producto.
+     * - Control de estado (activo/inactivo).
+     *
+     * @return Regresa una instancia de IProductoBO completamente configurada y lista para su uso.
+     */
+    public static IProductoBO crearProductoBO() {
         IProductoDAO productoDAO = ProductoDAO.getInstance();
         IProductoBO productoBO = new ProductoBO(productoDAO);
         return productoBO;
     }
-
+     
+    
     public static IDetalleComandaBO crearDetalleComandaBO() {
         IDetalleComandaDAO detalleComandaDAO = DetalleComandaDAO.getInstance();
         IDetalleComandaBO detalleComandaBO = new DetalleComandaBO(detalleComandaDAO);
         return detalleComandaBO;
     }
+
+    /**
+     * Este método crea y devuelve una instancia del Business Object para la gestión de relaciones
+     * entre productos e ingredientes (ProductoIngredienteBO).
+     *
+     * Este método se encarga de obtener una única instancia del DAO
+     * ProductoIngredienteDAO usando el patrón Singleton, y luego inyecta esta
+     * instancia en el BO.
+     *
+     * Esta clase BO maneja operaciones como:
+     * - Registro de relaciones producto-ingrediente.
+     * - Eliminación de asociaciones.
+     * - Recuperación de ingredientes requeridos por producto.
+     * 
+     * Es esencial en la lógica de ensamblado y validación de productos antes de su venta.
+     *
+     * @return Regresa una instancia de IProductoIngredienteBO completamente funcional.
+     */
 
     public static IProductoIngredienteBO crearProductoIngredienteBO() {
         IProductoIngredienteDAO productoIngredienteDAO = ProductoIngredienteDAO.getInstance();

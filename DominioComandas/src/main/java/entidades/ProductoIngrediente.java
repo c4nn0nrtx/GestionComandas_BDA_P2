@@ -92,7 +92,7 @@ public class ProductoIngrediente implements Serializable {
     private Ingrediente ingrediente;
 
     /**
-     * Constructor vacío requerido por JPA.
+     * Constructor vacío requerido de la entidad producto ingrediente.
      */
     public ProductoIngrediente() {
     }
@@ -111,72 +111,72 @@ public class ProductoIngrediente implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Este método obtiene el ID de esta relación.
+     * @return Regresa el ID único generado automáticamente.
      */
     public Long getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * Este método establece el ID de esta relación.
+     * @param id Este es el ID único.
      */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * Este método obtiene la cantidad requerida del ingrediente.
+     * @return Regresa la cantidad necesaria del ingrediente.
      */
     public double getCantidadRequerida() {
         return cantidadRequerida;
     }
 
     /**
-     *
-     * @param cantidadRequerida
+     * Este método establece la cantidad requerida del ingrediente.
+     * @param cantidadRequerida Esta es la nueva cantidad.
      */
     public void setCantidadRequerida(double cantidadRequerida) {
         this.cantidadRequerida = cantidadRequerida;
     }
 
     /**
-     *
-     * @return
+     * Este método obtiene el producto asociado.
+     * @return Regresa la entidad `Producto`.
      */
     public Producto getProducto() {
         return producto;
     }
 
     /**
-     *
-     * @param producto
+     * Este método establece el producto asociado.
+     * @param producto Esta es la entidad `Producto`.
      */
     public void setProducto(Producto producto) {
         this.producto = producto;
     }
 
     /**
-     *
-     * @return
+     * Este método obtiene el ingrediente asociado.
+     * @return Regresa la entidad `Ingrediente`.
      */
     public Ingrediente getIngrediente() {
         return ingrediente;
     }
 
     /**
-     *
-     * @param ingrediente
+     * Este método establece el ingrediente asociado.
+     * @param ingrediente Esta es la entidad `Ingrediente`.
      */
     public void setIngrediente(Ingrediente ingrediente) {
         this.ingrediente = ingrediente;
     }
 
     /**
-     *
-     * @return
+     * Este método devuelve una representación en cadena del objeto `ProductoIngrediente`.
+     * @return Regresa la cadena que representa los valores clave del objeto.
      */
     @Override
     public String toString() {

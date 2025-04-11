@@ -85,6 +85,28 @@ public class ProductoDAO implements IProductoDAO
             em.close();
         }
     }
+    
+@Override
+public boolean habilitar(Long id) throws PersistenciaException {
+    EntityManager em = Conexion.crearConexion();
+    try {
+        em.getTransaction().begin();
+        Producto producto = em.find(Producto.class, id);
+        if (producto != null) {
+            producto.setEstado(true); // Cambia el estado a habilitado
+            em.merge(producto);
+            em.getTransaction().commit();
+            return true;
+        } else {
+            throw new PersistenciaException("No se encontró el producto con ID: " + id);
+        }
+    } catch (Exception e) {
+        em.getTransaction().rollback();
+        throw new PersistenciaException("Error al habilitar el producto: " + e.getMessage());
+    } finally {
+        em.close();
+    }
+}
 
     @Override
     public Producto obtenerPorId(Long id) throws PersistenciaException {

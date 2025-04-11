@@ -128,40 +128,6 @@ public class ProductoDAOTest {
             verify(em).close();
         }
     }
-
-    /*@Test
-    void testObtenerTodos() throws PersistenciaException {
-        try (MockedStatic<Conexion> mockedConexion = Mockito.mockStatic(Conexion.class)) {
-            mockedConexion.when(Conexion::crearConexion).thenReturn(em);
-            when(em.createQuery("SELECT p FROM Producto p WHERE p.estado = true", Producto.class)).thenReturn(queryMock);
-            when(query.getResultList()).thenReturn(productos);
-
-            List<Producto> result = productoDAO.obtenerTodos();
-
-            assertEquals(2, result.size());
-            assertEquals("Hamburguesa", result.get(0).getNombre());
-            assertEquals("Papas Fritas", result.get(1).getNombre());
-            verify(em).createQuery("SELECT p FROM Producto p", Producto.class);
-            verify(em).close();
-        }
-    }*/
-    
-    /*@Test
-void testObtenerTodos() throws PersistenciaException {
-    // Arrange
-    List<Producto> productos = Arrays.asList(new Producto(), new Producto());
-    when(em.createQuery("SELECT p FROM Producto p WHERE p.estado = true", Producto.class))
-        .thenReturn(queryMock);
-    when(queryMock.getResultList()).thenReturn(productos);
-
-    // Act
-    List<Producto> resultado = productoDAO.obtenerTodos();
-
-    // Assert
-    assertEquals(productos, resultado);
-    verify(em).createQuery("SELECT p FROM Producto p WHERE p.estado = true", Producto.class);
-    verify(queryMock).getResultList();
-}*/
     
     @Test
 void testObtenerTodos() throws PersistenciaException {
@@ -219,5 +185,7 @@ void testObtenerTodos() throws PersistenciaException {
             verify(em).close();
         }
     }
+    
+    
     
 }

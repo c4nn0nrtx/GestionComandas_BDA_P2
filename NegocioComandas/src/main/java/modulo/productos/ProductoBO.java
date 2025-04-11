@@ -392,5 +392,22 @@ public class ProductoBO implements IProductoBO
             throw new NegocioException("Error al obtener productos por tipo de producto", ex);
         }
     }
+    
+    /**
+     * Habilita un producto previamente deshabilitado.
+     * 
+     * @param id ID del producto a habilitar
+     * @return true si fue habilitado con éxito
+     * @throws NegocioException si ocurre un error de persistencia
+     */
+    @Override
+    public boolean habilitarProducto(Long id) throws NegocioException {
+        try {
+            return productoDAO.habilitar(id);
+        } catch (PersistenciaException ex) {
+            LOGGER.log(Level.SEVERE, "Error al habilitar producto", ex);
+            throw new NegocioException("Error al habilitar producto", ex);
+        }
+    }
 
 }

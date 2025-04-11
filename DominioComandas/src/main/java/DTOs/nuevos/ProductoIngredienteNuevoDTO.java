@@ -5,8 +5,26 @@
 package DTOs.nuevos;
 
 /**
- *
- * @author Maximiliano
+ * La clase ProductoNuevoDTO es un DTO (Data Transfer Object) que
+ * encapsula la información necesaria para registrar o modificar un producto
+ * dentro del sistema. Esta clase representa los datos de entrada (creación o
+ * actualización) desde la capa de presentación o lógica de negocio, antes de
+ * ser transformados en una entidad persistente.
+ * 
+ * Este DTO es especialmente útil para separar las capas de la aplicación
+ * (presentación, negocio y persistencia), evitando así el acoplamiento directo
+ * con la entidad Producto.
+ * 
+ * Se utiliza principalmente en las operaciones de alta y modificación
+ * de productos.
+ * 
+ * Atributos incluidos:
+ *   nombre: nombre único que identifica al producto.
+ *   tipo: tipo o categoría del producto (PLATILLO, BEBIDA, POSTRE).
+ *   precio: precio unitario del producto.
+ *   estado: indica si el producto está habilitado (true) o deshabilitado (false).
+ * 
+ * @author Maximiliano Reyna Aguilar
  */
 public class ProductoIngredienteNuevoDTO 
 {

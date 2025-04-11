@@ -52,6 +52,11 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
 
         btnProductos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnProductos.setText("Productos");
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
+            }
+        });
 
         btnIngredientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnIngredientes.setText("Ingredientes");
@@ -145,6 +150,12 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         control.ocultarFrameActual();
         control.mostrarFrame("MenuComandasGUI");
     }//GEN-LAST:event_btnComandasActionPerformed
+
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        // TODO add your handling code here:
+        control.ocultarFrameActual();
+        control.mostrarFrame("MenuProductosGUI");
+    }//GEN-LAST:event_btnProductosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

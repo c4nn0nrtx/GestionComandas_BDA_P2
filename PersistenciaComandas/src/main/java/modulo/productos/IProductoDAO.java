@@ -32,5 +32,8 @@ public interface IProductoDAO
     public List<Producto> obtenerPorTipo(TipoProducto tipo) throws PersistenciaException;
     
     public List<Producto> obtenerPorFiltro(String nombre, TipoProducto tipo) throws PersistenciaException;
+    
+    public boolean habilitar(Long id) throws PersistenciaException;
+
 
 }

@@ -250,6 +250,35 @@ public void setProductoSeleccionadoListener(ProductoSeleccionadoListener listene
 
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
+        //Tomamos la fila seleccionada para enviarla
+        int filaSeleccionada = tblProductos.getSelectedRow();
+        
+        //Si la fila es válida
+        if (filaSeleccionada >= 0) {
+            //obtiene el ingrediente de la fila seleccionada
+            ProductoViejoDTO productoSeleccionado = obtenerProductoDeFila(filaSeleccionada);
+            
+            // Válida el ingrediente y el listener para enviar el ingrediente
+            if (productoSeleccionado != null) {
+                if (listener != null) {
+                    int opcion = JOptionPane.showConfirmDialog(this,"¿Desea seleccionar el producto: " + productoSeleccionado.getNombre() +
+                                                            " con categoría: " + productoSeleccionado.getTipo().toString() + " ?",
+                                                            "Confirmar elección",
+                                                            JOptionPane.YES_NO_OPTION);
+                    if(opcion == JOptionPane.YES_OPTION){
+                        listener.productoSeleccionado(productoSeleccionado);
+                    }else if(opcion == JOptionPane.NO_OPTION){
+                        return;
+                    }
+                    this.setVisible(false);
+                }
+                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_btnElegirActionPerformed
 
